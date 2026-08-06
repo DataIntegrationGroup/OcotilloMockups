@@ -273,6 +273,24 @@
     }
     .datagrid tbody tr:last-child td { border-bottom: none; }
     .datagrid tbody tr:hover td { background: var(--bg-wrapper); }
+    .datagrid.crosstab { overflow-x: auto; }
+    .datagrid.crosstab table { min-width: 1120px; }
+    .datagrid.crosstab th:first-child,
+    .datagrid.crosstab td:first-child {
+      position: sticky;
+      left: 0;
+      background: var(--paper);
+      z-index: 1;
+      box-shadow: 1px 0 0 var(--divider);
+    }
+    .datagrid.crosstab tbody tr:hover td:first-child { background: var(--bg-wrapper); }
+    .unit-label {
+      display: block;
+      margin-top: 2px;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
 
     /* ── Chips ── */
     .chip {
@@ -613,54 +631,40 @@
             Sample <strong>WL-0433A</strong> &nbsp;·&nbsp; Analyzed at Bonnie's Lab &nbsp;·&nbsp; Results received Jun 2, 2026
           </div>
           <div class="qa-banner">✓ Ion balance ±2.1% — within acceptable range (lab QA/QC passed)</div>
-          <div class="datagrid">
+          <div class="datagrid crosstab">
             <table>
               <thead>
                 <tr>
-                  <th>Parameter</th>
-                  <th>Result</th>
-                  <th>Unit</th>
-                  <th>Detection limit</th>
-                  <th>EPA MCL</th>
-                  <th>Lab</th>
+                  <th>Sample</th>
+                  <th>Calcium <span class="unit-label">mg/L</span></th>
+                  <th>Magnesium <span class="unit-label">mg/L</span></th>
+                  <th>Sodium <span class="unit-label">mg/L</span></th>
+                  <th>Potassium <span class="unit-label">mg/L</span></th>
+                  <th>Bicarbonate (HCO₃) <span class="unit-label">mg/L</span></th>
+                  <th>Sulfate <span class="unit-label">mg/L</span></th>
+                  <th>Chloride <span class="unit-label">mg/L</span></th>
+                  <th>Nitrate as N <span class="unit-label">mg/L</span></th>
+                  <th>Arsenic <span class="unit-label">mg/L</span></th>
+                  <th>Iron <span class="unit-label">mg/L</span></th>
+                  <th>Manganese <span class="unit-label">mg/L</span></th>
+                  <th>TDS <span class="unit-label">mg/L</span></th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Calcium</td><td>48.2</td><td>mg/L</td><td>—</td><td>—</td><td>Bureau</td></tr>
-                <tr><td>Magnesium</td><td>12.1</td><td>mg/L</td><td>—</td><td>—</td><td>Bureau</td></tr>
-                <tr><td>Sodium</td><td>31.4</td><td>mg/L</td><td>—</td><td>—</td><td>Bureau</td></tr>
-                <tr><td>Potassium</td><td>2.8</td><td>mg/L</td><td>—</td><td>—</td><td>Bureau</td></tr>
-                <tr><td>Bicarbonate (HCO₃)</td><td>218</td><td>mg/L</td><td>—</td><td>—</td><td>Bureau</td></tr>
-                <tr><td>Sulfate</td><td>42.6</td><td>mg/L</td><td>—</td><td>250 <span class="chip chip-ok">Secondary</span></td><td>Bureau</td></tr>
-                <tr><td>Chloride</td><td>18.3</td><td>mg/L</td><td>—</td><td>250 <span class="chip chip-ok">Secondary</span></td><td>Bureau</td></tr>
                 <tr>
-                  <td>Nitrate (as N)</td>
+                  <td><strong>WL-0433A</strong><span class="unit-label">May 15, 2026 · Bureau</span></td>
+                  <td>48.2</td>
+                  <td>12.1</td>
+                  <td>31.4</td>
+                  <td>2.8</td>
+                  <td>218</td>
+                  <td>42.6</td>
+                  <td>18.3</td>
                   <td>&lt;0.05 <span class="chip chip-nd">ND</span></td>
-                  <td>mg/L</td><td>0.05</td>
-                  <td>10 <span class="chip chip-ok">Primary</span></td>
-                  <td>Bureau</td>
-                </tr>
-                <tr>
-                  <td>Arsenic</td>
                   <td>0.006 <span class="chip chip-mcl">Above MCL</span></td>
-                  <td>mg/L</td><td>0.0005</td>
-                  <td>0.010 <span class="chip chip-mcl">Primary</span></td>
-                  <td>Bureau</td>
-                </tr>
-                <tr><td>Iron</td><td>0.12</td><td>mg/L</td><td>—</td><td>0.3 <span class="chip chip-ok">Secondary</span></td><td>Bureau</td></tr>
-                <tr>
-                  <td>Manganese</td>
+                  <td>0.12</td>
                   <td>&lt;0.005 <span class="chip chip-nd">ND</span></td>
-                  <td>mg/L</td><td>0.005</td>
-                  <td>0.05 <span class="chip chip-ok">Secondary</span></td>
-                  <td>Bureau</td>
-                </tr>
-                <tr>
-                  <td>TDS (calculated)</td>
                   <td>374 <span class="chip chip-calc">Calc.</span></td>
-                  <td>mg/L</td><td>—</td>
-                  <td>500 <span class="chip chip-ok">Secondary</span></td>
-                  <td>—</td>
                 </tr>
               </tbody>
             </table>
@@ -678,24 +682,29 @@
           <div class="sample-meta">
             Sample <strong>WL-0433A</strong> &nbsp;·&nbsp; Multiple external labs &nbsp;·&nbsp; Results received Jun 10, 2026
           </div>
-          <div class="datagrid">
+          <div class="datagrid crosstab">
             <table>
               <thead>
                 <tr>
-                  <th>Parameter</th>
-                  <th>Result</th>
-                  <th>Unit</th>
-                  <th>Lab</th>
-                  <th>Notes</th>
+                  <th>Sample</th>
+                  <th>δ¹⁸O <span class="unit-label">‰ VSMOW</span></th>
+                  <th>δD (δ²H) <span class="unit-label">‰ VSMOW</span></th>
+                  <th>δ¹⁷O <span class="unit-label">‰ VSMOW</span></th>
+                  <th>Tritium <span class="unit-label">TU</span></th>
+                  <th>Carbon-14 <span class="unit-label">pmC</span></th>
+                  <th>Carbon-13 <span class="unit-label">‰ VPDB</span></th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>δ¹⁸O</td><td>−10.42</td><td>‰ VSMOW</td><td>Bureau</td><td></td></tr>
-                <tr><td>δD (δ²H)</td><td>−74.8</td><td>‰ VSMOW</td><td>Bureau</td><td></td></tr>
-                <tr><td>δ¹⁷O</td><td>—</td><td>‰ VSMOW</td><td colspan="2" style="color:var(--text-2); font-style:italic;">Pending — instrument arriving July 2026</td></tr>
-                <tr><td>Tritium</td><td>0.8</td><td>TU</td><td>Univ. of Miami</td><td>Low — suggests older recharge component</td></tr>
-                <tr><td>Carbon-14</td><td>68.4</td><td>pmC</td><td>Commercial lab (Miami)</td><td></td></tr>
-                <tr><td>Carbon-13</td><td>−13.2</td><td>‰ VPDB</td><td>Commercial lab (Miami)</td><td></td></tr>
+                <tr>
+                  <td><strong>WL-0433A</strong><span class="unit-label">May 15, 2026 · multiple labs</span></td>
+                  <td>−10.42<span class="unit-label">Bureau</span></td>
+                  <td>−74.8<span class="unit-label">Bureau</span></td>
+                  <td>—<span class="unit-label">Pending · July 2026</span></td>
+                  <td>0.8<span class="unit-label">Univ. of Miami · low</span></td>
+                  <td>68.4<span class="unit-label">Commercial lab</span></td>
+                  <td>−13.2<span class="unit-label">Commercial lab</span></td>
+                </tr>
               </tbody>
             </table>
           </div>
