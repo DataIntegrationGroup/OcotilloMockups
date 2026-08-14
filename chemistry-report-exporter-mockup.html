@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lo-fi Mockup — Chemistry Report Exporter · Ocotillo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+        <link rel="stylesheet" href="design-system/ocotillo.css" />
+    <style>
+      /* ── Page-specific ──
+         Shared styles live in design-system/ocotillo.css. */
+
+      /* Toolbar above the report preview sheet — sits flush on top of the
+         .paper-wrap, so its bottom corners are square. */
+      .preview-nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 14px;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-bottom: none;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      }
+
+      /* The selection tray is pinned to the bottom of .main, so it has to
+         cancel the main pane's padding to run full width. */
+      .main {
+        padding-bottom: 120px;
+      }
+      .tray {
+        margin: 18px -24px -120px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── App bar ── -->
+    <div class="appbar">
+      <div class="appbar-hamburger">☰</div>
+      <span class="appbar-title">Ocotillo</span>
+      <div class="appbar-right">
+        <div class="appbar-search">
+          <span>⌕</span>
+          <span>Search wells…</span>
+          <span class="appbar-search-kbd">⌘K</span>
+        </div>
+        <div class="appbar-icon-btn" title="Report a bug">🐛</div>
+        <div class="avatar">LL</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- ── Sidebar ── -->
+      <div class="sidebar">
+        <div class="nav-item"><span class="nav-icon">⌂</span> Home</div>
+        <div class="nav-item"><span class="nav-icon">◉</span> Wells</div>
+        <div class="nav-item"><span class="nav-icon">◎</span> Springs</div>
+        <div class="nav-item"><span class="nav-icon">◈</span> Map</div>
+        <div class="nav-item"><span class="nav-icon">☎</span> Contacts</div>
+        <div class="nav-item"><span class="nav-icon">⊞</span> Projects</div>
+        <div class="nav-item"><span class="nav-icon">📎</span> Assets</div>
+        <hr class="nav-divider" />
+        <div class="nav-item active is-new">
+          <span class="nav-icon">⚗</span> Chemistry Reports
+        </div>
+        <div class="nav-item"><span class="nav-icon">↧</span> Exports</div>
+        <hr class="nav-divider" />
+        <div class="nav-item" style="color: var(--muted-foreground)">
+          <span class="nav-icon">🔒</span> Admin
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-footer-link">About</div>
+          <div class="sidebar-footer-link">Connect Desktop GIS</div>
+          <div class="sidebar-footer-link">Report a Bug</div>
+        </div>
+      </div>
+
+      <!-- ── Main ── -->
+      <div class="main">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+          <a href="#">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="#">Chemistry Reports</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>New Report Run</span>
+        </div>
+
+        <!-- Page header -->
+        <div class="page-header">
+          <div>
+            <div class="page-title">Chemistry Report Exporter</div>
+            <div class="page-subtitle">
+              Generate owner-facing water quality reports for one or many wells
+              — annual cycle or on-demand data request.
+            </div>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-outline">⎘ Load Template</button>
+            <button class="btn btn-outline">⏱ Scheduled Runs</button>
+            <button class="btn btn-outline">▤ Run History</button>
+          </div>
+        </div>
+
+        <div class="mockup-note">
+          <strong>Lo-fi mockup — not functional.</strong> Demonstrates the
+          chemistry report export flow for 1..n wells. Open questions flagged
+          for review:
+          <ul>
+            <li>
+              Who may generate reports for a well they do not own — role gate,
+              or project membership?
+            </li>
+            <li>
+              Anonymized nearby-well comparison: is k ≥ 5 sufficient, and does
+              the radius need to be suppressed on the report itself?
+            </li>
+            <li>
+              Does the digital version link expire, and does it require the
+              owner to authenticate?
+            </li>
+            <li>
+              Annual run: are reports generated for wells with zero samples in
+              the period, or skipped?
+            </li>
+          </ul>
+        </div>
+
+        <!-- ── Step rail ── -->
+        <div class="steps">
+          <div class="step done" id="rail-1" onclick="goStep(1)">
+            <div class="step-num">1</div>
+            <div>
+              <div class="step-label">Select Wells</div>
+              <div class="step-sub" id="rail-1-sub">5 wells selected</div>
+            </div>
+          </div>
+          <div class="step done" id="rail-2" onclick="goStep(2)">
+            <div class="step-num">2</div>
+            <div>
+              <div class="step-label">Report Options</div>
+              <div class="step-sub">Annual · 2026 · 9 sections</div>
+            </div>
+          </div>
+          <div class="step active" id="rail-3" onclick="goStep(3)">
+            <div class="step-num">3</div>
+            <div>
+              <div class="step-label">Review &amp; Generate</div>
+              <div class="step-sub">5 reports queued</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════ STEP 1 ══════════════════ -->
+        <div class="step-panel" id="step-1">
+          <div class="tabs-bar">
+            <div class="tab active" onclick="switchTab(this, 'search')">
+              Well Search
+            </div>
+            <div class="tab" onclick="switchTab(this, 'upload')">
+              Upload / Paste List
+            </div>
+            <div class="tab" onclick="switchTab(this, 'saved')">
+              Saved Selections &amp; Cohorts
+            </div>
+          </div>
+
+          <!-- ── Tab: Well Search ── -->
+          <div class="tab-panel active" id="tab-search">
+            <div class="card" style="margin-bottom: 16px">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <span class="card-header-icon">⌕</span>
+                  <span class="card-title">Find Wells</span>
+                  <span class="card-subtitle"
+                    >Filters apply to the results grid below</span
+                  >
+                </div>
+                <div class="header-actions">
+                  <button class="btn btn-outline btn-sm">Clear filters</button>
+                  <button class="btn btn-outline btn-sm">◈ Draw on map</button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="field">
+                    <span class="field-label-sm">Point ID / Name</span>
+                    <input
+                      class="input input-mono"
+                      value="WL-1"
+                      placeholder="WL-…"
+                    />
+                  </div>
+                  <div class="field">
+                    <span class="field-label-sm">Owner</span>
+                    <input class="input" placeholder="Any owner" />
+                  </div>
+                  <div class="field">
+                    <span class="field-label-sm">County</span>
+                    <select class="select">
+                      <option>Any county</option>
+                      <option selected>Socorro</option>
+                      <option>Sandoval</option>
+                      <option>Bernalillo</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <span class="field-label-sm">Project</span>
+                    <select class="select">
+                      <option selected>Any project</option>
+                      <option>Socorro Basin Domestic Well Study</option>
+                      <option>Members Basin Study</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <span class="field-label-sm">Has chemistry since</span>
+                    <select class="select">
+                      <option selected>Jan 01, 2026</option>
+                      <option>Jan 01, 2025</option>
+                      <option>Any time</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="toolbar" style="margin-bottom: 0">
+                  <span class="toolbar-label">Quick filters</span>
+                  <span class="toggle-chip on">Has ≥1 sample in period</span>
+                  <span class="toggle-chip">Has MCL exceedance</span>
+                  <span class="toggle-chip">Owner contact on file</span>
+                  <span class="toggle-chip">Never reported</span>
+                  <span class="toggle-chip">In current map extent</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <span class="card-header-icon">▤</span>
+                  <span class="card-title">Results</span>
+                  <span class="card-subtitle">38 wells match</span>
+                </div>
+                <div class="header-actions">
+                  <button class="btn btn-primary-outline btn-sm">
+                    + Add all 38 matches
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="datagrid">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="width: 38px">
+                          <span class="row-check" onclick="toggleAll(this)"
+                            >✓</span
+                          >
+                        </th>
+                        <th>Point ID <span class="sort-caret">▲</span></th>
+                        <th>Name</th>
+                        <th>Owner of Record</th>
+                        <th>County</th>
+                        <th>Samples in Period</th>
+                        <th>Last Sample</th>
+                        <th>Exceedances</th>
+                        <th>Last Report Sent</th>
+                      </tr>
+                    </thead>
+                    <tbody id="results-body">
+                      <tr class="selected">
+                        <td>
+                          <span class="row-check on" onclick="toggleRow(this)"
+                            >✓</span
+                          >
+                        </td>
+                        <td class="mono"><strong>WL-1187</strong></td>
+                        <td>Vigil Ranch Well</td>
+                        <td>Rosalía Vigil</td>
+                        <td>Socorro</td>
+                        <td>2</td>
+                        <td>May 15, 2026</td>
+                        <td>
+                          <span class="chip chip-mcl">1 MCL</span>
+                          <span class="chip chip-smcl">3 SMCL</span>
+                        </td>
+                        <td class="muted">Mar 2025</td>
+                      </tr>
+                      <tr class="selected">
+                        <td>
+                          <span class="row-check on" onclick="toggleRow(this)"
+                            >✓</span
+                          >
+                        </td>
+                        <td class="mono"><strong>WL-1204</strong></td>
+                        <td>Cañon Domestic</td>
+                        <td>D. Trujillo</td>
+                        <td>Socorro</td>
+                        <td>1</td>
+                        <td>Apr 02, 2026</td>
+                        <td><span class="chip chip-ok">None</span></td>
+                        <td class="muted">Mar 2025</td>
+                      </tr>
+                      <tr class="selected">
+                        <td>
+                          <span class="row-check on" onclick="toggleRow(this)"
+                            >✓</span
+                          >
+                        </td>
+                        <td class="mono"><strong>WL-1342</strong></td>
+                        <td>Sierra Vista #2</td>
+                        <td>M. Nakai</td>
+                        <td>Socorro</td>
+                        <td>3</td>
+                        <td>Jun 08, 2026</td>
+                        <td><span class="chip chip-smcl">2 SMCL</span></td>
+                        <td class="muted">Mar 2025</td>
+                      </tr>
+                      <tr class="selected">
+                        <td>
+                          <span class="row-check on" onclick="toggleRow(this)"
+                            >✓</span
+                          >
+                        </td>
+                        <td class="mono"><strong>WL-1355</strong></td>
+                        <td>Lemitar Orchard</td>
+                        <td>Lemitar Farms LLC</td>
+                        <td>Socorro</td>
+                        <td>1</td>
+                        <td>Feb 20, 2026</td>
+                        <td><span class="chip chip-ok">None</span></td>
+                        <td class="muted">—</td>
+                      </tr>
+                      <tr class="selected">
+                        <td>
+                          <span class="row-check on" onclick="toggleRow(this)"
+                            >✓</span
+                          >
+                        </td>
+                        <td class="mono"><strong>WL-1361</strong></td>
+                        <td>Escondida Stock Well</td>
+                        <td>
+                          <span class="muted">No contact on file</span>
+                          <span class="cell-note"
+                            >Report will be flagged undeliverable</span
+                          >
+                        </td>
+                        <td>Socorro</td>
+                        <td>0</td>
+                        <td class="muted">Nov 12, 2023</td>
+                        <td class="muted">—</td>
+                        <td class="muted">—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="grid-footer">
+                    <span>Rows per page: 5 ▾</span>
+                    <span>1–5 of 38</span>
+                    <span>‹ ›</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Tab: Upload ── -->
+          <div class="tab-panel" id="tab-upload">
+            <div class="grid g-main-aside">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <span class="card-header-icon">↥</span>
+                    <span class="card-title">Upload or Paste a List</span>
+                  </div>
+                  <div class="header-actions">
+                    <button class="btn btn-outline btn-sm">
+                      ↓ Download template CSV
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="form-row">
+                    <div class="field">
+                      <span class="field-label-sm">List contains</span>
+                      <select class="select">
+                        <option selected>Point IDs (WL-####)</option>
+                        <option>Owner email addresses</option>
+                        <option>OSE permit numbers</option>
+                        <option>Mixed — auto-detect per row</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">On duplicate</span>
+                      <select class="select">
+                        <option selected>Collapse to one report</option>
+                        <option>Keep both (flag for review)</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">
+                        Email matches ⇢ wells
+                      </span>
+                      <select class="select">
+                        <option selected>All wells owned by that email</option>
+                        <option>Primary well only</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="dropzone">
+                    <div class="dropzone-title">
+                      ↥ Drop CSV, XLSX, or TXT here
+                    </div>
+                    <div class="dropzone-sub">
+                      or click to browse · one identifier per row · max 5,000
+                      rows
+                    </div>
+                  </div>
+
+                  <div class="field" style="margin-bottom: 12px">
+                    <span class="field-label-sm">…or paste directly</span>
+                    <textarea class="input input-mono" rows="4">
+WL-1187
+WL-1204
+WL-1342
+rvigil@example.org
+WL-9999
+WL-1187</textarea
+                    >
+                  </div>
+
+                  <div class="alert alert-ok">
+                    <span>✓</span>
+                    <div>
+                      <strong>42 rows parsed — 39 wells resolved.</strong>
+                      2 identifiers matched no well, 1 duplicate collapsed.
+                      Resolved wells were added to the selection tray.
+                    </div>
+                  </div>
+
+                  <div class="datagrid dense">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Row</th>
+                          <th>Input</th>
+                          <th>Resolved To</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="muted">4</td>
+                          <td class="mono">rvigil@example.org</td>
+                          <td class="mono">WL-1187, WL-1188</td>
+                          <td>
+                            <span class="chip chip-info">2 wells owned</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-outline btn-sm">
+                              Choose…
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="muted">5</td>
+                          <td class="mono">WL-9999</td>
+                          <td class="muted">—</td>
+                          <td>
+                            <span class="chip chip-mcl">No match</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-outline btn-sm">
+                              Search…
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="muted">6</td>
+                          <td class="mono">WL-1187</td>
+                          <td class="mono">WL-1187</td>
+                          <td>
+                            <span class="chip chip-neutral">Duplicate</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-outline btn-sm">Keep</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="muted">18</td>
+                          <td class="mono">WL-1361</td>
+                          <td class="mono">WL-1361</td>
+                          <td>
+                            <span class="chip chip-smcl">No contact</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-outline btn-sm">
+                              Add contact
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="grid-footer">
+                      <span>Showing 4 rows needing attention of 42</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <span class="card-header-icon">ⓘ</span>
+                    <span class="card-title">Accepted Formats</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="alert alert-info" style="display: block">
+                    <strong>Point ID</strong> — <code>WL-1187</code>, case
+                    insensitive, leading zeros optional.
+                  </div>
+                  <div class="alert alert-info" style="display: block">
+                    <strong>Owner email</strong> — resolves to every well where
+                    that address is the contact of record. Useful for
+                    fulfilling a data request from an owner with multiple
+                    wells.
+                  </div>
+                  <div class="alert alert-info" style="display: block">
+                    <strong>OSE permit</strong> — <code>RG-12345-POD2</code>.
+                    May resolve to more than one point.
+                  </div>
+                  <div class="alert alert-warn" style="display: block">
+                    Uploaded lists are retained for 30 days with the run record
+                    so a report batch can be reproduced or audited.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Tab: Saved ── -->
+          <div class="tab-panel" id="tab-saved">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <span class="card-header-icon">★</span>
+                  <span class="card-title">Saved Selections &amp; Cohorts</span>
+                </div>
+                <div class="header-actions">
+                  <button class="btn btn-outline btn-sm">
+                    + Save current selection
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="datagrid">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Wells</th>
+                        <th>Type</th>
+                        <th>Owner</th>
+                        <th>Last used</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>Annual — Socorro Basin domestic</strong>
+                          <span class="cell-note"
+                            >Dynamic: county = Socorro, use = domestic, ≥1
+                            sample in period</span
+                          >
+                        </td>
+                        <td>212</td>
+                        <td><span class="chip chip-info">Dynamic</span></td>
+                        <td>L. Lopez</td>
+                        <td class="muted">Mar 2025</td>
+                        <td>
+                          <button class="btn btn-primary-outline btn-sm">Load</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Annual — Members Basin Study</strong>
+                          <span class="cell-note"
+                            >Static list captured Feb 2025</span
+                          >
+                        </td>
+                        <td>88</td>
+                        <td><span class="chip chip-neutral">Static</span></td>
+                        <td>S. Spaur</td>
+                        <td class="muted">Mar 2025</td>
+                        <td>
+                          <button class="btn btn-primary-outline btn-sm">Load</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Data request — Vigil (REQ-2026-0142)</strong>
+                          <span class="cell-note"
+                            >From owner request intake</span
+                          >
+                        </td>
+                        <td>2</td>
+                        <td><span class="chip chip-info">Request</span></td>
+                        <td>L. Lopez</td>
+                        <td class="muted">Jun 2026</td>
+                        <td>
+                          <button class="btn btn-primary-outline btn-sm">Load</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════ STEP 2 ══════════════════ -->
+        <div class="step-panel" id="step-2">
+          <div class="grid g-main-aside">
+            <div>
+              <!-- Report type -->
+              <div class="card" style="margin-bottom: 16px">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <span class="card-header-icon">◱</span>
+                    <span class="card-title">Report Type &amp; Period</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="opt-cards">
+                    <div class="opt-card on" onclick="pickType(this)">
+                      <span class="opt-radio"></span>
+                      <div>
+                        <div class="opt-title">Annual Water Quality Report</div>
+                        <div class="opt-desc">
+                          Yearly report sent to the owner of record. Covers one
+                          calendar year. Can be scheduled to run automatically.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="opt-card" onclick="pickType(this)">
+                      <span class="opt-radio"></span>
+                      <div>
+                        <div class="opt-title">On-Demand Data Request</div>
+                        <div class="opt-desc">
+                          Generated in response to a request from the owner.
+                          Attaches a request ID and covers a custom period —
+                          typically the full record.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row" style="margin-top: 14px">
+                    <div class="field">
+                      <span class="field-label-sm">Reporting period</span>
+                      <select class="select">
+                        <option selected>Calendar year 2026</option>
+                        <option>Calendar year 2025</option>
+                        <option>Water year 2026 (Oct–Sep)</option>
+                        <option>Full record of well</option>
+                        <option>Custom range…</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">Prior-year comparison</span>
+                      <select class="select">
+                        <option selected>Include previous 5 years</option>
+                        <option>Include previous 3 years</option>
+                        <option>Current period only</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">Request ID</span>
+                      <input
+                        class="input input-mono"
+                        placeholder="REQ-2026-…"
+                        disabled
+                        style="background: var(--wrapper)"
+                      />
+                      <span class="helper">Data requests only</span>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">Report language</span>
+                      <select class="select">
+                        <option selected>English</option>
+                        <option>Español</option>
+                        <option>Both (two files per well)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sections -->
+              <div class="card" style="margin-bottom: 16px">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <span class="card-header-icon">☰</span>
+                    <span class="card-title">Sections to Include</span>
+                    <span class="card-subtitle">9 of 10 enabled</span>
+                  </div>
+                  <div class="header-actions">
+                    <button class="btn btn-outline btn-sm">Select all</button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="grid g2" style="margin-bottom: 0">
+                    <div class="check-list">
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Well metadata &amp; construction
+                          <span class="check-sub"
+                            >Location, depth, casing, screen, driller, permit,
+                            aquifer</span
+                          ></span
+                        >
+                      </div>
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Water level measurements
+                          <span class="check-sub"
+                            >Table plus hydrograph for the period</span
+                          ></span
+                        >
+                      </div>
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Field parameters
+                          <span class="check-sub"
+                            >pH, SC, temp, DO, ORP, turbidity</span
+                          ></span
+                        >
+                      </div>
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >General chemistry results
+                          <span class="check-sub"
+                            >Major ions, metals, nutrients, TDS</span
+                          ></span
+                        >
+                      </div>
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Drinking water standards &amp; exceedances
+                          <span class="check-sub"
+                            >MCL / SMCL comparison, plain-language
+                            explanation</span
+                          ></span
+                        >
+                      </div>
+                    </div>
+                    <div class="check-list">
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Comparison to nearby wells (anonymized)
+                          <span class="check-sub"
+                            >Aggregate only — no IDs, owners, or
+                            locations</span
+                          ></span
+                        >
+                      </div>
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Sampling &amp; QA notes
+                          <span class="check-sub"
+                            >Event notes, lab, ion balance, detection
+                            limits</span
+                          ></span
+                        >
+                      </div>
+                      <div class="check-item" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Environmental tracers
+                          <span class="check-sub"
+                            >Isotopes, tritium, C-14 — usually omitted from
+                            owner reports</span
+                          ></span
+                        >
+                      </div>
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Glossary &amp; how to read this report
+                          <span class="check-sub"
+                            >Definitions, limitations, who to contact</span
+                          ></span
+                        >
+                      </div>
+                      <div class="check-item on" onclick="toggleCheck(this)">
+                        <span class="box">✓</span>
+                        <span class="check-text"
+                          >Digital version link + QR code
+                          <span class="check-sub"
+                            >Per-well short link printed on every page
+                            footer</span
+                          ></span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Nearby comparison settings -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <span class="card-header-icon">◈</span>
+                    <span class="card-title"
+                      >Nearby Well Comparison — Anonymization</span
+                    >
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="form-row">
+                    <div class="field">
+                      <span class="field-label-sm">Search radius</span>
+                      <select class="select">
+                        <option>1 mile</option>
+                        <option selected>3 miles</option>
+                        <option>5 miles</option>
+                        <option>Same groundwater basin</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">Also require</span>
+                      <select class="select">
+                        <option selected>Same aquifer / formation</option>
+                        <option>Any aquifer</option>
+                        <option>Similar completion depth ±100 ft</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">Minimum group size (k)</span>
+                      <select class="select">
+                        <option>3</option>
+                        <option selected>5</option>
+                        <option>10</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">Statistics shown</span>
+                      <select class="select">
+                        <option selected>Median + 10th–90th percentile</option>
+                        <option>Median + full range</option>
+                        <option>Median only</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <span class="field-label-sm">If group &lt; k</span>
+                      <select class="select">
+                        <option selected>Suppress section, print notice</option>
+                        <option>Widen radius until k is met</option>
+                        <option>Fall back to basin-wide statistics</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="alert alert-warn" style="margin-bottom: 0">
+                    <span>⚠</span>
+                    <div>
+                      Nearby-well values are always aggregated. Point IDs,
+                      owner names, addresses, and coordinates of comparison
+                      wells are never rendered into the report, the digital
+                      version, or the export payload.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Aside: output & delivery -->
+            <div>
+              <div class="card" style="margin-bottom: 16px">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <span class="card-header-icon">↧</span>
+                    <span class="card-title">Output</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="field" style="margin-bottom: 10px">
+                    <span class="field-label-sm">File structure</span>
+                    <select class="select" style="width: 100%">
+                      <option selected>One PDF per well (ZIP)</option>
+                      <option>Single combined PDF</option>
+                      <option>One PDF per owner (wells grouped)</option>
+                    </select>
+                  </div>
+                  <div class="field" style="margin-bottom: 10px">
+                    <span class="field-label-sm">Also attach data</span>
+                    <select class="select" style="width: 100%">
+                      <option selected>CSV of all results per well</option>
+                      <option>CSV + lab report PDFs</option>
+                      <option>PDF only</option>
+                    </select>
+                  </div>
+                  <div class="field" style="margin-bottom: 10px">
+                    <span class="field-label-sm">Page size</span>
+                    <select class="select" style="width: 100%">
+                      <option selected>US Letter</option>
+                      <option>A4</option>
+                    </select>
+                  </div>
+                  <div class="check-list">
+                    <div class="check-item on" onclick="toggleCheck(this)">
+                      <span class="box">✓</span>
+                      <span class="check-text">Include NMBGMR letterhead</span>
+                    </div>
+                    <div class="check-item on" onclick="toggleCheck(this)">
+                      <span class="box">✓</span>
+                      <span class="check-text"
+                        >Watermark as DRAFT until approved</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card" style="margin-bottom: 16px">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <span class="card-header-icon">⇢</span>
+                    <span class="card-title">Delivery</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="check-list" style="margin-bottom: 10px">
+                    <div class="check-item on" onclick="toggleCheck(this)">
+                      <span class="box">✓</span>
+                      <span class="check-text"
+                        >Download ZIP when finished</span
+                      >
+                    </div>
+                    <div class="check-item on" onclick="toggleCheck(this)">
+                      <span class="box">✓</span>
+                      <span class="check-text"
+                        >Email to owner of record
+                        <span class="check-sub"
+                          >4 of 5 wells have an email on file</span
+                        ></span
+                      >
+                    </div>
+                    <div class="check-item" onclick="toggleCheck(this)">
+                      <span class="box">✓</span>
+                      <span class="check-text"
+                        >Queue print + mail for owners without email</span
+                      >
+                    </div>
+                    <div class="check-item on" onclick="toggleCheck(this)">
+                      <span class="box">✓</span>
+                      <span class="check-text"
+                        >Attach to each well record in Ocotillo</span
+                      >
+                    </div>
+                  </div>
+                  <div class="field">
+                    <span class="field-label-sm">Reply-to</span>
+                    <input class="input" style="width: 100%" value="waterdata@nmbg.nmt.edu" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <span class="card-header-icon">▦</span>
+                    <span class="card-title">Digital Version &amp; QR</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="field" style="margin-bottom: 10px">
+                    <span class="field-label-sm">Link access</span>
+                    <select class="select" style="width: 100%">
+                      <option selected>
+                        Unlisted link with token — no sign-in
+                      </option>
+                      <option>Requires owner sign-in</option>
+                      <option>Public</option>
+                    </select>
+                  </div>
+                  <div class="field" style="margin-bottom: 10px">
+                    <span class="field-label-sm">Link expires</span>
+                    <select class="select" style="width: 100%">
+                      <option>90 days</option>
+                      <option>1 year</option>
+                      <option selected>Never — superseded by next report</option>
+                    </select>
+                  </div>
+                  <div class="alert alert-info" style="margin-bottom: 0">
+                    <span>ⓘ</span>
+                    <div>
+                      The digital version is the same report plus interactive
+                      trends and the full sample history. QR resolves to
+                      <span class="mono">ocotillo.nmbg.nmt.edu/r/&lt;id&gt;</span>.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════ STEP 3 ══════════════════ -->
+        <div class="step-panel active" id="step-3">
+          <div class="stat-strip" style="margin-bottom: 16px">
+            <div class="stat-cell">
+              <div class="stat-label">Reports to generate</div>
+              <div class="stat-value">5</div>
+              <div class="stat-note">1 per well · Annual · 2026</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-label">Wells with exceedances</div>
+              <div class="stat-value" style="color: var(--destructive)">2</div>
+              <div class="stat-note">1 MCL · 5 SMCL total</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-label">No data in period</div>
+              <div class="stat-value" style="color: var(--warning)">1</div>
+              <div class="stat-note">WL-1361 — renders "no data" notice</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-label">Undeliverable</div>
+              <div class="stat-value" style="color: var(--warning)">1</div>
+              <div class="stat-note">No contact on file</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-label">Est. build time</div>
+              <div class="stat-value">~40s</div>
+              <div class="stat-note">≈8s per report</div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom: 16px">
+            <div class="card-header">
+              <div class="card-header-left">
+                <span class="card-header-icon">▤</span>
+                <span class="card-title">Batch Summary</span>
+                <span class="card-subtitle"
+                  >Review warnings before generating</span
+                >
+              </div>
+              <div class="header-actions">
+                <button class="btn btn-outline btn-sm">
+                  Exclude rows with warnings
+                </button>
+                <button class="btn btn-default btn-sm">
+                  ▶ Generate 5 Reports
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="datagrid">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Point ID</th>
+                      <th>Owner / Delivery</th>
+                      <th>Samples</th>
+                      <th>Water levels</th>
+                      <th>Exceedances</th>
+                      <th>Nearby group</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="mono"><strong>WL-1187</strong></td>
+                      <td>
+                        Rosalía Vigil
+                        <span class="cell-note">rvigil@example.org</span>
+                      </td>
+                      <td>2</td>
+                      <td>12</td>
+                      <td>
+                        <span class="chip chip-mcl">Arsenic</span>
+                        <span class="chip chip-smcl">+3 SMCL</span>
+                      </td>
+                      <td>n = 14</td>
+                      <td><span class="chip chip-ok">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td class="mono"><strong>WL-1204</strong></td>
+                      <td>
+                        D. Trujillo
+                        <span class="cell-note">dtrujillo@example.org</span>
+                      </td>
+                      <td>1</td>
+                      <td>4</td>
+                      <td><span class="chip chip-ok">None</span></td>
+                      <td>n = 9</td>
+                      <td><span class="chip chip-ok">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td class="mono"><strong>WL-1342</strong></td>
+                      <td>
+                        M. Nakai
+                        <span class="cell-note">mnakai@example.org</span>
+                      </td>
+                      <td>3</td>
+                      <td>12</td>
+                      <td><span class="chip chip-smcl">2 SMCL</span></td>
+                      <td>
+                        n = 3
+                        <span class="cell-note"
+                          >Below k = 5 — comparison suppressed</span
+                        >
+                      </td>
+                      <td><span class="chip chip-smcl">1 warning</span></td>
+                    </tr>
+                    <tr>
+                      <td class="mono"><strong>WL-1355</strong></td>
+                      <td>
+                        Lemitar Farms LLC
+                        <span class="cell-note">office@lemitarfarms.example</span>
+                      </td>
+                      <td>1</td>
+                      <td>0</td>
+                      <td><span class="chip chip-ok">None</span></td>
+                      <td>n = 11</td>
+                      <td><span class="chip chip-ok">Ready</span></td>
+                    </tr>
+                    <tr>
+                      <td class="mono"><strong>WL-1361</strong></td>
+                      <td>
+                        <span class="muted">No contact of record</span>
+                        <span class="cell-note">Delivery blocked</span>
+                      </td>
+                      <td>0</td>
+                      <td>2</td>
+                      <td class="muted">—</td>
+                      <td>n = 14</td>
+                      <td><span class="chip chip-mcl">2 warnings</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="grid-footer"><span>5 of 5 wells</span></div>
+              </div>
+
+              <div class="legend">
+                <div class="legend-item">
+                  <span class="chip chip-ok">Ready</span> Will generate and
+                  deliver
+                </div>
+                <div class="legend-item">
+                  <span class="chip chip-smcl">Warning</span> Will generate
+                  with a section suppressed or a notice printed
+                </div>
+                <div class="legend-item">
+                  <span class="chip chip-mcl">Blocked</span> Will generate but
+                  cannot be delivered
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Report preview ── -->
+          <div class="section-rule">
+            <span class="section-rule-title">Report Preview</span>
+          </div>
+
+          <div class="preview-nav">
+            <button class="btn btn-outline btn-sm">‹ Prev</button>
+            <span class="toolbar-label"
+              >Previewing <strong>WL-1187 — Vigil Ranch Well</strong> · report 1
+              of 5</span
+            >
+            <button class="btn btn-outline btn-sm">Next ›</button>
+            <span class="toolbar-spacer"></span>
+            <span class="toolbar-label">Page</span>
+            <select class="toolbar-select">
+              <option selected>1 — Summary &amp; chemistry</option>
+              <option>2 — Comparison &amp; notes</option>
+              <option>3 — Glossary</option>
+            </select>
+            <button class="btn btn-outline btn-sm">⤢ Full screen</button>
+            <button class="btn btn-primary-outline btn-sm">↓ Download this one</button>
+          </div>
+
+          <div class="paper-wrap" style="border-radius: 0 0 8px 8px">
+            <!-- ══ THE REPORT ══ -->
+            <div class="report-page">
+              <!-- Head -->
+              <div class="rp-head">
+                <div>
+                  <div class="rp-org">
+                    New Mexico Bureau of Geology &amp; Mineral Resources ·
+                    Aquifer Mapping Program
+                  </div>
+                  <div class="rp-title">Annual Water Quality Report</div>
+                  <div class="rp-sub">
+                    Reporting year 2026 &nbsp;·&nbsp; Well
+                    <strong>WL-1187</strong> — Vigil Ranch Well
+                  </div>
+                  <div style="margin-top: 10px; font-size: 11.5px">
+                    <div>
+                      Prepared for <strong>Rosalía Vigil</strong>, owner of
+                      record
+                    </div>
+                    <div class="muted">
+                      HC 32 Box 118, Lemitar, NM 87823
+                    </div>
+                    <div class="muted" style="margin-top: 5px">
+                      Report ID <span class="mono">RPT-2026-001187</span>
+                      &nbsp;·&nbsp; Issued Aug 13, 2026 &nbsp;·&nbsp; Supersedes
+                      RPT-2025-001187
+                    </div>
+                  </div>
+                </div>
+                <div class="rp-qr">
+                  <svg
+                    id="qr-main"
+                    viewBox="0 0 29 29"
+                    shape-rendering="crispEdges"
+                    role="img"
+                    aria-label="QR code linking to the digital version of this report"
+                  ></svg>
+                  <div class="rp-qr-cap">
+                    Scan for the interactive version<br />
+                    <span class="mono" style="font-size: 9px"
+                      >ocotillo.nmbg.nmt.edu/r/1187-26</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="rp-p">
+                This report summarizes everything on file for your well for the
+                2026 calendar year: how the well is built, how much water was in
+                it, what the water was tested for, and how those results compare
+                both to drinking water standards and to other wells in your
+                area. It is provided as a courtesy and is not a certification of
+                water safety.
+              </div>
+
+              <!-- At a glance -->
+              <div class="rp-section">
+                <div class="rp-h">At a Glance</div>
+                <div class="stat-strip">
+                  <div class="stat-cell">
+                    <div class="stat-label">Samples this year</div>
+                    <div class="stat-value">2</div>
+                    <div class="stat-note">Feb 04 &amp; May 15, 2026</div>
+                  </div>
+                  <div class="stat-cell">
+                    <div class="stat-label">Parameters tested</div>
+                    <div class="stat-value">31</div>
+                    <div class="stat-note">22 with a health standard</div>
+                  </div>
+                  <div class="stat-cell">
+                    <div class="stat-label">Above health limit</div>
+                    <div class="stat-value" style="color: var(--destructive)">1</div>
+                    <div class="stat-note">Arsenic</div>
+                  </div>
+                  <div class="stat-cell">
+                    <div class="stat-label">Above taste/odor limit</div>
+                    <div class="stat-value" style="color: var(--warning)">
+                      3
+                    </div>
+                    <div class="stat-note">Iron, fluoride, TDS</div>
+                  </div>
+                  <div class="stat-cell">
+                    <div class="stat-label">Water level change</div>
+                    <div class="stat-value">−1.8 ft</div>
+                    <div class="stat-note">vs. Aug 2025</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Exceedance callout -->
+              <div class="rp-section">
+                <div class="rp-callout">
+                  <div class="rp-callout-title">
+                    ⚠ One result was above a federal health limit
+                  </div>
+                  <div>
+                    <strong>Arsenic — 0.012 mg/L</strong> (limit 0.010 mg/L,
+                    measured May 15, 2026). Arsenic occurs naturally in New
+                    Mexico groundwater. Long-term drinking of water above the
+                    limit is associated with health risk; short-term exposure at
+                    this level is not an emergency.
+                    <ul>
+                      <li>
+                        Consider a confirmation sample before making treatment
+                        decisions.
+                      </li>
+                      <li>
+                        Reverse osmosis and activated alumina are the common
+                        point-of-use treatments for arsenic.
+                      </li>
+                      <li>
+                        Contact NM Environment Department Drinking Water Bureau
+                        for private-well guidance: (505) 476-8620.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Well metadata -->
+              <div class="rp-section">
+                <div class="rp-h">
+                  Well Information &amp; Construction
+                  <span class="rp-h-note"
+                    >Source: OSE well record + field verification Mar 2024</span
+                  >
+                </div>
+                <div class="rp-kv">
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Point ID</div>
+                    <div class="rp-kv-value mono">WL-1187</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Site type</div>
+                    <div class="rp-kv-value">Domestic well</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">County</div>
+                    <div class="rp-kv-value">Socorro</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">OSE permit</div>
+                    <div class="rp-kv-value mono">RG-71204-POD1</div>
+                  </div>
+
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Latitude</div>
+                    <div class="rp-kv-value mono">34.1876° N</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Longitude</div>
+                    <div class="rp-kv-value mono">106.9412° W</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">PLSS</div>
+                    <div class="rp-kv-value">T2S R1W Sec 14 NE¼</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Land surface elev.</div>
+                    <div class="rp-kv-value">4,712 ft amsl</div>
+                  </div>
+
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Total depth</div>
+                    <div class="rp-kv-value">385 ft</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Casing diameter</div>
+                    <div class="rp-kv-value">6 in · PVC</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Screened interval</div>
+                    <div class="rp-kv-value">280–380 ft</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Completed</div>
+                    <div class="rp-kv-value">Jun 1998 · Baca Drilling</div>
+                  </div>
+
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Aquifer</div>
+                    <div class="rp-kv-value">Santa Fe Group — upper</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Primary use</div>
+                    <div class="rp-kv-value">Domestic / household</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Monitoring since</div>
+                    <div class="rp-kv-value">Oct 2019</div>
+                  </div>
+                  <div class="rp-kv-cell">
+                    <div class="rp-kv-label">Project</div>
+                    <div class="rp-kv-value">Socorro Basin Domestic Study</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Measurements -->
+              <div class="rp-section">
+                <div class="rp-h">
+                  Water Level Measurements
+                  <span class="rp-h-note"
+                    >12 readings in 2026 · continuous transducer + manual
+                    checks</span
+                  >
+                </div>
+                <div class="rp-cols2">
+                  <div>
+                    <div class="rp-chart">
+                      [ Hydrograph — depth to water, 2019–2026, seasonal
+                      envelope shaded ]
+                    </div>
+                  </div>
+                  <div>
+                    <table class="rp-table">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Depth to water</th>
+                          <th>Water elev.</th>
+                          <th>Method</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Feb 04, 2026</td>
+                          <td class="rp-num">208.4 ft</td>
+                          <td class="rp-num">4,503.6 ft</td>
+                          <td>Steel tape</td>
+                        </tr>
+                        <tr>
+                          <td>May 15, 2026</td>
+                          <td class="rp-num">211.0 ft</td>
+                          <td class="rp-num">4,501.0 ft</td>
+                          <td>Steel tape</td>
+                        </tr>
+                        <tr>
+                          <td>Aug 02, 2026</td>
+                          <td class="rp-num">212.1 ft</td>
+                          <td class="rp-num">4,499.9 ft</td>
+                          <td>Transducer</td>
+                        </tr>
+                        <tr>
+                          <td class="muted">Aug 2025 (prior)</td>
+                          <td class="rp-num muted">210.3 ft</td>
+                          <td class="rp-num muted">4,501.7 ft</td>
+                          <td class="muted">Transducer</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="rp-priv">
+                      Depths are measured from the top of casing. Full reading
+                      list is in the digital version and the attached CSV.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Field parameters -->
+              <div class="rp-section">
+                <div class="rp-h">
+                  Field Parameters
+                  <span class="rp-h-note"
+                    >Measured at the wellhead during collection</span
+                  >
+                </div>
+                <table class="rp-table">
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Feb 04, 2026</th>
+                      <th>May 15, 2026</th>
+                      <th>Unit</th>
+                      <th>Typical range</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Temperature</td>
+                      <td class="rp-num">17.2</td>
+                      <td class="rp-num">17.9</td>
+                      <td>°C</td>
+                      <td class="muted">—</td>
+                    </tr>
+                    <tr>
+                      <td>pH</td>
+                      <td class="rp-num">7.61</td>
+                      <td class="rp-num">7.55</td>
+                      <td>S.U.</td>
+                      <td class="muted">6.5–8.5 (SMCL)</td>
+                    </tr>
+                    <tr>
+                      <td>Specific conductance</td>
+                      <td class="rp-num">918</td>
+                      <td class="rp-num">944</td>
+                      <td>µS/cm</td>
+                      <td class="muted">—</td>
+                    </tr>
+                    <tr>
+                      <td>Dissolved oxygen</td>
+                      <td class="rp-num">4.1</td>
+                      <td class="rp-num">3.8</td>
+                      <td>mg/L</td>
+                      <td class="muted">—</td>
+                    </tr>
+                    <tr>
+                      <td>Turbidity</td>
+                      <td class="rp-num">1.2</td>
+                      <td class="rp-num">0.9</td>
+                      <td>NTU</td>
+                      <td class="muted">—</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Chemistry vs standards -->
+              <div class="rp-section">
+                <div class="rp-h">
+                  Water Chemistry &amp; Drinking Water Standards
+                  <span class="rp-h-note"
+                    >Most recent sample: May 15, 2026 · Analyzed by NMBGMR
+                    Analytical Chemistry Lab</span
+                  >
+                </div>
+                <table class="rp-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 21%">Parameter</th>
+                      <th>Your result</th>
+                      <th>Unit</th>
+                      <th>Standard</th>
+                      <th>Type</th>
+                      <th>Status</th>
+                      <th>Nearby median<br />(n = 14)</th>
+                      <th style="width: 20%">
+                        Where your well sits among nearby wells
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="row-exceed">
+                      <td><strong>Arsenic</strong></td>
+                      <td class="rp-num"><strong>0.012</strong></td>
+                      <td>mg/L</td>
+                      <td class="rp-num">0.010</td>
+                      <td>MCL</td>
+                      <td><span class="chip chip-mcl">Above limit</span></td>
+                      <td class="rp-num">0.006</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 10%; width: 62%"
+                            ></div>
+                            <div class="meter-median" style="left: 34%"></div>
+                            <div class="meter-limit" style="left: 56%"></div>
+                            <div
+                              class="meter-mark over"
+                              style="left: 66%"
+                            ></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>71st pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="row-smcl">
+                      <td><strong>Fluoride</strong></td>
+                      <td class="rp-num"><strong>2.4</strong></td>
+                      <td>mg/L</td>
+                      <td class="rp-num">2.0 / 4.0</td>
+                      <td>SMCL / MCL</td>
+                      <td>
+                        <span class="chip chip-smcl">Above SMCL</span>
+                      </td>
+                      <td class="rp-num">1.7</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 14%; width: 55%"
+                            ></div>
+                            <div class="meter-median" style="left: 38%"></div>
+                            <div class="meter-limit" style="left: 82%"></div>
+                            <div class="meter-mark" style="left: 60%"></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>68th pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="row-smcl">
+                      <td><strong>Iron</strong></td>
+                      <td class="rp-num"><strong>0.42</strong></td>
+                      <td>mg/L</td>
+                      <td class="rp-num">0.30</td>
+                      <td>SMCL</td>
+                      <td>
+                        <span class="chip chip-smcl">Above SMCL</span>
+                      </td>
+                      <td class="rp-num">0.08</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 8%; width: 44%"
+                            ></div>
+                            <div class="meter-median" style="left: 22%"></div>
+                            <div class="meter-limit" style="left: 58%"></div>
+                            <div class="meter-mark" style="left: 79%"></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>92nd pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="row-smcl">
+                      <td><strong>Total dissolved solids</strong></td>
+                      <td class="rp-num"><strong>612</strong></td>
+                      <td>mg/L</td>
+                      <td class="rp-num">500</td>
+                      <td>SMCL</td>
+                      <td>
+                        <span class="chip chip-smcl">Above SMCL</span>
+                      </td>
+                      <td class="rp-num">548</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 12%; width: 60%"
+                            ></div>
+                            <div class="meter-median" style="left: 40%"></div>
+                            <div class="meter-limit" style="left: 36%"></div>
+                            <div class="meter-mark" style="left: 55%"></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>63rd pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Nitrate as N</td>
+                      <td class="rp-num">4.2</td>
+                      <td>mg/L</td>
+                      <td class="rp-num">10.0</td>
+                      <td>MCL</td>
+                      <td><span class="chip chip-ok">Below limit</span></td>
+                      <td class="rp-num">1.1</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 6%; width: 40%"
+                            ></div>
+                            <div class="meter-median" style="left: 16%"></div>
+                            <div class="meter-limit" style="left: 88%"></div>
+                            <div class="meter-mark" style="left: 51%"></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>88th pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Uranium</td>
+                      <td class="rp-num">0.018</td>
+                      <td>mg/L</td>
+                      <td class="rp-num">0.030</td>
+                      <td>MCL</td>
+                      <td><span class="chip chip-ok">Below limit</span></td>
+                      <td class="rp-num">0.014</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 10%; width: 58%"
+                            ></div>
+                            <div class="meter-median" style="left: 33%"></div>
+                            <div class="meter-limit" style="left: 76%"></div>
+                            <div class="meter-mark" style="left: 44%"></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>59th pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Sulfate</td>
+                      <td class="rp-num">108</td>
+                      <td>mg/L</td>
+                      <td class="rp-num">250</td>
+                      <td>SMCL</td>
+                      <td><span class="chip chip-ok">Below limit</span></td>
+                      <td class="rp-num">96</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 12%; width: 56%"
+                            ></div>
+                            <div class="meter-median" style="left: 36%"></div>
+                            <div class="meter-limit" style="left: 90%"></div>
+                            <div class="meter-mark" style="left: 42%"></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>55th pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Chloride</td>
+                      <td class="rp-num">62</td>
+                      <td>mg/L</td>
+                      <td class="rp-num">250</td>
+                      <td>SMCL</td>
+                      <td><span class="chip chip-ok">Below limit</span></td>
+                      <td class="rp-num">71</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 14%; width: 54%"
+                            ></div>
+                            <div class="meter-median" style="left: 44%"></div>
+                            <div class="meter-limit" style="left: 92%"></div>
+                            <div class="meter-mark" style="left: 38%"></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>41st pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Lead</td>
+                      <td class="rp-num">
+                        &lt;0.001 <span class="chip chip-nd">ND</span>
+                      </td>
+                      <td>mg/L</td>
+                      <td class="rp-num">0.015</td>
+                      <td>Action level</td>
+                      <td><span class="chip chip-ok">Not detected</span></td>
+                      <td class="rp-num">&lt;0.001</td>
+                      <td class="muted" style="font-size: 10.5px">
+                        Not detected in 13 of 14 nearby wells
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Hardness (as CaCO₃)</td>
+                      <td class="rp-num">
+                        284 <span class="chip chip-calc">Calc.</span>
+                      </td>
+                      <td>mg/L</td>
+                      <td class="muted">no standard</td>
+                      <td class="muted">—</td>
+                      <td>
+                        <span class="chip chip-neutral">Very hard</span>
+                      </td>
+                      <td class="rp-num">246</td>
+                      <td>
+                        <div class="meter">
+                          <div class="meter-track">
+                            <div
+                              class="meter-band"
+                              style="left: 10%; width: 62%"
+                            ></div>
+                            <div class="meter-median" style="left: 35%"></div>
+                            <div class="meter-mark" style="left: 52%"></div>
+                          </div>
+                          <div class="meter-scale">
+                            <span>lower</span><span>64th pct</span
+                            ><span>higher</span>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="legend" style="border-top: none; padding-top: 8px">
+                  <div class="legend-item">
+                    <span
+                      style="
+                        display: inline-block;
+                        width: 3px;
+                        height: 12px;
+                        background: var(--primary);
+                        border-radius: 2px;
+                      "
+                    ></span>
+                    Your well
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      style="
+                        display: inline-block;
+                        width: 22px;
+                        height: 8px;
+                        background: #cbd5e1;
+                        border: 1px solid var(--divider);
+                        border-radius: 4px;
+                      "
+                    ></span>
+                    10th–90th percentile of nearby wells
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      style="
+                        display: inline-block;
+                        width: 2px;
+                        height: 12px;
+                        background: var(--muted-foreground);
+                      "
+                    ></span>
+                    Nearby median
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      style="
+                        display: inline-block;
+                        width: 0;
+                        height: 12px;
+                        border-left: 2px dashed var(--destructive);
+                      "
+                    ></span>
+                    Standard
+                  </div>
+                  <div class="legend-item">
+                    <span class="chip chip-nd">ND</span> Not detected — value
+                    shown is the detection limit
+                  </div>
+                  <div class="legend-item">
+                    <span class="chip chip-calc">Calc.</span> Calculated, not
+                    directly measured
+                  </div>
+                </div>
+                <div class="rp-priv">
+                  Full results for all 31 parameters, including both 2026
+                  samples and prior years, are in the digital version and the
+                  attached data file.
+                </div>
+              </div>
+
+              <!-- Nearby comparison -->
+              <div class="rp-section">
+                <div class="rp-h">
+                  How Your Well Compares to Nearby Wells
+                  <span class="rp-h-note"
+                    >14 wells within 3 miles, same aquifer, sampled 2021–2026</span
+                  >
+                </div>
+                <div class="rp-p">
+                  Your results are shown next to the range seen in other wells
+                  drawing from the same part of the aquifer. This is context,
+                  not a standard — a result that is typical for the area can
+                  still be above a drinking water limit, and arsenic in this
+                  area is a good example.
+                </div>
+                <div class="rp-cols2">
+                  <table class="rp-table">
+                    <thead>
+                      <tr>
+                        <th>Parameter</th>
+                        <th>Your well</th>
+                        <th>Nearby median</th>
+                        <th>Nearby range<br />(10th–90th)</th>
+                        <th>Nearby wells<br />above limit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Arsenic</td>
+                        <td class="rp-num"><strong>0.012</strong></td>
+                        <td class="rp-num">0.006</td>
+                        <td class="rp-num">0.002 – 0.019</td>
+                        <td>6 of 14</td>
+                      </tr>
+                      <tr>
+                        <td>Fluoride</td>
+                        <td class="rp-num"><strong>2.4</strong></td>
+                        <td class="rp-num">1.7</td>
+                        <td class="rp-num">0.8 – 3.1</td>
+                        <td>7 of 14</td>
+                      </tr>
+                      <tr>
+                        <td>Iron</td>
+                        <td class="rp-num"><strong>0.42</strong></td>
+                        <td class="rp-num">0.08</td>
+                        <td class="rp-num">&lt;0.005 – 0.31</td>
+                        <td>2 of 14</td>
+                      </tr>
+                      <tr>
+                        <td>TDS</td>
+                        <td class="rp-num"><strong>612</strong></td>
+                        <td class="rp-num">548</td>
+                        <td class="rp-num">402 – 780</td>
+                        <td>9 of 14</td>
+                      </tr>
+                      <tr>
+                        <td>Nitrate as N</td>
+                        <td class="rp-num"><strong>4.2</strong></td>
+                        <td class="rp-num">1.1</td>
+                        <td class="rp-num">&lt;0.05 – 5.4</td>
+                        <td>0 of 14</td>
+                      </tr>
+                      <tr>
+                        <td>Depth to water</td>
+                        <td class="rp-num"><strong>211 ft</strong></td>
+                        <td class="rp-num">198 ft</td>
+                        <td class="rp-num">142 – 244 ft</td>
+                        <td class="muted">—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div>
+                    <div class="rp-chart" style="height: 172px">
+                      [ Box-and-whisker: your well plotted against the nearby
+                      distribution, one box per parameter ]
+                    </div>
+                    <div class="rp-callout info" style="margin-top: 10px">
+                      <div class="rp-callout-title">
+                        Arsenic is common in this area
+                      </div>
+                      6 of the 14 nearby wells were also above the arsenic
+                      limit. This points to a natural, area-wide source rather
+                      than something specific to your well.
+                    </div>
+                  </div>
+                </div>
+                <div class="rp-priv">
+                  Privacy: comparison wells are never identified. Only
+                  aggregated statistics are shown, and a comparison is printed
+                  only when at least 5 wells qualify. Well IDs, owners, and
+                  locations of comparison wells are not included in this report
+                  or in its digital version.
+                </div>
+              </div>
+
+              <!-- QA notes -->
+              <div class="rp-section">
+                <div class="rp-h">Sampling &amp; Quality Assurance Notes</div>
+                <table class="rp-table">
+                  <thead>
+                    <tr>
+                      <th>Sample</th>
+                      <th>Collected</th>
+                      <th>Collected by</th>
+                      <th>Lab</th>
+                      <th>Ion balance</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="mono">WL-1187-2026A</td>
+                      <td>Feb 04, 2026</td>
+                      <td>S. Spaur</td>
+                      <td>NMBGMR Analytical Chem</td>
+                      <td>±1.4% <span class="chip chip-ok">Pass</span></td>
+                      <td>
+                        Sampled at wellhead spigot ahead of pressure tank.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="mono">WL-1187-2026B</td>
+                      <td>May 15, 2026</td>
+                      <td>S. Spaur, Talon</td>
+                      <td>NMBGMR Analytical Chem</td>
+                      <td>±2.2% <span class="chip chip-ok">Pass</span></td>
+                      <td>
+                        Arsenic result confirmed by lab rerun on Jun 02, 2026.
+                        Faint iron staining noted at the tap.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Glossary -->
+              <div class="rp-section">
+                <div class="rp-h">How to Read This Report</div>
+                <div class="rp-glossary">
+                  <p>
+                    <strong>MCL (Maximum Contaminant Level)</strong> — an
+                    enforceable federal health-based limit for public water
+                    systems. Private wells are not regulated, but the limit is
+                    the best available yardstick.
+                  </p>
+                  <p>
+                    <strong>SMCL (Secondary MCL)</strong> — a non-health limit
+                    for taste, odor, color, and staining. Exceeding it is a
+                    nuisance, not a health risk.
+                  </p>
+                  <p>
+                    <strong>ND (Not Detected)</strong> — below what the
+                    instrument can measure. The value shown is the detection
+                    limit, not the concentration.
+                  </p>
+                  <p>
+                    <strong>mg/L</strong> — milligrams per liter, roughly one
+                    part per million.
+                  </p>
+                  <p>
+                    <strong>Percentile</strong> — 71st percentile means 71% of
+                    nearby wells had a lower result than yours.
+                  </p>
+                  <p>
+                    <strong>Limitations</strong> — results describe the water on
+                    the day it was sampled, at the point it was sampled. Water
+                    quality can change with season, pumping, and plumbing. This
+                    report does not certify water as safe to drink.
+                  </p>
+                  <p>
+                    <strong>Questions</strong> — waterdata@nmbg.nmt.edu or (575)
+                    835-5490. To request additional data for this well, use the
+                    data request link in the digital version.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div class="rp-foot">
+                <svg
+                  id="qr-foot"
+                  viewBox="0 0 29 29"
+                  shape-rendering="crispEdges"
+                  role="img"
+                  aria-label="QR code linking to the digital version of this report"
+                ></svg>
+                <div>
+                  <strong>Digital version of this report:</strong>
+                  <span class="mono">ocotillo.nmbg.nmt.edu/r/1187-26</span
+                  ><br />
+                  Includes every sample on record, interactive trend charts, and
+                  downloadable data. Replaced automatically when the next annual
+                  report is issued.
+                </div>
+                <div class="rp-page-num">
+                  WL-1187 · RPT-2026-001187 · Page 1 of 3
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Selection tray ── -->
+        <div class="tray">
+          <span class="tray-count" id="tray-count">5 wells selected</span>
+          <div class="tray-chips">
+            <span class="tray-chip"
+              >WL-1187 <span class="tray-chip-x">×</span></span
+            >
+            <span class="tray-chip"
+              >WL-1204 <span class="tray-chip-x">×</span></span
+            >
+            <span class="tray-chip"
+              >WL-1342 <span class="tray-chip-x">×</span></span
+            >
+            <span class="tray-chip"
+              >WL-1355 <span class="tray-chip-x">×</span></span
+            >
+            <span class="tray-chip"
+              >WL-1361 <span class="tray-chip-x">×</span></span
+            >
+          </div>
+          <span class="toolbar-spacer"></span>
+          <button class="btn btn-outline">Clear</button>
+          <button class="btn btn-outline">★ Save selection</button>
+          <button class="btn btn-default btn-lg" onclick="goStep(3)">
+            Continue ▶
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ── Step rail ── */
+      function goStep(n) {
+        for (let i = 1; i <= 3; i++) {
+          document
+            .getElementById("step-" + i)
+            .classList.toggle("active", i === n);
+          const rail = document.getElementById("rail-" + i);
+          rail.classList.toggle("active", i === n);
+          rail.classList.toggle("done", i < n);
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      /* ── Tabs ── */
+      function switchTab(el, name) {
+        document
+          .querySelectorAll("#step-1 .tab")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll("#step-1 .tab-panel")
+          .forEach((p) => p.classList.remove("active"));
+        el.classList.add("active");
+        document.getElementById("tab-" + name).classList.add("active");
+      }
+
+      /* ── Selection ── */
+      function toggleRow(el) {
+        el.classList.toggle("on");
+        el.closest("tr").classList.toggle("sel", el.classList.contains("on"));
+        updateCount();
+      }
+      function toggleAll(el) {
+        const on = !el.classList.contains("on");
+        el.classList.toggle("on", on);
+        document
+          .querySelectorAll("#results-body .row-check")
+          .forEach((c) => {
+            c.classList.toggle("on", on);
+            c.closest("tr").classList.toggle("sel", on);
+          });
+        updateCount();
+      }
+      function updateCount() {
+        const n = document.querySelectorAll("#results-body .row-check.on")
+          .length;
+        const label = n === 1 ? "1 well selected" : n + " wells selected";
+        document.getElementById("tray-count").textContent = label;
+        document.getElementById("rail-1-sub").textContent = label;
+      }
+
+      /* ── Option cards & checkboxes ── */
+      function pickType(el) {
+        el.parentElement
+          .querySelectorAll(".opt-card")
+          .forEach((c) => c.classList.remove("on"));
+        el.classList.add("on");
+      }
+      function toggleCheck(el) {
+        el.classList.toggle("on");
+      }
+
+      /* ── Placeholder QR rendering ──
+         Lo-fi stand-in: deterministic module pattern with real finder
+         patterns so the report reads correctly at a glance. A real QR
+         encoder replaces this at build time. */
+      function drawQR(svg) {
+        const N = 29;
+        let seed = 1187;
+        const rand = () => {
+          seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+          return seed / 0x7fffffff;
+        };
+        const on = [];
+        for (let y = 0; y < N; y++) {
+          on[y] = [];
+          for (let x = 0; x < N; x++) on[y][x] = rand() > 0.52;
+        }
+        // Finder patterns (7x7) at three corners + quiet separators
+        const finder = (ox, oy) => {
+          for (let y = -1; y <= 7; y++)
+            for (let x = -1; x <= 7; x++) {
+              const px = ox + x,
+                py = oy + y;
+              if (px < 0 || py < 0 || px >= N || py >= N) continue;
+              const edge = x === 0 || x === 6 || y === 0 || y === 6;
+              const core = x >= 2 && x <= 4 && y >= 2 && y <= 4;
+              const inside = x >= 0 && x <= 6 && y >= 0 && y <= 6;
+              on[py][px] = inside && (edge || core);
+            }
+        };
+        finder(0, 0);
+        finder(N - 7, 0);
+        finder(0, N - 7);
+        // Timing patterns
+        for (let i = 8; i < N - 8; i++) {
+          on[6][i] = i % 2 === 0;
+          on[i][6] = i % 2 === 0;
+        }
+        // Alignment pattern
+        for (let y = -2; y <= 2; y++)
+          for (let x = -2; x <= 2; x++)
+            on[N - 7 + y][N - 7 + x] =
+              Math.max(Math.abs(x), Math.abs(y)) !== 1;
+
+        let d = "";
+        for (let y = 0; y < N; y++)
+          for (let x = 0; x < N; x++)
+            if (on[y][x]) d += `M${x} ${y}h1v1h-1z`;
+        svg.innerHTML = `<rect width="${N}" height="${N}" fill="#fff"/><path d="${d}" fill="#0f172a"/>`;
+      }
+      drawQR(document.getElementById("qr-main"));
+      drawQR(document.getElementById("qr-foot"));
+    </script>
+  </body>
+</html>
