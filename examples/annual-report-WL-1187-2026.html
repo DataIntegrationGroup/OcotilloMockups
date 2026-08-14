@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Annual Water Quality Report — WL-1187 — 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============================================================================
+       * Example output of chemistry-report-exporter-mockup.html.
+       *
+       * This is a SAMPLE DELIVERABLE, not a mockup — it is what the exporter would
+       * hand to a well owner for one well, one reporting year. Print to PDF at US
+       * Letter, margins "None"/default, background graphics ON.
+       *
+       * Tokens match design-system/ocotillo.css. Print-tuned: no dark mode, fixed
+       * letter pages, per-page footers (Chrome cannot repeat a running footer
+       * without a paged-media polyfill, so each page carries its own).
+       * ========================================================================== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --brand-50: #eff8fd;
+        --primary: #0e6da8;
+        --primary-dark: #0f5786;
+        --foreground: #0f172a;
+        --muted-foreground: #64748b;
+        --muted: #f5f5f5;
+        --border: #e5e5e5;
+        --divider: #d6d3d1;
+        --destructive: #dc2626;
+        --success: #047857;
+        --warning: #f97316;
+        --warning-text: #c2410c;
+        --info: #0f766e;
+        --font-sans: "Public Sans", system-ui, sans-serif;
+        --font-heading: "Outfit", system-ui, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+      }
+
+      @page {
+        size: letter;
+        margin: 0;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        color: var(--foreground);
+        font-size: 12px;
+        line-height: 1.5;
+        background: #e7e5e4;
+      }
+
+      .page {
+        position: relative;
+        width: 8.5in;
+        height: 10.55in;
+        padding: 0.5in 0.7in 0.2in;
+        margin: 0 auto;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+      }
+      /* On screen only — separates the sheets. Collapses when printing. */
+      .page + .page {
+        margin-top: 22px;
+      }
+
+      @media print {
+        body {
+          background: #fff;
+        }
+        .page {
+          margin: 0;
+          page-break-after: always;
+        }
+        .page:last-child {
+          page-break-after: auto;
+        }
+        .screen-only {
+          display: none !important;
+        }
+      }
+
+      /* ── Masthead ── */
+      .head {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        border-bottom: 2px solid var(--foreground);
+        padding-bottom: 12px;
+        margin-bottom: 14px;
+      }
+      .org {
+        font-family: var(--font-heading);
+        font-size: 9.5px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .title {
+        font-family: var(--font-heading);
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.15;
+        margin-top: 3px;
+      }
+      .subtitle {
+        font-size: 12.5px;
+        color: var(--muted-foreground);
+        margin-top: 2px;
+      }
+      .owner {
+        margin-top: 9px;
+        font-size: 11px;
+      }
+      .owner .dim {
+        color: var(--muted-foreground);
+      }
+      .qr {
+        margin-left: auto;
+        width: 1.15in;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .qr svg {
+        display: block;
+        width: 1in;
+        height: 1in;
+        margin: 0 auto;
+        padding: 3px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+      }
+      .qr-cap {
+        font-size: 8px;
+        line-height: 1.3;
+        color: var(--muted-foreground);
+        margin-top: 3px;
+      }
+
+      /* ── Sections ── */
+      .section {
+        margin-top: 12px;
+      }
+      .h {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-family: var(--font-heading);
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--primary);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 3px;
+        margin-bottom: 8px;
+      }
+      .h-note {
+        margin-left: auto;
+        font-family: var(--font-sans);
+        font-size: 9.5px;
+        font-weight: 400;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--muted-foreground);
+      }
+      p.lede {
+        font-size: 11.5px;
+        margin-bottom: 4px;
+      }
+
+      /* ── At a glance ── */
+      .stats {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .stat {
+        flex: 1;
+        padding: 7px 10px;
+        border-left: 1px solid var(--border);
+        min-width: 0;
+      }
+      .stat:first-child {
+        border-left: none;
+      }
+      .stat-label {
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        line-height: 1.35;
+      }
+      .stat-value {
+        font-family: var(--font-heading);
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.2;
+        font-variant-numeric: tabular-nums;
+      }
+      .stat-note {
+        font-size: 9px;
+        color: var(--muted-foreground);
+        line-height: 1.3;
+      }
+
+      /* ── Callout ── */
+      .callout {
+        border-left: 4px solid var(--destructive);
+        background: #fdf0f0;
+        border-radius: 0 4px 4px 0;
+        padding: 10px 13px;
+        font-size: 11.5px;
+      }
+      .callout.info {
+        border-left-color: var(--primary);
+        background: var(--brand-50);
+      }
+      .callout-title {
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .callout ul {
+        margin: 5px 0 0 16px;
+      }
+      .callout li {
+        margin-bottom: 1px;
+      }
+
+      /* ── Key / value grid ── */
+      .kv {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .kv-cell {
+        padding: 6px 10px;
+        border-left: 1px solid var(--border);
+        border-top: 1px solid var(--border);
+        min-width: 0;
+      }
+      .kv-cell:nth-child(4n + 1) {
+        border-left: none;
+      }
+      .kv-cell:nth-child(-n + 4) {
+        border-top: none;
+      }
+      .kv-label {
+        font-size: 8.5px;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .kv-value {
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      /* ── Tables ── */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 10.5px;
+      }
+      th {
+        text-align: left;
+        vertical-align: bottom;
+        border-bottom: 1.5px solid var(--foreground);
+        padding: 3px 6px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        line-height: 1.25;
+      }
+      td {
+        padding: 3px 6px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+      tbody tr:nth-child(even) td {
+        background: #fafafa;
+      }
+      tr.exceed td {
+        background: #fdf0f0;
+      }
+      tr.smcl td {
+        background: #fff8f1;
+      }
+      .num {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .dim {
+        color: var(--muted-foreground);
+      }
+
+      /* ── Chips ── */
+      .chip {
+        display: inline-block;
+        padding: 0 6px;
+        border-radius: 20px;
+        border: 1px solid;
+        font-size: 9px;
+        font-weight: 600;
+        white-space: nowrap;
+        line-height: 1.55;
+      }
+      .chip-mcl {
+        background: #fdeded;
+        color: var(--destructive);
+        border-color: #f4bcbc;
+      }
+      .chip-smcl {
+        background: #fff3e8;
+        color: var(--warning-text);
+        border-color: #fbcfa4;
+      }
+      .chip-ok {
+        background: #ebf7f1;
+        color: var(--success);
+        border-color: #a9d8c4;
+      }
+      .chip-nd {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        border-color: var(--border);
+      }
+
+      /* ── Distribution meter ── */
+      .meter-track {
+        position: relative;
+        height: 6px;
+        border-radius: 3px;
+        background: var(--muted);
+        border: 1px solid var(--border);
+      }
+      .band {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        border-radius: 3px;
+        background: #c3ccd8;
+      }
+      .median {
+        position: absolute;
+        top: -2px;
+        bottom: -2px;
+        width: 1.5px;
+        background: var(--muted-foreground);
+      }
+      .mark {
+        position: absolute;
+        top: -4px;
+        width: 3px;
+        height: 13px;
+        border-radius: 2px;
+        background: var(--primary);
+      }
+      .mark.over {
+        background: var(--destructive);
+      }
+      .limit {
+        position: absolute;
+        top: -3px;
+        bottom: -3px;
+        width: 0;
+        border-left: 1.5px dashed var(--destructive);
+      }
+      .meter-scale {
+        display: flex;
+        justify-content: space-between;
+        font-size: 7.5px;
+        color: var(--muted-foreground);
+        margin-top: 2px;
+      }
+
+      .legend {
+        display: flex;
+        gap: 11px;
+        flex-wrap: wrap;
+        margin-top: 6px;
+        font-size: 8.5px;
+        color: var(--muted-foreground);
+        align-items: center;
+      }
+      .legend span.key {
+        display: inline-block;
+        margin-right: 3px;
+        vertical-align: middle;
+      }
+
+      .chart {
+        border: 1px dashed var(--border);
+        border-radius: 4px;
+        background: #fafafa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-style: italic;
+        color: var(--muted-foreground);
+        text-align: center;
+        padding: 8px;
+      }
+      .cols2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .note {
+        font-size: 9.5px;
+        font-style: italic;
+        color: var(--muted-foreground);
+        margin-top: 5px;
+      }
+      .glossary {
+        columns: 2;
+        column-gap: 20px;
+        font-size: 10px;
+        color: var(--muted-foreground);
+      }
+      .glossary p {
+        break-inside: avoid;
+        margin-bottom: 4px;
+      }
+      .glossary strong {
+        color: var(--foreground);
+      }
+
+      /* ── Footer ── */
+      .foot {
+        margin-top: auto;
+        padding-top: 7px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 8.5px;
+        color: var(--muted-foreground);
+      }
+      .foot svg {
+        width: 0.42in;
+        height: 0.42in;
+        flex-shrink: 0;
+      }
+      .page-num {
+        margin-left: auto;
+        white-space: nowrap;
+      }
+
+      .screen-only {
+        max-width: 8.5in;
+        margin: 20px auto 0;
+        padding: 10px 14px;
+        background: #fefce8;
+        border: 1px solid #fde047;
+        border-radius: 6px;
+        font-size: 12px;
+        color: #713f12;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="screen-only">
+      <strong>Sample deliverable.</strong> This is an example of what
+      <code>chemistry-report-exporter-mockup.html</code> would produce for one
+      well, for one reporting year — the file a well owner receives. The data is
+      invented; the QR code is real and resolves to the (not yet existing)
+      digital version. To regenerate the PDF: print at US Letter with background
+      graphics on, or run
+      <code>examples/render.sh</code>.
+    </div>
+
+    <!-- ══════════════════════ PAGE 1 ══════════════════════ -->
+    <div class="page">
+      <div class="head">
+        <div>
+          <div class="org">
+            New Mexico Bureau of Geology &amp; Mineral Resources · Aquifer
+            Mapping Program
+          </div>
+          <div class="title">Annual Water Quality Report</div>
+          <div class="subtitle">
+            Reporting year 2026 &nbsp;·&nbsp; Well <strong>WL-1187</strong> —
+            Vigil Ranch Well
+          </div>
+          <div class="owner">
+            Prepared for <strong>Rosalía Vigil</strong>, owner of record<br />
+            <span class="dim">HC 32 Box 118, Lemitar, NM 87823</span><br />
+            <span class="dim"
+              >Report ID RPT-2026-001187 &nbsp;·&nbsp; Issued August 13, 2026
+              &nbsp;·&nbsp; Supersedes RPT-2025-001187</span
+            >
+          </div>
+        </div>
+        <!-- Real QR for https://ocotillo.nmbg.nmt.edu/r/1187-26 — 29x29
+             modules, error correction M, generated with segno and inlined as a
+             static path so this file needs no encoder and no JavaScript. -->
+        <div class="qr">
+          <svg viewBox="0 0 29 29" shape-rendering="crispEdges">
+            <rect width="29" height="29" fill="#fff" />
+            <path fill="#0f172a" d="M0 0h7v1h-7zM11 0h3v1h-3zM17 0h4v1h-4zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h2v1h-2zM14 1h4v1h-4zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h2v1h-2zM12 3h2v1h-2zM15 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM17 4h3v1h-3zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h3v1h-3zM15 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h3v1h-3zM12 7h1v1h-1zM15 7h1v1h-1zM19 7h2v1h-2zM0 8h1v1h-1zM2 8h5v1h-5zM12 8h2v1h-2zM16 8h2v1h-2zM22 8h5v1h-5zM1 9h1v1h-1zM3 9h1v1h-1zM9 9h2v1h-2zM12 9h1v1h-1zM14 9h1v1h-1zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM11 10h1v1h-1zM13 10h4v1h-4zM21 10h2v1h-2zM24 10h1v1h-1zM0 11h1v1h-1zM2 11h2v1h-2zM7 11h2v1h-2zM10 11h3v1h-3zM15 11h1v1h-1zM18 11h2v1h-2zM23 11h3v1h-3zM27 11h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM12 12h1v1h-1zM15 12h4v1h-4zM23 12h1v1h-1zM25 12h2v1h-2zM4 13h2v1h-2zM7 13h4v1h-4zM12 13h1v1h-1zM17 13h8v1h-8zM28 13h1v1h-1zM0 14h1v1h-1zM3 14h2v1h-2zM6 14h1v1h-1zM8 14h1v1h-1zM11 14h2v1h-2zM15 14h3v1h-3zM20 14h1v1h-1zM22 14h2v1h-2zM25 14h2v1h-2zM4 15h2v1h-2zM7 15h2v1h-2zM11 15h1v1h-1zM15 15h1v1h-1zM18 15h1v1h-1zM20 15h2v1h-2zM23 15h1v1h-1zM27 15h1v1h-1zM0 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM9 16h2v1h-2zM15 16h3v1h-3zM19 16h1v1h-1zM25 16h2v1h-2zM0 17h3v1h-3zM8 17h1v1h-1zM11 17h1v1h-1zM13 17h1v1h-1zM18 17h7v1h-7zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM3 18h1v1h-1zM6 18h2v1h-2zM12 18h5v1h-5zM22 18h2v1h-2zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM10 19h2v1h-2zM13 19h1v1h-1zM16 19h1v1h-1zM19 19h3v1h-3zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM2 20h2v1h-2zM5 20h2v1h-2zM8 20h5v1h-5zM14 20h1v1h-1zM17 20h1v1h-1zM19 20h6v1h-6zM26 20h3v1h-3zM8 21h3v1h-3zM12 21h1v1h-1zM18 21h1v1h-1zM20 21h1v1h-1zM24 21h5v1h-5zM0 22h7v1h-7zM11 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h2v1h-2zM11 23h1v1h-1zM14 23h1v1h-1zM18 23h3v1h-3zM24 23h1v1h-1zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h4v1h-4zM15 24h3v1h-3zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h4v1h-4zM13 25h2v1h-2zM16 25h1v1h-1zM20 25h1v1h-1zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h1v1h-1zM14 26h3v1h-3zM19 26h9v1h-9zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM12 27h1v1h-1zM16 27h1v1h-1zM20 27h1v1h-1zM22 27h2v1h-2zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM12 28h3v1h-3zM17 28h2v1h-2zM22 28h2v1h-2zM26 28h1v1h-1z" />
+          </svg>
+          <div class="qr-cap">
+            Scan for the interactive version<br />ocotillo.nmbg.nmt.edu/r/1187-26
+          </div>
+        </div>
+      </div>
+
+      <p class="lede">
+        This report summarizes everything on file for your well for the 2026
+        calendar year: how the well is built, how much water was in it, what the
+        water was tested for, and how those results compare both to drinking
+        water standards and to other wells in your area. It is provided as a
+        courtesy and is not a certification that the water is safe to drink.
+      </p>
+
+      <div class="section">
+        <div class="h">At a Glance</div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Samples this year</div>
+            <div class="stat-value">2</div>
+            <div class="stat-note">Feb 04 &amp; May 15</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Parameters tested</div>
+            <div class="stat-value">31</div>
+            <div class="stat-note">22 with a standard</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Above health limit</div>
+            <div class="stat-value" style="color: var(--destructive)">1</div>
+            <div class="stat-note">Arsenic</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Above taste/odor limit</div>
+            <div class="stat-value" style="color: var(--warning-text)">3</div>
+            <div class="stat-note">Iron, fluoride, TDS</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Water level change</div>
+            <div class="stat-value">−1.8 ft</div>
+            <div class="stat-note">vs. August 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="callout">
+          <div class="callout-title">
+            One result was above a federal health limit
+          </div>
+          <strong>Arsenic — 0.012 mg/L</strong> (limit 0.010 mg/L, measured May
+          15, 2026). Arsenic occurs naturally in New Mexico groundwater.
+          Drinking water above the limit over many years is associated with
+          health risk; exposure at this level for a short time is not an
+          emergency.
+          <ul>
+            <li>
+              Consider a confirmation sample before making treatment decisions.
+            </li>
+            <li>
+              Reverse osmosis and activated alumina are the usual point-of-use
+              treatments for arsenic.
+            </li>
+            <li>
+              The NM Environment Department Drinking Water Bureau advises
+              private well owners at (505) 476-8620.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="h">
+          Well Information &amp; Construction
+          <span class="h-note"
+            >Source: OSE well record, field-verified March 2024</span
+          >
+        </div>
+        <div class="kv">
+          <div class="kv-cell">
+            <div class="kv-label">Point ID</div>
+            <div class="kv-value">WL-1187</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Site type</div>
+            <div class="kv-value">Domestic well</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">County</div>
+            <div class="kv-value">Socorro</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">OSE permit</div>
+            <div class="kv-value">RG-71204-POD1</div>
+          </div>
+
+          <div class="kv-cell">
+            <div class="kv-label">Latitude</div>
+            <div class="kv-value">34.1876° N</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Longitude</div>
+            <div class="kv-value">106.9412° W</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">PLSS</div>
+            <div class="kv-value">T2S R1W Sec 14 NE¼</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Land surface elev.</div>
+            <div class="kv-value">4,712 ft amsl</div>
+          </div>
+
+          <div class="kv-cell">
+            <div class="kv-label">Total depth</div>
+            <div class="kv-value">385 ft</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Casing</div>
+            <div class="kv-value">6 in · PVC</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Screened interval</div>
+            <div class="kv-value">280–380 ft</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Completed</div>
+            <div class="kv-value">June 1998 · Baca Drilling</div>
+          </div>
+
+          <div class="kv-cell">
+            <div class="kv-label">Aquifer</div>
+            <div class="kv-value">Santa Fe Group — upper</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Primary use</div>
+            <div class="kv-value">Domestic / household</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Monitoring since</div>
+            <div class="kv-value">October 2019</div>
+          </div>
+          <div class="kv-cell">
+            <div class="kv-label">Project</div>
+            <div class="kv-value">Socorro Basin Domestic Study</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="h">
+          Water Level Measurements
+          <span class="h-note"
+            >12 readings in 2026 · transducer plus manual checks</span
+          >
+        </div>
+        <div class="cols2">
+          <div class="chart" style="height: 1.35in">
+            [ Hydrograph — depth to water, 2019–2026,<br />seasonal envelope
+            shaded ]
+          </div>
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Depth to water</th>
+                  <th>Water elevation</th>
+                  <th>Method</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Feb 04, 2026</td>
+                  <td class="num">208.4 ft</td>
+                  <td class="num">4,503.6 ft</td>
+                  <td>Steel tape</td>
+                </tr>
+                <tr>
+                  <td>May 15, 2026</td>
+                  <td class="num">211.0 ft</td>
+                  <td class="num">4,501.0 ft</td>
+                  <td>Steel tape</td>
+                </tr>
+                <tr>
+                  <td>Aug 02, 2026</td>
+                  <td class="num">212.1 ft</td>
+                  <td class="num">4,499.9 ft</td>
+                  <td>Transducer</td>
+                </tr>
+                <tr>
+                  <td class="dim">Aug 2025 (prior)</td>
+                  <td class="num dim">210.3 ft</td>
+                  <td class="num dim">4,501.7 ft</td>
+                  <td class="dim">Transducer</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="note">
+          Depths are measured from the top of casing. The full reading list is
+          in the digital version and the attached data file.
+        </div>
+      </div>
+
+      <div class="foot">
+        <svg viewBox="0 0 29 29" shape-rendering="crispEdges">
+          <rect width="29" height="29" fill="#fff" />
+          <path fill="#0f172a" d="M0 0h7v1h-7zM11 0h3v1h-3zM17 0h4v1h-4zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h2v1h-2zM14 1h4v1h-4zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h2v1h-2zM12 3h2v1h-2zM15 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM17 4h3v1h-3zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h3v1h-3zM15 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h3v1h-3zM12 7h1v1h-1zM15 7h1v1h-1zM19 7h2v1h-2zM0 8h1v1h-1zM2 8h5v1h-5zM12 8h2v1h-2zM16 8h2v1h-2zM22 8h5v1h-5zM1 9h1v1h-1zM3 9h1v1h-1zM9 9h2v1h-2zM12 9h1v1h-1zM14 9h1v1h-1zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM11 10h1v1h-1zM13 10h4v1h-4zM21 10h2v1h-2zM24 10h1v1h-1zM0 11h1v1h-1zM2 11h2v1h-2zM7 11h2v1h-2zM10 11h3v1h-3zM15 11h1v1h-1zM18 11h2v1h-2zM23 11h3v1h-3zM27 11h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM12 12h1v1h-1zM15 12h4v1h-4zM23 12h1v1h-1zM25 12h2v1h-2zM4 13h2v1h-2zM7 13h4v1h-4zM12 13h1v1h-1zM17 13h8v1h-8zM28 13h1v1h-1zM0 14h1v1h-1zM3 14h2v1h-2zM6 14h1v1h-1zM8 14h1v1h-1zM11 14h2v1h-2zM15 14h3v1h-3zM20 14h1v1h-1zM22 14h2v1h-2zM25 14h2v1h-2zM4 15h2v1h-2zM7 15h2v1h-2zM11 15h1v1h-1zM15 15h1v1h-1zM18 15h1v1h-1zM20 15h2v1h-2zM23 15h1v1h-1zM27 15h1v1h-1zM0 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM9 16h2v1h-2zM15 16h3v1h-3zM19 16h1v1h-1zM25 16h2v1h-2zM0 17h3v1h-3zM8 17h1v1h-1zM11 17h1v1h-1zM13 17h1v1h-1zM18 17h7v1h-7zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM3 18h1v1h-1zM6 18h2v1h-2zM12 18h5v1h-5zM22 18h2v1h-2zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM10 19h2v1h-2zM13 19h1v1h-1zM16 19h1v1h-1zM19 19h3v1h-3zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM2 20h2v1h-2zM5 20h2v1h-2zM8 20h5v1h-5zM14 20h1v1h-1zM17 20h1v1h-1zM19 20h6v1h-6zM26 20h3v1h-3zM8 21h3v1h-3zM12 21h1v1h-1zM18 21h1v1h-1zM20 21h1v1h-1zM24 21h5v1h-5zM0 22h7v1h-7zM11 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h2v1h-2zM11 23h1v1h-1zM14 23h1v1h-1zM18 23h3v1h-3zM24 23h1v1h-1zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h4v1h-4zM15 24h3v1h-3zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h4v1h-4zM13 25h2v1h-2zM16 25h1v1h-1zM20 25h1v1h-1zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h1v1h-1zM14 26h3v1h-3zM19 26h9v1h-9zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM12 27h1v1h-1zM16 27h1v1h-1zM20 27h1v1h-1zM22 27h2v1h-2zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM12 28h3v1h-3zM17 28h2v1h-2zM22 28h2v1h-2zM26 28h1v1h-1z" />
+        </svg>
+        <div>
+          <strong>Digital version:</strong> ocotillo.nmbg.nmt.edu/r/1187-26 —
+          every sample on record, interactive trends, and downloadable data.<br />
+          Questions: waterdata@nmbg.nmt.edu · (575) 835-5490
+        </div>
+        <div class="page-num">WL-1187 · RPT-2026-001187 · Page 1 of 3</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 2 ══════════════════════ -->
+    <div class="page">
+      <div class="section" style="margin-top: 0">
+        <div class="h">
+          Field Parameters
+          <span class="h-note">Measured at the wellhead during collection</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Feb 04, 2026</th>
+              <th>May 15, 2026</th>
+              <th>Unit</th>
+              <th>Typical range</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Temperature</td>
+              <td class="num">17.2</td>
+              <td class="num">17.9</td>
+              <td>°C</td>
+              <td class="dim">—</td>
+            </tr>
+            <tr>
+              <td>pH</td>
+              <td class="num">7.61</td>
+              <td class="num">7.55</td>
+              <td>S.U.</td>
+              <td class="dim">6.5–8.5 (SMCL)</td>
+            </tr>
+            <tr>
+              <td>Specific conductance</td>
+              <td class="num">918</td>
+              <td class="num">944</td>
+              <td>µS/cm</td>
+              <td class="dim">—</td>
+            </tr>
+            <tr>
+              <td>Dissolved oxygen</td>
+              <td class="num">4.1</td>
+              <td class="num">3.8</td>
+              <td>mg/L</td>
+              <td class="dim">—</td>
+            </tr>
+            <tr>
+              <td>Turbidity</td>
+              <td class="num">1.2</td>
+              <td class="num">0.9</td>
+              <td>NTU</td>
+              <td class="dim">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="h">
+          Water Chemistry &amp; Drinking Water Standards
+          <span class="h-note"
+            >Sample of May 15, 2026 · NMBGMR Analytical Chemistry Lab</span
+          >
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 19%">Parameter</th>
+              <th>Your result</th>
+              <th>Unit</th>
+              <th>Standard</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Nearby median<br />(n = 14)</th>
+              <th style="width: 20%">
+                Where your well sits among nearby wells
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="exceed">
+              <td><strong>Arsenic</strong></td>
+              <td class="num"><strong>0.012</strong></td>
+              <td>mg/L</td>
+              <td class="num">0.010</td>
+              <td>MCL</td>
+              <td><span class="chip chip-mcl">Above limit</span></td>
+              <td class="num">0.006</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 10%; width: 62%"></div>
+                  <div class="median" style="left: 34%"></div>
+                  <div class="limit" style="left: 56%"></div>
+                  <div class="mark over" style="left: 66%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>71st pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+            <tr class="smcl">
+              <td><strong>Fluoride</strong></td>
+              <td class="num"><strong>2.4</strong></td>
+              <td>mg/L</td>
+              <td class="num">2.0 / 4.0</td>
+              <td>SMCL / MCL</td>
+              <td><span class="chip chip-smcl">Above SMCL</span></td>
+              <td class="num">1.7</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 14%; width: 55%"></div>
+                  <div class="median" style="left: 38%"></div>
+                  <div class="limit" style="left: 82%"></div>
+                  <div class="mark" style="left: 60%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>68th pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+            <tr class="smcl">
+              <td><strong>Iron</strong></td>
+              <td class="num"><strong>0.42</strong></td>
+              <td>mg/L</td>
+              <td class="num">0.30</td>
+              <td>SMCL</td>
+              <td><span class="chip chip-smcl">Above SMCL</span></td>
+              <td class="num">0.08</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 8%; width: 44%"></div>
+                  <div class="median" style="left: 22%"></div>
+                  <div class="limit" style="left: 58%"></div>
+                  <div class="mark" style="left: 79%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>92nd pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+            <tr class="smcl">
+              <td><strong>Total dissolved solids</strong></td>
+              <td class="num"><strong>612</strong></td>
+              <td>mg/L</td>
+              <td class="num">500</td>
+              <td>SMCL</td>
+              <td><span class="chip chip-smcl">Above SMCL</span></td>
+              <td class="num">548</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 12%; width: 60%"></div>
+                  <div class="median" style="left: 40%"></div>
+                  <div class="limit" style="left: 36%"></div>
+                  <div class="mark" style="left: 55%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>63rd pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Nitrate as N</td>
+              <td class="num">4.2</td>
+              <td>mg/L</td>
+              <td class="num">10.0</td>
+              <td>MCL</td>
+              <td><span class="chip chip-ok">Below limit</span></td>
+              <td class="num">1.1</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 6%; width: 40%"></div>
+                  <div class="median" style="left: 16%"></div>
+                  <div class="limit" style="left: 88%"></div>
+                  <div class="mark" style="left: 51%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>88th pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Uranium</td>
+              <td class="num">0.018</td>
+              <td>mg/L</td>
+              <td class="num">0.030</td>
+              <td>MCL</td>
+              <td><span class="chip chip-ok">Below limit</span></td>
+              <td class="num">0.014</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 10%; width: 58%"></div>
+                  <div class="median" style="left: 33%"></div>
+                  <div class="limit" style="left: 76%"></div>
+                  <div class="mark" style="left: 44%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>59th pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Sulfate</td>
+              <td class="num">108</td>
+              <td>mg/L</td>
+              <td class="num">250</td>
+              <td>SMCL</td>
+              <td><span class="chip chip-ok">Below limit</span></td>
+              <td class="num">96</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 12%; width: 56%"></div>
+                  <div class="median" style="left: 36%"></div>
+                  <div class="limit" style="left: 90%"></div>
+                  <div class="mark" style="left: 42%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>55th pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Chloride</td>
+              <td class="num">62</td>
+              <td>mg/L</td>
+              <td class="num">250</td>
+              <td>SMCL</td>
+              <td><span class="chip chip-ok">Below limit</span></td>
+              <td class="num">71</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 14%; width: 54%"></div>
+                  <div class="median" style="left: 44%"></div>
+                  <div class="limit" style="left: 92%"></div>
+                  <div class="mark" style="left: 38%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>41st pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Lead</td>
+              <td class="num">&lt;0.001 <span class="chip chip-nd">ND</span></td>
+              <td>mg/L</td>
+              <td class="num">0.015</td>
+              <td>Action level</td>
+              <td><span class="chip chip-ok">Not detected</span></td>
+              <td class="num">&lt;0.001</td>
+              <td class="dim" style="font-size: 9px">
+                Not detected in 13 of 14 nearby wells
+              </td>
+            </tr>
+            <tr>
+              <td>Hardness (as CaCO₃)</td>
+              <td class="num">284</td>
+              <td>mg/L</td>
+              <td class="dim">no standard</td>
+              <td class="dim">—</td>
+              <td><span class="chip chip-nd">Very hard</span></td>
+              <td class="num">246</td>
+              <td>
+                <div class="meter-track">
+                  <div class="band" style="left: 10%; width: 62%"></div>
+                  <div class="median" style="left: 35%"></div>
+                  <div class="mark" style="left: 52%"></div>
+                </div>
+                <div class="meter-scale">
+                  <span>lower</span><span>64th pct</span><span>higher</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="legend">
+          <div>
+            <span
+              class="key"
+              style="
+                width: 3px;
+                height: 11px;
+                background: var(--primary);
+                border-radius: 2px;
+              "
+            ></span
+            >Your well
+          </div>
+          <div>
+            <span
+              class="key"
+              style="
+                width: 20px;
+                height: 6px;
+                background: #c3ccd8;
+                border: 1px solid var(--border);
+                border-radius: 3px;
+              "
+            ></span
+            >10th–90th percentile of nearby wells
+          </div>
+          <div>
+            <span
+              class="key"
+              style="width: 2px; height: 11px; background: var(--muted-foreground)"
+            ></span
+            >Nearby median
+          </div>
+          <div>
+            <span
+              class="key"
+              style="
+                width: 0;
+                height: 11px;
+                border-left: 1.5px dashed var(--destructive);
+              "
+            ></span
+            >Standard
+          </div>
+          <div><span class="chip chip-nd">ND</span> Not detected</div>
+        </div>
+        <div class="note">
+          Results for all 31 parameters, including both 2026 samples and prior
+          years, are in the digital version and the attached data file.
+        </div>
+      </div>
+
+      <div class="foot">
+        <svg viewBox="0 0 29 29" shape-rendering="crispEdges">
+          <rect width="29" height="29" fill="#fff" />
+          <path fill="#0f172a" d="M0 0h7v1h-7zM11 0h3v1h-3zM17 0h4v1h-4zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h2v1h-2zM14 1h4v1h-4zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h2v1h-2zM12 3h2v1h-2zM15 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM17 4h3v1h-3zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h3v1h-3zM15 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h3v1h-3zM12 7h1v1h-1zM15 7h1v1h-1zM19 7h2v1h-2zM0 8h1v1h-1zM2 8h5v1h-5zM12 8h2v1h-2zM16 8h2v1h-2zM22 8h5v1h-5zM1 9h1v1h-1zM3 9h1v1h-1zM9 9h2v1h-2zM12 9h1v1h-1zM14 9h1v1h-1zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM11 10h1v1h-1zM13 10h4v1h-4zM21 10h2v1h-2zM24 10h1v1h-1zM0 11h1v1h-1zM2 11h2v1h-2zM7 11h2v1h-2zM10 11h3v1h-3zM15 11h1v1h-1zM18 11h2v1h-2zM23 11h3v1h-3zM27 11h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM12 12h1v1h-1zM15 12h4v1h-4zM23 12h1v1h-1zM25 12h2v1h-2zM4 13h2v1h-2zM7 13h4v1h-4zM12 13h1v1h-1zM17 13h8v1h-8zM28 13h1v1h-1zM0 14h1v1h-1zM3 14h2v1h-2zM6 14h1v1h-1zM8 14h1v1h-1zM11 14h2v1h-2zM15 14h3v1h-3zM20 14h1v1h-1zM22 14h2v1h-2zM25 14h2v1h-2zM4 15h2v1h-2zM7 15h2v1h-2zM11 15h1v1h-1zM15 15h1v1h-1zM18 15h1v1h-1zM20 15h2v1h-2zM23 15h1v1h-1zM27 15h1v1h-1zM0 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM9 16h2v1h-2zM15 16h3v1h-3zM19 16h1v1h-1zM25 16h2v1h-2zM0 17h3v1h-3zM8 17h1v1h-1zM11 17h1v1h-1zM13 17h1v1h-1zM18 17h7v1h-7zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM3 18h1v1h-1zM6 18h2v1h-2zM12 18h5v1h-5zM22 18h2v1h-2zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM10 19h2v1h-2zM13 19h1v1h-1zM16 19h1v1h-1zM19 19h3v1h-3zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM2 20h2v1h-2zM5 20h2v1h-2zM8 20h5v1h-5zM14 20h1v1h-1zM17 20h1v1h-1zM19 20h6v1h-6zM26 20h3v1h-3zM8 21h3v1h-3zM12 21h1v1h-1zM18 21h1v1h-1zM20 21h1v1h-1zM24 21h5v1h-5zM0 22h7v1h-7zM11 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h2v1h-2zM11 23h1v1h-1zM14 23h1v1h-1zM18 23h3v1h-3zM24 23h1v1h-1zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h4v1h-4zM15 24h3v1h-3zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h4v1h-4zM13 25h2v1h-2zM16 25h1v1h-1zM20 25h1v1h-1zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h1v1h-1zM14 26h3v1h-3zM19 26h9v1h-9zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM12 27h1v1h-1zM16 27h1v1h-1zM20 27h1v1h-1zM22 27h2v1h-2zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM12 28h3v1h-3zM17 28h2v1h-2zM22 28h2v1h-2zM26 28h1v1h-1z" />
+        </svg>
+        <div>
+          <strong>Digital version:</strong> ocotillo.nmbg.nmt.edu/r/1187-26 —
+          every sample on record, interactive trends, and downloadable data.<br />
+          Questions: waterdata@nmbg.nmt.edu · (575) 835-5490
+        </div>
+        <div class="page-num">WL-1187 · RPT-2026-001187 · Page 2 of 3</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 3 ══════════════════════ -->
+    <div class="page">
+      <div class="section" style="margin-top: 0">
+        <div class="h">
+          How Your Well Compares to Nearby Wells
+          <span class="h-note"
+            >14 wells within 3 miles, same aquifer, sampled 2021–2026</span
+          >
+        </div>
+        <p class="lede">
+          Your results are shown next to the range seen in other wells drawing
+          from the same part of the aquifer. This is context, not a standard — a
+          result that is typical for the area can still be above a drinking
+          water limit, and arsenic here is exactly that case.
+        </p>
+        <div class="cols2">
+          <table>
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Your well</th>
+                <th>Nearby median</th>
+                <th>Nearby range<br />(10th–90th)</th>
+                <th>Nearby wells<br />above limit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Arsenic</td>
+                <td class="num"><strong>0.012</strong></td>
+                <td class="num">0.006</td>
+                <td class="num">0.002–0.019</td>
+                <td>6 of 14</td>
+              </tr>
+              <tr>
+                <td>Fluoride</td>
+                <td class="num"><strong>2.4</strong></td>
+                <td class="num">1.7</td>
+                <td class="num">0.8–3.1</td>
+                <td>7 of 14</td>
+              </tr>
+              <tr>
+                <td>Iron</td>
+                <td class="num"><strong>0.42</strong></td>
+                <td class="num">0.08</td>
+                <td class="num">&lt;0.005–0.31</td>
+                <td>2 of 14</td>
+              </tr>
+              <tr>
+                <td>TDS</td>
+                <td class="num"><strong>612</strong></td>
+                <td class="num">548</td>
+                <td class="num">402–780</td>
+                <td>9 of 14</td>
+              </tr>
+              <tr>
+                <td>Nitrate as N</td>
+                <td class="num"><strong>4.2</strong></td>
+                <td class="num">1.1</td>
+                <td class="num">&lt;0.05–5.4</td>
+                <td>0 of 14</td>
+              </tr>
+              <tr>
+                <td>Depth to water</td>
+                <td class="num"><strong>211 ft</strong></td>
+                <td class="num">198 ft</td>
+                <td class="num">142–244 ft</td>
+                <td class="dim">—</td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <div class="chart" style="height: 1.55in">
+              [ Box-and-whisker — your well plotted<br />against the nearby
+              distribution,<br />one box per parameter ]
+            </div>
+            <div class="callout info" style="margin-top: 9px">
+              <div class="callout-title">Arsenic is common in this area</div>
+              6 of the 14 nearby wells were also above the arsenic limit. That
+              points to a natural, area-wide source rather than something
+              specific to your well.
+            </div>
+          </div>
+        </div>
+        <div class="note">
+          Privacy: comparison wells are never identified. Only aggregated
+          statistics are shown, and a comparison is printed only when at least 5
+          wells qualify. The IDs, owners, and locations of comparison wells are
+          not included in this report or its digital version.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="h">Sampling &amp; Quality Assurance Notes</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Sample</th>
+              <th>Collected</th>
+              <th>Collected by</th>
+              <th>Laboratory</th>
+              <th>Ion balance</th>
+              <th style="width: 34%">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="num">WL-1187-2026A</td>
+              <td>Feb 04, 2026</td>
+              <td>S. Spaur</td>
+              <td>NMBGMR Analytical Chem</td>
+              <td>±1.4% <span class="chip chip-ok">Pass</span></td>
+              <td>Sampled at the wellhead spigot, ahead of the pressure tank.</td>
+            </tr>
+            <tr>
+              <td class="num">WL-1187-2026B</td>
+              <td>May 15, 2026</td>
+              <td>S. Spaur, Talon</td>
+              <td>NMBGMR Analytical Chem</td>
+              <td>±2.2% <span class="chip chip-ok">Pass</span></td>
+              <td>
+                Arsenic result confirmed by laboratory rerun on Jun 02, 2026.
+                Faint iron staining noted at the tap.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="h">How to Read This Report</div>
+        <div class="glossary">
+          <p>
+            <strong>MCL (Maximum Contaminant Level)</strong> — an enforceable
+            federal health-based limit for public water systems. Private wells
+            are not regulated, but the limit is the best available yardstick.
+          </p>
+          <p>
+            <strong>SMCL (Secondary MCL)</strong> — a non-health limit covering
+            taste, odor, color, and staining. Exceeding it is a nuisance, not a
+            health risk.
+          </p>
+          <p>
+            <strong>ND (Not Detected)</strong> — below what the instrument can
+            measure. The value shown is the detection limit, not the
+            concentration.
+          </p>
+          <p>
+            <strong>mg/L</strong> — milligrams per liter, roughly one part per
+            million.
+          </p>
+          <p>
+            <strong>Percentile</strong> — "71st percentile" means 71% of nearby
+            wells had a lower result than yours.
+          </p>
+          <p>
+            <strong>Ion balance</strong> — a laboratory check that the positive
+            and negative ions add up. A passing balance means the analysis is
+            internally consistent.
+          </p>
+          <p>
+            <strong>Limitations</strong> — results describe the water on the day
+            it was sampled, at the point it was sampled. Water quality changes
+            with season, pumping, and household plumbing. This report does not
+            certify water as safe to drink.
+          </p>
+          <p>
+            <strong>Questions, or want more data?</strong> Email
+            waterdata@nmbg.nmt.edu or call (575) 835-5490. You can request the
+            complete record for your well at any time; use the data request link
+            in the digital version.
+          </p>
+        </div>
+      </div>
+
+      <div class="foot">
+        <svg viewBox="0 0 29 29" shape-rendering="crispEdges">
+          <rect width="29" height="29" fill="#fff" />
+          <path fill="#0f172a" d="M0 0h7v1h-7zM11 0h3v1h-3zM17 0h4v1h-4zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h2v1h-2zM14 1h4v1h-4zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM16 2h1v1h-1zM18 2h3v1h-3zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h2v1h-2zM12 3h2v1h-2zM15 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM17 4h3v1h-3zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h3v1h-3zM15 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h3v1h-3zM12 7h1v1h-1zM15 7h1v1h-1zM19 7h2v1h-2zM0 8h1v1h-1zM2 8h5v1h-5zM12 8h2v1h-2zM16 8h2v1h-2zM22 8h5v1h-5zM1 9h1v1h-1zM3 9h1v1h-1zM9 9h2v1h-2zM12 9h1v1h-1zM14 9h1v1h-1zM19 9h6v1h-6zM28 9h1v1h-1zM0 10h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM11 10h1v1h-1zM13 10h4v1h-4zM21 10h2v1h-2zM24 10h1v1h-1zM0 11h1v1h-1zM2 11h2v1h-2zM7 11h2v1h-2zM10 11h3v1h-3zM15 11h1v1h-1zM18 11h2v1h-2zM23 11h3v1h-3zM27 11h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM12 12h1v1h-1zM15 12h4v1h-4zM23 12h1v1h-1zM25 12h2v1h-2zM4 13h2v1h-2zM7 13h4v1h-4zM12 13h1v1h-1zM17 13h8v1h-8zM28 13h1v1h-1zM0 14h1v1h-1zM3 14h2v1h-2zM6 14h1v1h-1zM8 14h1v1h-1zM11 14h2v1h-2zM15 14h3v1h-3zM20 14h1v1h-1zM22 14h2v1h-2zM25 14h2v1h-2zM4 15h2v1h-2zM7 15h2v1h-2zM11 15h1v1h-1zM15 15h1v1h-1zM18 15h1v1h-1zM20 15h2v1h-2zM23 15h1v1h-1zM27 15h1v1h-1zM0 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM9 16h2v1h-2zM15 16h3v1h-3zM19 16h1v1h-1zM25 16h2v1h-2zM0 17h3v1h-3zM8 17h1v1h-1zM11 17h1v1h-1zM13 17h1v1h-1zM18 17h7v1h-7zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM3 18h1v1h-1zM6 18h2v1h-2zM12 18h5v1h-5zM22 18h2v1h-2zM26 18h1v1h-1zM0 19h1v1h-1zM5 19h1v1h-1zM10 19h2v1h-2zM13 19h1v1h-1zM16 19h1v1h-1zM19 19h3v1h-3zM24 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM2 20h2v1h-2zM5 20h2v1h-2zM8 20h5v1h-5zM14 20h1v1h-1zM17 20h1v1h-1zM19 20h6v1h-6zM26 20h3v1h-3zM8 21h3v1h-3zM12 21h1v1h-1zM18 21h1v1h-1zM20 21h1v1h-1zM24 21h5v1h-5zM0 22h7v1h-7zM11 22h1v1h-1zM15 22h1v1h-1zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h2v1h-2zM11 23h1v1h-1zM14 23h1v1h-1zM18 23h3v1h-3zM24 23h1v1h-1zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h4v1h-4zM15 24h3v1h-3zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h4v1h-4zM13 25h2v1h-2zM16 25h1v1h-1zM20 25h1v1h-1zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h1v1h-1zM14 26h3v1h-3zM19 26h9v1h-9zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM12 27h1v1h-1zM16 27h1v1h-1zM20 27h1v1h-1zM22 27h2v1h-2zM25 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM12 28h3v1h-3zM17 28h2v1h-2zM22 28h2v1h-2zM26 28h1v1h-1z" />
+        </svg>
+        <div>
+          <strong>Digital version:</strong> ocotillo.nmbg.nmt.edu/r/1187-26 —
+          every sample on record, interactive trends, and downloadable data.<br />
+          Questions: waterdata@nmbg.nmt.edu · (575) 835-5490
+        </div>
+        <div class="page-num">WL-1187 · RPT-2026-001187 · Page 3 of 3</div>
+      </div>
+    </div>
+
+  </body>
+</html>

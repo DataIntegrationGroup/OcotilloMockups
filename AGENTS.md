@@ -90,6 +90,32 @@ It states two things:
 The second part is the point. A mockup with no open questions listed is either
 finished or not being honest. Write it before building the screen, not after.
 
+## Example deliverables (`examples/`)
+
+Some mockups describe a screen that *produces* something — a PDF, an export, a
+printed report. `examples/` holds a rendered sample of that output, so a
+reviewer can hold the artifact instead of imagining it.
+
+These are **not** mockups, and the naming and mockup-note rules above do not
+apply. What does apply:
+
+- The source `.html` is still standalone — all CSS inline, no `<script src>`.
+  Same rule, same reason.
+- The rendered PDF is committed alongside its source. It is the point of the
+  folder; a reviewer should not need a toolchain to see it.
+- `examples/render.sh` regenerates a PDF via headless Chrome. Re-run it after
+  editing the source and commit both.
+- On-screen fit is not print fit. A page that measures correctly in the browser
+  can still push its footer onto a blank sheet. Always render and count pages:
+  a 3-page report that comes out 5 pages is the usual symptom.
+- **Anything scannable must be real.** A placeholder QR is fine in a mockup and
+  not fine on a sample deliverable — someone will scan it. Encode the actual
+  URL and inline the result as a static path.
+
+Mark the sample clearly as a sample, in a screen-only banner that does not
+print. The artifact should be unmistakable as an example when read on screen
+and clean when put on paper.
+
 ## Design rules
 
 `design-system/README.md` has the full set, including where each value comes
