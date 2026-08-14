@@ -9,649 +9,72 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
+        <link rel="stylesheet" href="design-system/ocotillo.css" />
     <style>
-      /* ── Reset & base ── */
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      :root {
-        /* Palette — light mode */
-        --bg: #e7e5e4; /* stone-200 */
-        --bg-wrapper: #f5f4f2; /* stone-100 */
-        --paper: #ffffff;
-        --divider: #d6d3d1; /* stone-300 */
-
-        --primary: #1d4ed8; /* blue-700 */
-        --primary-dk: #1e3a8a; /* blue-900 */
-        --primary-lt: #93c5fd; /* blue-300 */
-        --primary-bg: #eff6ff; /* blue-50 */
-
-        --text-1: #0f172a; /* slate-900 */
-        --text-2: #64748b; /* slate-500 */
-
-        --success: #059669; /* emerald-700 */
-        --warning: #f97316; /* orange-500 */
-        --error: #dc2626; /* red-600 */
-
-        --font-body: "Public Sans", system-ui, sans-serif;
-        --font-head: "Outfit", system-ui, sans-serif;
-
-        --radius-card: 8px;
-        --shadow-2:
-          0 3px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.06);
-      }
-
-      body {
-        font-family: var(--font-body);
-        background: var(--bg);
-        color: var(--text-1);
-        font-size: 14px;
-        line-height: 1.6;
-      }
-
-      /* ── App bar ── */
-      .appbar {
-        position: sticky;
-        top: 0;
-        z-index: 200;
-        background: var(--bg);
-        border-bottom: 1px solid var(--divider);
-        height: 52px;
-        display: flex;
-        align-items: center;
-        padding: 0 16px 0 0;
-        gap: 12px;
-      }
-      .appbar-hamburger {
-        width: 52px;
-        height: 52px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        color: var(--text-2);
-        cursor: pointer;
-        flex-shrink: 0;
-      }
-      .appbar-title {
-        font-family: var(--font-head);
-        font-weight: 800;
-        font-size: 1.05rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--text-1);
-      }
-      .appbar-right {
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .appbar-search {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        border: 1px solid var(--divider);
-        border-radius: 6px;
-        padding: 5px 12px;
-        font-family: var(--font-body);
-        font-size: 13px;
-        color: var(--text-2);
-        background: var(--paper);
-        width: 220px;
-        cursor: text;
-      }
-      .appbar-search-kbd {
-        margin-left: auto;
-        border: 1px solid var(--divider);
-        border-radius: 3px;
-        padding: 1px 5px;
-        font-size: 10px;
-        color: var(--text-2);
-        background: var(--bg-wrapper);
-      }
-      .appbar-icon-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 1px solid var(--divider);
-        background: var(--paper);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        color: var(--text-2);
-        cursor: pointer;
-      }
-      .avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: var(--primary);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      /* ── Layout ── */
-      .layout {
-        display: flex;
-        min-height: calc(100vh - 52px);
-      }
-
-      /* ── Sidebar ── */
-      .sidebar {
-        width: 260px;
-        flex-shrink: 0;
-        background: var(--paper);
-        border-right: 1px solid var(--divider);
-        display: flex;
-        flex-direction: column;
-        padding-top: 8px;
-      }
-      .nav-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 9px 16px;
-        font-size: 13.5px;
-        font-weight: 500;
-        color: var(--text-2);
-        cursor: pointer;
-        border-radius: 0;
-        text-decoration: none;
-      }
-      .nav-item:hover {
-        background: var(--bg-wrapper);
-        color: var(--text-1);
-      }
-      .nav-item.active {
-        color: var(--primary);
-        text-decoration: underline;
-        text-underline-offset: 2px;
-      }
-      .nav-icon {
-        font-size: 16px;
-        width: 20px;
-        text-align: center;
-      }
-      .nav-divider {
-        border: none;
-        border-top: 1px solid var(--divider);
-        margin: 6px 0;
-      }
-      .sidebar-footer {
-        margin-top: auto;
-        padding: 12px 0 8px;
-        border-top: 1px solid var(--divider);
-      }
-      .sidebar-footer-link {
-        display: block;
-        padding: 6px 16px;
-        font-size: 12px;
-        color: var(--text-2);
-        cursor: pointer;
-      }
-      .sidebar-footer-link:hover {
-        color: var(--text-1);
-      }
-
-      /* ── Main ── */
-      .main {
-        flex: 1;
-        padding: 20px 24px;
-        overflow: auto;
-        min-width: 0;
-      }
-
-      /* ── Breadcrumb ── */
-      .breadcrumb {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 14px;
-        color: var(--text-2);
-        margin-bottom: 10px;
-      }
-      .breadcrumb a {
-        color: var(--text-2);
-        text-decoration: none;
-      }
-      .breadcrumb a:hover {
-        text-decoration: underline;
-        color: var(--text-1);
-      }
-      .breadcrumb-sep {
-        color: var(--divider);
-      }
-
-      /* ── Page header ── */
-      .page-header {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        gap: 16px;
-      }
-      .page-title {
-        font-family: var(--font-head);
-        font-size: 22px;
-        font-weight: 600;
-        color: var(--text-1);
-        line-height: 1.3;
-      }
-      .page-subtitle {
-        font-size: 13px;
-        color: var(--text-2);
-        margin-top: 2px;
-      }
-      .header-actions {
-        display: flex;
-        gap: 8px;
-        flex-shrink: 0;
-      }
-
-      /* ── Buttons ── */
-      .btn {
-        font-family: var(--font-body);
-        font-size: 13px;
-        font-weight: 500;
-        letter-spacing: 0.04em;
-        padding: 4px 12px;
-        border-radius: 6px;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .btn-contained {
-        background: var(--primary);
-        color: white;
-        border: 1px solid var(--primary);
-      }
-      .btn-contained:hover {
-        background: var(--primary-dk);
-      }
-      .btn-outlined {
-        background: var(--paper);
-        color: var(--primary);
-        border: 1px solid var(--primary);
-      }
-      .btn-outlined:hover {
-        background: var(--primary-bg);
-      }
-      .btn-ghost {
-        background: var(--paper);
-        color: var(--text-2);
-        border: 1px solid var(--divider);
-      }
-      .btn-ghost:hover {
-        background: var(--bg-wrapper);
-      }
-
-      /* ── Cards ── */
-      .card {
-        background: var(--paper);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-2);
-        overflow: hidden;
-      }
-      .card-header {
-        padding: 12px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .card-header-left {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .card-header-icon {
-        font-size: 16px;
-        color: var(--primary);
-      }
-      .card-title {
-        font-family: var(--font-body);
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--text-1);
-      }
-      .card-body {
-        padding: 8px 16px 16px;
-      }
-      .card-placeholder {
-        padding: 16px;
-        min-height: 72px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        color: var(--divider);
-        font-style: italic;
-        background: var(--bg-wrapper);
-        margin: 8px 16px 16px;
-        border-radius: 4px;
-        border: 1px dashed var(--divider);
-      }
-
-      /* ── Grid ── */
-      .grid {
-        display: grid;
-        gap: 16px;
-        margin-bottom: 16px;
-      }
-      .g2 {
-        grid-template-columns: 1fr 1fr;
-      }
-      .g3 {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-      .g-main-aside {
-        grid-template-columns: 2fr 1fr;
-      }
-      .span2 {
-        grid-column: span 2;
-      }
-      .span3 {
-        grid-column: span 3;
-      }
-
-      /* ── Well info fields ── */
-      .field-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0;
-      }
-      .field-cell {
-        padding: 10px 16px;
-        border-left: 1px solid var(--divider);
-      }
-      .field-cell:first-child {
-        border-left: none;
-      }
-      .field-label {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--text-2);
-        margin-bottom: 2px;
-      }
-      .field-value {
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--text-1);
-      }
-
-      /* ── MUI DataGrid-style table ── */
-      .datagrid {
-        border: 1px solid var(--divider);
-        border-radius: 5px;
-        overflow: hidden;
-        font-size: 13px;
-        width: 100%;
-      }
-      .datagrid table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .datagrid thead th {
-        background: var(--paper);
-        border-bottom: 1px solid var(--divider);
-        padding: 0 12px;
-        height: 40px;
-        text-align: left;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text-1);
-        white-space: nowrap;
-      }
-      .datagrid tbody td {
-        padding: 0 12px;
-        height: 44px;
-        border-bottom: 1px solid var(--divider);
-        vertical-align: middle;
-        color: var(--text-1);
-        font-size: 13px;
-      }
-      .datagrid tbody tr:last-child td {
-        border-bottom: none;
-      }
-      .datagrid tbody tr:hover td {
-        background: var(--bg-wrapper);
-      }
-      .datagrid.crosstab {
-        overflow-x: auto;
-      }
-      .datagrid.crosstab table {
-        min-width: 1380px;
-      }
-      .datagrid.crosstab th:first-child,
-      .datagrid.crosstab td:first-child {
-        position: sticky;
-        left: 0;
-        background: var(--paper);
-        z-index: 1;
-        box-shadow: 1px 0 0 var(--divider);
-      }
-      .datagrid.crosstab tbody tr:hover td:first-child {
-        background: var(--bg-wrapper);
-      }
-      .unit-label {
-        display: block;
-        margin-top: 2px;
-        font-size: 10px;
-        font-weight: 500;
-        color: var(--text-2);
-      }
-      .cell-note {
-        display: block;
-        margin-top: 3px;
-        font-size: 10px;
-        color: var(--text-2);
-        white-space: nowrap;
-      }
-
-      /* ── Chips ── */
-      .chip {
-        display: inline-flex;
-        align-items: center;
-        font-size: 11px;
-        font-weight: 500;
-        padding: 1px 7px;
-        border-radius: 10px;
-        white-space: nowrap;
-      }
-      .chip-nd {
-        background: #fff7ed;
-        color: #c2410c;
-        border: 1px solid #fed7aa;
-      }
-      .chip-mcl {
-        background: #fef2f2;
-        color: #b91c1c;
-        border: 1px solid #fecaca;
-      }
-      .chip-ok {
-        background: #f0fdf4;
-        color: #15803d;
-        border: 1px solid #bbf7d0;
-      }
-      .chip-calc {
-        background: #f8fafc;
-        color: #64748b;
-        border: 1px solid #e2e8f0;
-      }
-      .chip-smcl {
-        background: #fff7ed;
-        color: #c2410c;
-        border: 1px solid #fed7aa;
-      }
-
-      /* ── Tabs (MUI style) ── */
-      .tabs-bar {
-        display: flex;
-        border-bottom: 2px solid var(--divider);
-        margin-bottom: 16px;
-      }
-      .tab {
-        padding: 10px 16px;
-        font-family: var(--font-body);
-        font-size: 13.5px;
-        font-weight: 500;
-        letter-spacing: 0.04em;
-        color: var(--text-2);
-        cursor: pointer;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -2px;
-        white-space: nowrap;
-      }
-      .tab.active {
-        color: var(--primary);
-        border-bottom-color: var(--primary);
-      }
-      .tab:hover:not(.active) {
-        color: var(--text-1);
-        background: var(--bg-wrapper);
-      }
-
-      .tab-panel {
-        display: none;
-      }
-      .tab-panel.active {
-        display: block;
-      }
-
-      /* ── Toolbar ── */
-      .toolbar {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 14px;
-        flex-wrap: wrap;
-      }
-      .toolbar-label {
-        font-size: 12px;
-        color: var(--text-2);
-      }
-      .toolbar-select {
-        font-family: var(--font-body);
-        font-size: 12px;
-        border: 1px solid var(--divider);
-        border-radius: 5px;
-        padding: 4px 8px;
-        background: var(--paper);
-        color: var(--text-1);
-      }
-      .toolbar-spacer {
-        margin-left: auto;
-      }
-
+      /* ── Page-specific ──
+         Shared styles live in design-system/ocotillo.css. */
       /* ── Sample meta ── */
-      .sample-meta {
-        font-size: 12px;
-        color: var(--text-2);
-        margin-bottom: 12px;
-      }
+            .sample-meta {
+              font-size: 12px;
+              color: var(--muted-foreground);
+              margin-bottom: 12px;
+            }
       .sample-meta strong {
-        color: var(--text-1);
-        font-weight: 600;
-      }
+              color: var(--foreground);
+              font-weight: 600;
+            }
       .sample-context {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        border: 1px solid var(--divider);
-        border-radius: 5px;
-        overflow: hidden;
-        margin-bottom: 12px;
-        background: var(--paper);
-      }
+              display: grid;
+              grid-template-columns: repeat(4, minmax(0, 1fr));
+              border: 1px solid var(--divider);
+              border-radius: 5px;
+              overflow: hidden;
+              margin-bottom: 12px;
+              background: var(--paper);
+            }
       .sample-context-cell {
-        padding: 9px 12px;
-        border-left: 1px solid var(--divider);
-        min-width: 0;
-      }
+              padding: 9px 12px;
+              border-left: 1px solid var(--divider);
+              min-width: 0;
+            }
       .sample-context-cell:first-child {
-        border-left: none;
-      }
+              border-left: none;
+            }
       .sample-note {
-        margin-bottom: 12px;
-        padding: 9px 12px;
-        border-radius: 5px;
-        border: 1px solid #bfdbfe;
-        background: #eff6ff;
-        font-size: 12px;
-        color: var(--text-1);
-      }
-
+              margin-bottom: 12px;
+              padding: 9px 12px;
+              border-radius: 5px;
+              border: 1px solid #bfdbfe;
+              background: #eff6ff;
+              font-size: 12px;
+              color: var(--foreground);
+            }
       /* ── QA banner ── */
-      .qa-banner {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: #f0fdf4;
-        border: 1px solid #bbf7d0;
-        border-radius: 5px;
-        padding: 7px 12px;
-        font-size: 12px;
-        color: #166534;
-        margin-bottom: 12px;
-      }
-
+            .qa-banner {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              background: #f0fdf4;
+              border: 1px solid #bbf7d0;
+              border-radius: 5px;
+              padding: 7px 12px;
+              font-size: 12px;
+              color: #166534;
+              margin-bottom: 12px;
+            }
       /* ── Time series hint ── */
-      .ts-hint {
-        margin-top: 12px;
-        padding: 10px 14px;
-        background: var(--bg-wrapper);
-        border-radius: 5px;
-        font-size: 12px;
-        color: var(--text-2);
-        border: 1px solid var(--divider);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      /* ── Legend ── */
-      .legend {
-        display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
-        padding-top: 12px;
-        margin-top: 10px;
-        border-top: 1px solid var(--divider);
-        font-size: 11px;
-        color: var(--text-2);
-      }
-      .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      /* ── Mockup note ── */
-      .mockup-note {
-        background: #fefce8;
-        border: 1px solid #fde047;
-        border-radius: 6px;
-        padding: 10px 14px;
-        font-size: 12px;
-        color: #713f12;
-        margin-bottom: 16px;
-      }
-      .mockup-note strong {
-        font-weight: 600;
-      }
+            .ts-hint {
+              margin-top: 12px;
+              padding: 10px 14px;
+              background: var(--wrapper);
+              border-radius: 5px;
+              font-size: 12px;
+              color: var(--muted-foreground);
+              border: 1px solid var(--divider);
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            }
     </style>
   </head>
   <body>
@@ -681,7 +104,7 @@
         <div class="nav-item"><span class="nav-icon">⊞</span> Projects</div>
         <div class="nav-item"><span class="nav-icon">📎</span> Assets</div>
         <hr class="nav-divider" />
-        <div class="nav-item" style="color: var(--text-2)">
+        <div class="nav-item" style="color: var(--muted-foreground)">
           <span class="nav-icon">🔒</span> Admin
         </div>
 
@@ -691,7 +114,7 @@
           <div class="sidebar-footer-link">Report a Bug</div>
           <div style="padding: 8px 16px; margin-top: 4px">
             <button
-              class="btn btn-ghost"
+              class="btn btn-outline"
               style="font-size: 11px; padding: 3px 10px"
             >
               ☀ Light mode
@@ -719,9 +142,9 @@
             </div>
           </div>
           <div class="header-actions">
-            <button class="btn btn-ghost">Field Sheet PDF</button>
-            <button class="btn btn-ghost">↓ Download PDF</button>
-            <button class="btn btn-outlined">Edit</button>
+            <button class="btn btn-outline">Field Sheet PDF</button>
+            <button class="btn btn-outline">↓ Download PDF</button>
+            <button class="btn btn-primary-outline">Edit</button>
           </div>
         </div>
 
@@ -880,7 +303,7 @@
                 <option>Export GeoJSON</option>
                 <option>Export Crosstab</option>
               </select>
-              <button class="btn btn-outlined" style="font-size: 12px">
+              <button class="btn btn-primary-outline" style="font-size: 12px">
                 ↓ Export
               </button>
             </div>
@@ -1288,7 +711,7 @@
               <span class="card-header-icon">📝</span>
               <span class="card-title">Notes</span>
             </div>
-            <span style="font-size: 12px; color: var(--text-2)">▼</span>
+            <span style="font-size: 12px; color: var(--muted-foreground)">▼</span>
           </div>
           <div class="card-placeholder">[ Site and visit notes accordion ]</div>
         </div>

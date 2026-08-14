@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lo-fi Mockup — [Feature] · Ocotillo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="design-system/ocotillo.css" />
+    <style>
+      /* ── Page-specific ──
+         Only things genuinely unique to this mockup. Anything reusable
+         belongs in design-system/ocotillo.css instead. */
+    </style>
+  </head>
+  <body>
+    <!-- ── App bar ── -->
+    <div class="appbar">
+      <div class="appbar-hamburger">☰</div>
+      <span class="appbar-title">Ocotillo</span>
+      <div class="appbar-right">
+        <div class="appbar-search">
+          <span>⌕</span>
+          <span>Search wells…</span>
+          <span class="appbar-search-kbd">⌘K</span>
+        </div>
+        <div class="appbar-icon-btn" title="Report a bug">🐛</div>
+        <div class="avatar">LL</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- ── Sidebar ── -->
+      <div class="sidebar">
+        <div class="nav-item"><span class="nav-icon">⌂</span> Home</div>
+        <div class="nav-item active"><span class="nav-icon">◉</span> Wells</div>
+        <div class="nav-item"><span class="nav-icon">◎</span> Springs</div>
+        <div class="nav-item"><span class="nav-icon">◈</span> Map</div>
+        <div class="nav-item"><span class="nav-icon">☎</span> Contacts</div>
+        <div class="nav-item"><span class="nav-icon">⊞</span> Projects</div>
+        <div class="nav-item"><span class="nav-icon">📎</span> Assets</div>
+        <hr class="nav-divider" />
+        <div class="nav-item"><span class="nav-icon">🔒</span> Admin</div>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-footer-link">About</div>
+          <div class="sidebar-footer-link">Connect Desktop GIS</div>
+          <div class="sidebar-footer-link">Report a Bug</div>
+        </div>
+      </div>
+
+      <!-- ── Main ── -->
+      <div class="main">
+        <div class="breadcrumb">
+          <a href="#">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="#">[Section]</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>[Page]</span>
+        </div>
+
+        <div class="page-header">
+          <div>
+            <div class="page-title">[Page Title]</div>
+            <div class="page-subtitle">[One line on what this screen is for.]</div>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-outline">Secondary</button>
+            <button class="btn btn-default">Primary Action</button>
+          </div>
+        </div>
+
+        <!-- Required. State what is fake, and what this mockup is meant to
+             force a decision about. -->
+        <div class="mockup-note">
+          <strong>Lo-fi mockup — not functional.</strong> [What it demonstrates.]
+          Open questions flagged for review:
+          <ul>
+            <li>[Question this mockup exists to answer.]</li>
+            <li>[Another one.]</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="card-header-icon">◉</span>
+              <span class="card-title">Card Title</span>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-ghost btn-sm">Action</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-placeholder">[ Content ]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

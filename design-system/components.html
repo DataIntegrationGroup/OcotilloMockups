@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ocotillo Mockup Design System — Components</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="ocotillo.css" />
+    <style>
+      /* ── Page-specific — gallery chrome only ── */
+      .gallery {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 28px 24px 80px;
+      }
+      .spec {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 30px 0 12px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 5px;
+      }
+      .spec h2 {
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--foreground);
+      }
+      .spec code {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--muted-foreground);
+        margin-left: auto;
+      }
+      .demo {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        padding: 14px;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        margin-bottom: 8px;
+      }
+      .demo.stack {
+        display: block;
+      }
+      .note {
+        font-size: 12px;
+        color: var(--muted-foreground);
+        margin-bottom: 14px;
+      }
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(122px, 1fr));
+        gap: 8px;
+      }
+      .sw {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        font-size: 10.5px;
+      }
+      .sw i {
+        display: block;
+        height: 42px;
+      }
+      .sw b {
+        display: block;
+        padding: 4px 7px 0;
+        font-weight: 600;
+        font-style: normal;
+      }
+      .sw span {
+        display: block;
+        padding: 0 7px 5px;
+        color: var(--muted-foreground);
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+      }
+      .mode-toggle {
+        position: fixed;
+        top: 14px;
+        right: 18px;
+        z-index: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="btn btn-outline mode-toggle" onclick="toggleMode()">
+      ◐ Toggle dark mode
+    </button>
+
+    <div class="gallery">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Design System</div>
+          <div class="page-subtitle">
+            Every class in <code class="mono">ocotillo.css</code>, rendered.
+            Ported from OcotilloUI — see README.md for provenance and rules.
+          </div>
+        </div>
+      </div>
+
+      <div class="mockup-note">
+        <strong>This is the reference, not a mockup.</strong> Build screens from
+        these classes. If something you need is missing, add it to the
+        stylesheet when it is general, and to your mockup's own
+        <code class="mono">&lt;style&gt;</code> block when it is one-off.
+      </div>
+
+      <!-- ── Color ── -->
+      <div class="spec"><h2>Brand ramp</h2><code>--brand-50 … --brand-950</code></div>
+      <div class="note">
+        The one ramp that is not Tailwind — sampled from the pixel water-splash
+        mark and the desert sky in the masthead photo. <code class="mono">--primary</code>
+        points at brand-600 on light surfaces, brand-300 on dark.
+      </div>
+      <div class="swatches" style="margin-bottom: 8px">
+        <div class="sw"><i style="background: var(--brand-50)"></i><b>50</b><span>#eff8fd</span></div>
+        <div class="sw"><i style="background: var(--brand-100)"></i><b>100</b><span>#dceffb</span></div>
+        <div class="sw"><i style="background: var(--brand-200)"></i><b>200</b><span>#b8dff6</span></div>
+        <div class="sw"><i style="background: var(--brand-300)"></i><b>300</b><span>#83c6ee</span></div>
+        <div class="sw"><i style="background: var(--brand-400)"></i><b>400</b><span>#47a6dd</span></div>
+        <div class="sw"><i style="background: var(--brand-500)"></i><b>500</b><span>#1e88c4</span></div>
+        <div class="sw"><i style="background: var(--brand-600)"></i><b>600 ← primary</b><span>#0e6da8</span></div>
+        <div class="sw"><i style="background: var(--brand-700)"></i><b>700 ← hover</b><span>#0f5786</span></div>
+        <div class="sw"><i style="background: var(--brand-800)"></i><b>800</b><span>#12496e</span></div>
+        <div class="sw"><i style="background: var(--brand-900)"></i><b>900</b><span>#143d5b</span></div>
+        <div class="sw"><i style="background: var(--brand-950)"></i><b>950</b><span>#0d273c</span></div>
+      </div>
+
+      <div class="spec"><h2>Semantic &amp; surface tokens</h2><code>var(--token)</code></div>
+      <div class="swatches" style="margin-bottom: 8px">
+        <div class="sw"><i style="background: var(--destructive)"></i><b>destructive</b><span>red-600</span></div>
+        <div class="sw"><i style="background: var(--warning)"></i><b>warning</b><span>orange-500</span></div>
+        <div class="sw"><i style="background: var(--success)"></i><b>success</b><span>emerald-700</span></div>
+        <div class="sw"><i style="background: var(--info)"></i><b>info</b><span>teal-700</span></div>
+        <div class="sw"><i style="background: var(--secondary)"></i><b>secondary</b><span>amber-600</span></div>
+        <div class="sw"><i style="background: var(--background)"></i><b>background</b><span>zinc-50</span></div>
+        <div class="sw"><i style="background: var(--paper)"></i><b>paper / card</b><span>white</span></div>
+        <div class="sw"><i style="background: var(--muted)"></i><b>muted</b><span>neutral-100</span></div>
+        <div class="sw"><i style="background: var(--border)"></i><b>border</b><span>neutral-200</span></div>
+        <div class="sw"><i style="background: var(--divider)"></i><b>divider</b><span>stone-300 (MUI)</span></div>
+      </div>
+      <div class="note">
+        Brand identity, never semantic — the bloom sits 8.7 degrees of hue from
+        <code class="mono">--destructive</code> and reads as an alarm in UI chrome:
+      </div>
+      <div class="swatches">
+        <div class="sw"><i style="background: var(--bloom)"></i><b>bloom</b><span>#e2552e</span></div>
+        <div class="sw"><i style="background: var(--sand)"></i><b>sand</b><span>#f2e9d2</span></div>
+      </div>
+
+      <!-- ── Type ── -->
+      <div class="spec"><h2>Typography</h2><code>.h1 … .h6 · .body1 · .caption · .overline · .mono</code></div>
+      <div class="demo stack">
+        <div class="h3">Outfit · h3 · page titles</div>
+        <div class="h5">Outfit · h5</div>
+        <div class="h6">Outfit · h6</div>
+        <div class="body1">Public Sans · body1 · 16px</div>
+        <div class="body2">Public Sans · body2 · 14px — the app's working size</div>
+        <div class="caption">Public Sans · caption · 12px</div>
+        <div class="overline">Overline · 11px · uppercase</div>
+        <div class="mono">WL-1187 · mono · tabular-nums 0123456789</div>
+      </div>
+
+      <!-- ── Buttons ── -->
+      <div class="spec"><h2>Buttons</h2><code>.btn + .btn-default | -outline | -ghost | -primary-outline | -destructive | -link</code></div>
+      <div class="demo">
+        <button class="btn btn-default">Primary</button>
+        <button class="btn btn-outline">Outline</button>
+        <button class="btn btn-ghost">Ghost</button>
+        <button class="btn btn-primary-outline">Primary outline</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-destructive">Destructive</button>
+        <button class="btn btn-link">Link</button>
+        <button class="btn btn-default" disabled>Disabled</button>
+      </div>
+      <div class="demo">
+        <button class="btn btn-default btn-xs">xs</button>
+        <button class="btn btn-default btn-sm">sm</button>
+        <button class="btn btn-default">default</button>
+        <button class="btn btn-default btn-lg">lg</button>
+        <button class="btn btn-outline btn-icon">◈</button>
+      </div>
+
+      <!-- ── Badges ── -->
+      <div class="spec"><h2>Badges / chips</h2><code>.badge | .chip + variant</code></div>
+      <div class="note">
+        Tinted at 10% with a 30% border of the same token, via
+        <code class="mono">color-mix</code>. Never hand-picked hex pairs — those
+        drift from the token and break dark mode.
+      </div>
+      <div class="demo">
+        <span class="badge badge-default">Default</span>
+        <span class="badge badge-primary">Primary</span>
+        <span class="badge badge-success">Success</span>
+        <span class="badge badge-warning">Warning</span>
+        <span class="badge badge-destructive">Destructive</span>
+        <span class="badge badge-info">Info</span>
+        <span class="badge badge-neutral">Neutral</span>
+        <span class="badge badge-outline">Outline</span>
+      </div>
+      <div class="note">
+        Domain flags — water chemistry meanings mapped onto those tints:
+      </div>
+      <div class="demo">
+        <span class="chip chip-mcl">Above MCL</span>
+        <span class="chip chip-smcl">Above SMCL</span>
+        <span class="chip chip-nd">ND</span>
+        <span class="chip chip-calc">Calc.</span>
+        <span class="chip chip-ok">Below limit</span>
+        <span class="chip chip-warn">Expiring</span>
+      </div>
+
+      <!-- ── Cards ── -->
+      <div class="spec"><h2>Card</h2><code>.card · .card-header · .card-title · .card-body</code></div>
+      <div class="note">
+        Ring-outlined and flat — <code class="mono">ring-1 ring-foreground/10</code>,
+        10px radius, no shadow. The app does not use drop shadows on cards.
+      </div>
+      <div class="grid g2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="card-header-icon">◉</span>
+              <span class="card-title">Card Title</span>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-ghost btn-sm">Action</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="body2">Card body content.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="card-header-icon">◈</span>
+              <span class="card-title">With placeholder</span>
+            </div>
+          </div>
+          <div class="card-placeholder">[ Chart or grid goes here ]</div>
+        </div>
+      </div>
+
+      <!-- ── Tables ── -->
+      <div class="spec"><h2>DataGrid</h2><code>.datagrid (+ .dense .crosstab .scroll-x)</code></div>
+      <div class="note">
+        The MUI X DataGrid look — bordered container, 5px radius, 13px,
+        tabular-nums. Use for record lists.
+      </div>
+      <div class="datagrid" style="margin-bottom: 8px">
+        <table>
+          <thead>
+            <tr>
+              <th>Point ID <span class="sort-caret">▲</span></th>
+              <th>Name</th>
+              <th>Samples</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="selected">
+              <td class="mono">WL-1187</td>
+              <td>Vigil Ranch Well<span class="cell-note">Domestic</span></td>
+              <td>2</td>
+              <td><span class="chip chip-mcl">1 MCL</span></td>
+            </tr>
+            <tr>
+              <td class="mono">WL-1204</td>
+              <td>Cañon Domestic</td>
+              <td>1</td>
+              <td><span class="chip chip-ok">None</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="grid-footer"><span>1–2 of 38</span><span>‹ ›</span></div>
+      </div>
+
+      <div class="spec"><h2>Table</h2><code>.table</code></div>
+      <div class="note">
+        The shadcn table — no outer border, 14px, row rules only. Use inside a card.
+      </div>
+      <div class="demo stack">
+        <table class="table">
+          <thead>
+            <tr><th>Parameter</th><th>Result</th><th>Unit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Arsenic</td><td class="num">0.012</td><td>mg/L</td></tr>
+            <tr><td>Nitrate as N</td><td class="num">4.2</td><td>mg/L</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── Forms ── -->
+      <div class="spec"><h2>Form controls</h2><code>.form-row · .field · .input · .select · .box · .opt-card</code></div>
+      <div class="demo stack">
+        <div class="form-row">
+          <div class="field">
+            <span class="field-label-sm">Point ID</span>
+            <input class="input input-mono" value="WL-1187" />
+          </div>
+          <div class="field">
+            <span class="field-label-sm">County</span>
+            <select class="select"><option>Socorro</option></select>
+          </div>
+          <div class="field">
+            <span class="field-label-sm">Disabled</span>
+            <input class="input" value="Read only" disabled />
+          </div>
+          <button class="btn btn-default">Apply</button>
+        </div>
+        <div class="check-list" style="max-width: 380px">
+          <div class="check-item on"><span class="box">✓</span><span class="check-text">Checked option<span class="check-sub">With a sub-label</span></span></div>
+          <div class="check-item"><span class="box">✓</span><span class="check-text">Unchecked option</span></div>
+        </div>
+        <div class="opt-cards" style="margin-top: 10px">
+          <div class="opt-card on"><span class="opt-radio"></span><div><div class="opt-title">Selected</div><div class="opt-desc">Radio card, for a choice that needs explaining.</div></div></div>
+          <div class="opt-card"><span class="opt-radio"></span><div><div class="opt-title">Unselected</div><div class="opt-desc">The alternative.</div></div></div>
+        </div>
+      </div>
+
+      <!-- ── Alerts ── -->
+      <div class="spec"><h2>Alerts</h2><code>.alert + .alert-info | -ok | -warn | -error | -primary</code></div>
+      <div class="demo stack">
+        <div class="alert alert-info"><span>ⓘ</span><div>Informational — teal, not cyan.</div></div>
+        <div class="alert alert-ok"><span>✓</span><div>Succeeded.</div></div>
+        <div class="alert alert-warn"><span>⚠</span><div>Will proceed, with something suppressed.</div></div>
+        <div class="alert alert-error"><span>✕</span><div>Blocked.</div></div>
+      </div>
+
+      <!-- ── Navigation ── -->
+      <div class="spec"><h2>Tabs, toolbar, steps</h2><code>.tabs-bar · .toolbar · .steps</code></div>
+      <div class="demo stack">
+        <div class="tabs-bar">
+          <div class="tab active">Active tab</div>
+          <div class="tab">Second</div>
+          <div class="tab">Third</div>
+        </div>
+        <div class="toolbar">
+          <span class="toolbar-label">Show</span>
+          <select class="toolbar-select"><option>All parameters</option></select>
+          <span class="toggle-chip on">Active filter</span>
+          <span class="toggle-chip">Inactive filter</span>
+          <span class="toolbar-spacer"></span>
+          <span class="toolbar-label">38 results</span>
+        </div>
+        <div class="steps" style="margin-bottom: 0">
+          <div class="step done"><div class="step-num">1</div><div><div class="step-label">Done</div><div class="step-sub">Complete</div></div></div>
+          <div class="step active"><div class="step-num">2</div><div><div class="step-label">Current</div><div class="step-sub">In progress</div></div></div>
+          <div class="step"><div class="step-num">3</div><div><div class="step-label">Upcoming</div><div class="step-sub">Not started</div></div></div>
+        </div>
+      </div>
+
+      <!-- ── Data display ── -->
+      <div class="spec"><h2>Stat strip &amp; field grid</h2><code>.stat-strip · .field-grid</code></div>
+      <div class="demo stack">
+        <div class="stat-strip" style="margin-bottom: 12px">
+          <div class="stat-cell"><div class="stat-label">Reports</div><div class="stat-value">5</div><div class="stat-note">1 per well</div></div>
+          <div class="stat-cell"><div class="stat-label">Exceedances</div><div class="stat-value" style="color: var(--destructive)">2</div><div class="stat-note">1 MCL · 5 SMCL</div></div>
+          <div class="stat-cell"><div class="stat-label">Undeliverable</div><div class="stat-value" style="color: var(--warning)">1</div><div class="stat-note">No contact</div></div>
+        </div>
+        <div class="field-grid" style="border: 1px solid var(--border); border-radius: var(--radius-md)">
+          <div class="field-cell"><div class="field-label">Point ID</div><div class="field-value">WL-1187</div></div>
+          <div class="field-cell"><div class="field-label">Site type</div><div class="field-value">Domestic well</div></div>
+          <div class="field-cell"><div class="field-label">County</div><div class="field-value">Socorro</div></div>
+        </div>
+      </div>
+
+      <div class="spec"><h2>Distribution meter</h2><code>.meter</code></div>
+      <div class="note">
+        Where one value sits inside a reference distribution — "this well vs.
+        nearby wells". Blue mark is the subject, grey band the 10th–90th
+        percentile, dashed red the standard.
+      </div>
+      <div class="demo">
+        <div class="meter">
+          <div class="meter-track">
+            <div class="meter-band" style="left: 10%; width: 62%"></div>
+            <div class="meter-median" style="left: 34%"></div>
+            <div class="meter-limit" style="left: 56%"></div>
+            <div class="meter-mark over" style="left: 66%"></div>
+          </div>
+          <div class="meter-scale"><span>lower</span><span>71st pct</span><span>higher</span></div>
+        </div>
+        <div class="meter">
+          <div class="meter-track">
+            <div class="meter-band" style="left: 14%; width: 55%"></div>
+            <div class="meter-median" style="left: 38%"></div>
+            <div class="meter-limit" style="left: 88%"></div>
+            <div class="meter-mark" style="left: 45%"></div>
+          </div>
+          <div class="meter-scale"><span>lower</span><span>52nd pct</span><span>higher</span></div>
+        </div>
+      </div>
+
+      <div class="spec"><h2>Misc</h2><code>.state-box · .section-rule · .legend · .dropzone</code></div>
+      <div class="demo stack">
+        <div class="state-box">No wells match these filters.</div>
+        <div class="section-rule"><span class="section-rule-title">Section Heading</span></div>
+        <div class="dropzone">
+          <div class="dropzone-title">↥ Drop CSV, XLSX, or TXT here</div>
+          <div class="dropzone-sub">or click to browse</div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><span class="chip chip-mcl">Above MCL</span> Exceeds a health-based limit</div>
+          <div class="legend-item"><span class="chip chip-nd">ND</span> Not detected</div>
+        </div>
+      </div>
+
+      <div class="spec"><h2>Report sheet</h2><code>.paper-wrap · .report-page · .rp-*</code></div>
+      <div class="note">
+        For mocking PDF deliverables. The app renders these for real with
+        <code class="mono">@react-pdf/renderer</code> — see
+        <code class="mono">OcotilloUI/src/components/pdf</code>.
+      </div>
+      <div class="paper-wrap">
+        <div class="report-page" style="width: 620px; padding: 24px 28px">
+          <div class="rp-head">
+            <div>
+              <div class="rp-org">New Mexico Bureau of Geology &amp; Mineral Resources</div>
+              <div class="rp-title" style="font-size: 20px">Annual Water Quality Report</div>
+              <div class="rp-sub" style="font-size: 12px">Well WL-1187 — Vigil Ranch Well</div>
+            </div>
+          </div>
+          <div class="rp-section" style="margin-top: 12px">
+            <div class="rp-h">Results <span class="rp-h-note">May 15, 2026</span></div>
+            <table class="rp-table">
+              <thead><tr><th>Parameter</th><th>Result</th><th>Standard</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr class="row-exceed"><td>Arsenic</td><td class="rp-num">0.012</td><td class="rp-num">0.010</td><td><span class="chip chip-mcl">Above limit</span></td></tr>
+                <tr class="row-smcl"><td>Iron</td><td class="rp-num">0.42</td><td class="rp-num">0.30</td><td><span class="chip chip-smcl">Above SMCL</span></td></tr>
+                <tr><td>Nitrate as N</td><td class="rp-num">4.2</td><td class="rp-num">10.0</td><td><span class="chip chip-ok">Below limit</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rp-section">
+            <div class="rp-callout">
+              <div class="rp-callout-title">⚠ One result was above a federal health limit</div>
+              Arsenic occurs naturally in New Mexico groundwater.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleMode() {
+        document.documentElement.classList.toggle('dark')
+      }
+    </script>
+  </body>
+</html>
