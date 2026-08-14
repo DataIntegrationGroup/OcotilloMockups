@@ -9,11 +9,31 @@ buttons are a different blue than the app.
 
 ## Files
 
-| File             | Use                                                          |
-| ---------------- | ------------------------------------------------------------ |
-| `ocotillo.css`   | The stylesheet. Link it from every mockup.                    |
-| `template.html`  | Starting shell — app bar, sidebar, main, mockup note. Copy it. |
-| `components.html`| Rendered gallery of every class. Open it to see what exists.  |
+| File              | Use                                                           |
+| ----------------- | ------------------------------------------------------------- |
+| `ocotillo.css`    | The stylesheet. **Source of truth — edit here, then sync.**    |
+| `sync.py`         | Copies the stylesheet into every mockup. Run after editing.    |
+| `template.html`   | Starting shell — app bar, sidebar, main, mockup note. Copy it. |
+| `components.html` | Rendered gallery of every class. Open it to see what exists.   |
+
+## Shared by copying, not by linking
+
+Mockups in this repo are **single self-contained files** — all CSS and JS
+embedded, so one can be opened offline or forwarded to someone with no
+toolchain. See `../AGENTS.md` for the full rule.
+
+That rules out a shared `<link>`, so the sharing happens at author time instead.
+`ocotillo.css` is the one place to edit; `sync.py` copies it into a delimited,
+**generated** block inside each mockup:
+
+```bash
+python3 design-system/sync.py           # write the block into every mockup
+python3 design-system/sync.py --check   # exit 1 if any mockup is stale
+```
+
+Never hand-edit the block between the `design-system:start` and
+`design-system:end` markers — the next sync overwrites it. Each mockup's own
+`<style>` block, which follows it, is yours.
 
 ## Starting a new mockup
 
@@ -28,9 +48,8 @@ Then:
 3. Build the page from classes in `components.html`.
 4. Put anything genuinely one-off in the file's own `<style>` block, under a
    `/* ── Page-specific ── */` banner.
-
-Mockups stay standalone HTML with no build step and no dependencies beyond the
-stylesheet and the Google Fonts link. Open the file, see the design.
+5. Run `python3 design-system/sync.py`, then open the file from `file://` with
+   no server running. That is the real test that it is standalone.
 
 ## Where the values come from
 
@@ -147,8 +166,13 @@ value will announce itself immediately.
 
 ## Keeping in sync
 
-When the app's tokens change, update `ocotillo.css` — do not fork a value into
-a single mockup. If you need something the system does not have, add it to the
-stylesheet if it is general, and to the mockup's own `<style>` block if it is
-genuinely one-off. When in doubt, one-off it; promoting later is easy, and
-un-inventing a token nobody wanted is not.
+When the app's tokens change, update `ocotillo.css` and run
+`python3 design-system/sync.py` — do not fork a value into a single mockup. If
+you need something the system does not have, add it to the stylesheet if it is
+general, and to the mockup's own `<style>` block if it is genuinely one-off.
+When in doubt, one-off it; promoting later is easy, and un-inventing a token
+nobody wanted is not.
+
+Because the stylesheet is copied into every mockup, a change to it touches every
+file. That is the intended cost of standalone mockups: the diff is noisy, but no
+mockup can quietly rot into a different design.
