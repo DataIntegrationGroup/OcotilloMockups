@@ -122,7 +122,8 @@
         --radius-4xl: 22px; /* badges           (rounded-4xl) */
 
         /* Type */
-        --font-sans: "Public Sans Variable", "Public Sans", system-ui, sans-serif;
+        --font-sans:
+          "Public Sans Variable", "Public Sans", system-ui, sans-serif;
         --font-heading: "Outfit Variable", "Outfit", system-ui, sans-serif;
         --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
@@ -133,7 +134,8 @@
         /* Elevation. The app is a flat, ring-outlined UI: cards carry a ring, not
            a shadow. Shadows are reserved for things that genuinely float. */
         --shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.14);
-        --shadow-paper: 0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
+        --shadow-paper:
+          0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
       }
 
       /* Dark mode — add class="dark" to <html>, same switch the app uses. */
@@ -1123,7 +1125,8 @@
 
       /* Dropzone. */
       .dropzone {
-        border: 1.5px dashed color-mix(in oklab, var(--primary) 40%, transparent);
+        border: 1.5px dashed
+          color-mix(in oklab, var(--primary) 40%, transparent);
         border-radius: var(--radius-lg);
         background: color-mix(in oklab, var(--primary) 6%, transparent);
         padding: 22px 16px;
@@ -1417,7 +1420,11 @@
         top: 0;
         bottom: 0;
         border-radius: 4px;
-        background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+        background: color-mix(
+          in oklab,
+          var(--muted-foreground) 35%,
+          transparent
+        );
       }
       .meter-median {
         position: absolute;
@@ -1895,8 +1902,8 @@
         margin-bottom: 12px;
         padding: 9px 12px;
         border-radius: 5px;
-        border: 1px solid #bfdbfe;
-        background: #eff6ff;
+        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
         font-size: 12px;
         color: var(--foreground);
       }
@@ -1920,18 +1927,79 @@
         min-width: max-content;
         white-space: nowrap;
       }
+      .chem-summary {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border: 1px solid var(--divider);
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 12px;
+        background: var(--paper);
+      }
+      .chem-summary-cell {
+        padding: 10px 12px;
+        border-left: 1px solid var(--divider);
+        min-width: 0;
+      }
+      .chem-summary-cell:first-child {
+        border-left: none;
+      }
+      .chem-summary-value {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 18px;
+        line-height: 1.2;
+        font-weight: 700;
+        color: var(--foreground);
+      }
+      .chem-summary-label {
+        margin-top: 2px;
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .standards-source {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 12px;
+        padding: 9px 12px;
+        border: 1px solid color-mix(in oklab, var(--info) 30%, transparent);
+        border-radius: 5px;
+        background: color-mix(in oklab, var(--info) 10%, transparent);
+        font-size: 12px;
+        color: var(--foreground);
+      }
+      .standards-source strong {
+        font-weight: 600;
+      }
+      .standards-table {
+        margin-bottom: 12px;
+      }
+      .status-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
       /* ── QA banner ── */
       .qa-banner {
         display: flex;
         align-items: center;
         gap: 8px;
-        background: #f0fdf4;
-        border: 1px solid #bbf7d0;
+        background: color-mix(in oklab, var(--success) 10%, transparent);
+        border: 1px solid color-mix(in oklab, var(--success) 30%, transparent);
         border-radius: 5px;
         padding: 7px 12px;
         font-size: 12px;
-        color: #166534;
+        color: var(--foreground);
         margin-bottom: 12px;
+      }
+      .dark .chem-summary,
+      .dark .sample-note,
+      .dark .standards-source,
+      .dark .qa-banner {
+        background-color: color-mix(in oklab, var(--paper) 92%, var(--primary));
       }
       /* ── Time series hint ── */
       .ts-hint {
@@ -2021,10 +2089,13 @@
 
         <!-- Mockup note -->
         <div class="mockup-note">
-          <strong>Lo-fi mockup — for feedback only.</strong> This shows where
-          chemistry data could appear on the well details page. Tab layout,
-          column structure, chip labels, and export controls are all open to
-          change. Please share with Talon and Ted before development begins.
+          <strong>Lo-fi mockup — for feedback only.</strong> This mockup is not
+          functional; filters, exports, and tabs only demonstrate the intended
+          flow. Open questions: should MCL and SMCL flags appear in both the
+          selected-sample comparison and the historical crosstab; should EPA
+          primary and secondary standards be stored with citations in Ocotillo;
+          and should fluoride show both the secondary SMCL and primary MCL in a
+          single status cell?
         </div>
 
         <!-- Row 1: Core info (3-col stat strip) + map -->
@@ -2203,6 +2274,7 @@
                 <option>All parameters</option>
                 <option>Above MCL only</option>
                 <option>Above SMCL only</option>
+                <option>Any EPA flag</option>
                 <option>Non-detects only</option>
               </select>
               <span class="toolbar-label" style="margin-left: 8px">View</span>
@@ -2240,10 +2312,6 @@
 
             <!-- ── Tab: Field Parameters ── -->
             <div id="tab-field" class="tab-panel active">
-              <div class="sample-meta">
-                Selected sample <strong>WL-0433C</strong> &nbsp;·&nbsp;
-                Collected May 15, 2026 &nbsp;·&nbsp; Staff: Siânin Spaur, Talon
-              </div>
               <div id="field-current-table" class="datagrid">
                 <table>
                   <thead>
@@ -2392,6 +2460,173 @@
 
             <!-- ── Tab: General Chemistry ── -->
             <div id="tab-chem" class="tab-panel">
+              <div class="standards-source">
+                <span>ⓘ</span>
+                <div>
+                  <strong
+                    >EPA standards applied to common general chemistry.</strong
+                  >
+                  Primary MCLs are enforceable drinking water limits; secondary
+                  SMCLs are non-enforceable nuisance guidelines for taste, odor,
+                  staining, color, and deposits.
+                </div>
+              </div>
+              <div class="chem-summary">
+                <div class="chem-summary-cell">
+                  <div class="chem-summary-value">
+                    1 <span class="chip chip-mcl">MCL</span>
+                  </div>
+                  <div class="chem-summary-label">
+                    Primary exceedance in selected sample
+                  </div>
+                </div>
+                <div class="chem-summary-cell">
+                  <div class="chem-summary-value">
+                    4 <span class="chip chip-smcl">SMCL</span>
+                  </div>
+                  <div class="chem-summary-label">
+                    Secondary exceedances in selected sample
+                  </div>
+                </div>
+                <div class="chem-summary-cell">
+                  <div class="chem-summary-value">11</div>
+                  <div class="chem-summary-label">
+                    Parameters compared to EPA standards
+                  </div>
+                </div>
+                <div class="chem-summary-cell">
+                  <div class="chem-summary-value">Jun 2</div>
+                  <div class="chem-summary-label">
+                    Results received from Bonnie's Lab
+                  </div>
+                </div>
+              </div>
+              <div class="datagrid standards-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Result</th>
+                      <th>Unit</th>
+                      <th>EPA primary MCL</th>
+                      <th>EPA secondary SMCL</th>
+                      <th>Status</th>
+                      <th>Basis</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Arsenic</strong></td>
+                      <td>0.012</td>
+                      <td>mg/L</td>
+                      <td>0.010</td>
+                      <td>—</td>
+                      <td><span class="chip chip-mcl">Above MCL</span></td>
+                      <td>EPA primary inorganic chemicals table</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Fluoride</strong></td>
+                      <td>2.4</td>
+                      <td>mg/L</td>
+                      <td>4.0</td>
+                      <td>2.0</td>
+                      <td>
+                        <span class="status-stack">
+                          <span class="chip chip-smcl">Above SMCL</span>
+                          <span class="chip chip-ok">Below MCL</span>
+                        </span>
+                      </td>
+                      <td>EPA primary and secondary standards</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Iron</strong></td>
+                      <td>0.34</td>
+                      <td>mg/L</td>
+                      <td>—</td>
+                      <td>0.3</td>
+                      <td><span class="chip chip-smcl">Above SMCL</span></td>
+                      <td>EPA secondary standards table</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Manganese</strong></td>
+                      <td>0.061</td>
+                      <td>mg/L</td>
+                      <td>—</td>
+                      <td>0.05</td>
+                      <td><span class="chip chip-smcl">Above SMCL</span></td>
+                      <td>EPA secondary standards table</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Total dissolved solids</strong></td>
+                      <td>612 <span class="chip chip-calc">Calc.</span></td>
+                      <td>mg/L</td>
+                      <td>—</td>
+                      <td>500</td>
+                      <td><span class="chip chip-smcl">Above SMCL</span></td>
+                      <td>EPA secondary standards table</td>
+                    </tr>
+                    <tr>
+                      <td>Nitrate as N</td>
+                      <td>4.2</td>
+                      <td>mg/L</td>
+                      <td>10</td>
+                      <td>—</td>
+                      <td><span class="chip chip-ok">Below MCL</span></td>
+                      <td>EPA primary inorganic chemicals table</td>
+                    </tr>
+                    <tr>
+                      <td>Sulfate</td>
+                      <td>108</td>
+                      <td>mg/L</td>
+                      <td>—</td>
+                      <td>250</td>
+                      <td><span class="chip chip-ok">Below SMCL</span></td>
+                      <td>EPA secondary standards table</td>
+                    </tr>
+                    <tr>
+                      <td>Chloride</td>
+                      <td>62</td>
+                      <td>mg/L</td>
+                      <td>—</td>
+                      <td>250</td>
+                      <td><span class="chip chip-ok">Below SMCL</span></td>
+                      <td>EPA secondary standards table</td>
+                    </tr>
+                    <tr>
+                      <td>pH</td>
+                      <td>7.42</td>
+                      <td>S.U.</td>
+                      <td>—</td>
+                      <td>6.5–8.5</td>
+                      <td><span class="chip chip-ok">Within SMCL</span></td>
+                      <td>EPA secondary standards table</td>
+                    </tr>
+                    <tr>
+                      <td>Calcium</td>
+                      <td>48.2</td>
+                      <td>mg/L</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td><span class="chip chip-ok">No EPA limit</span></td>
+                      <td>Common major ion; no EPA MCL/SMCL</td>
+                    </tr>
+                    <tr>
+                      <td>Magnesium</td>
+                      <td>12.1</td>
+                      <td>mg/L</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td><span class="chip chip-ok">No EPA limit</span></td>
+                      <td>Common major ion; no EPA MCL/SMCL</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="sample-meta">
+                Historical context for this well. Flags repeat in the crosstab
+                so reviewers can decide whether selected-sample flags alone are
+                enough.
+              </div>
               <div class="datagrid crosstab">
                 <table>
                   <thead>
