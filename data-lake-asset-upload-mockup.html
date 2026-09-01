@@ -1,0 +1,2814 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lo-fi Mockup — Data Lake Asset Upload · Ocotillo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- design-system:start — generated from design-system/ocotillo.css
+             by design-system/sync.py. Do not edit this block by hand. -->
+    <style>
+      /* ============================================================================
+       * Ocotillo Mockup Design System
+       * ----------------------------------------------------------------------------
+       * Derived from the real application. Source of truth, in priority order:
+       *
+       *   OcotilloUI/src/index.css   → design tokens (shadcn/Tailwind layer)
+       *   OcotilloUI/src/theme.ts    → design tokens (MUI layer) + brand ramp
+       *   OcotilloUI/src/components/ui/*.tsx → component specs (button, badge,
+       *                                        card, table, input, checkbox)
+       *
+       * When the app changes, change this file. Do not fork values into a mockup.
+       * See README.md for the conventions and the app→mockup mapping table.
+       * ========================================================================== */
+
+      /* ── Reset ───────────────────────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ── Tokens ──────────────────────────────────────────────────────────────────
+       * Mirrors src/index.css :root. Written as hex rather than oklch so mockup
+       * authors can read them; the values are the same colors.
+       * ------------------------------------------------------------------------- */
+      :root {
+        /* Ocotillo brand blue — the one ramp that is NOT from Tailwind.
+           Sampled from the pixel water-splash mark and the desert sky in the
+           masthead photo. Hue ~235–245: water/desert-sky blue, no violet cast. */
+        --brand-50: #eff8fd;
+        --brand-100: #dceffb;
+        --brand-200: #b8dff6;
+        --brand-300: #83c6ee;
+        --brand-400: #47a6dd;
+        --brand-500: #1e88c4;
+        --brand-600: #0e6da8;
+        --brand-700: #0f5786;
+        --brand-800: #12496e;
+        --brand-900: #143d5b;
+        --brand-950: #0d273c;
+
+        /* Surfaces */
+        --background: #fafafa; /* zinc-50  — page */
+        --paper: #ffffff; /* white    — cards, popovers, grids */
+        --card: #ffffff;
+        --wrapper: #fafafa; /* zinc-50  — inset wells, placeholders */
+        --popover: #ffffff;
+
+        /* Text */
+        --foreground: #0f172a; /* slate-900 */
+        --muted-foreground: #64748b; /* slate-500 */
+        --muted: #f5f5f5; /* neutral-100 — hover/selected fills */
+        --accent: #f0f0f0; /* neutral-150 — hover/active */
+
+        /* Lines.
+           Two different line colors exist in the app and both are correct:
+             --border  neutral-200, the shadcn/Tailwind border token (tables, inputs)
+             --divider stone-300,   MUI's palette.divider (DataGrid, MUI rules)
+           --ring-card is `ring-1 ring-foreground/10`, how shadcn Cards are outlined. */
+        --border: #e5e5e5;
+        --divider: #d6d3d1;
+        --input-border: #e5e5e5;
+        --ring: #0e6da8;
+        --ring-card: rgba(15, 23, 42, 0.1);
+
+        /* Primary — brand-600 on light surfaces. `--primary-dark` is the
+           hover/emphasis slot, not "a darker primary". */
+        --primary: var(--brand-600);
+        --primary-dark: var(--brand-700);
+        --primary-light: var(--brand-300);
+        --primary-foreground: #ffffff;
+        --primary-bg: var(--brand-50);
+
+        /* Secondary — amber. Deliberately NOT the ocotillo bloom: the bloom sits
+           11.6 degrees of hue from `warning` and reads as an alarm in UI chrome. */
+        --secondary: #d97706; /* amber-600 */
+        --secondary-light: #fcd34d; /* amber-300 */
+        --secondary-dark: #92400e; /* amber-800 */
+        --secondary-foreground: #ffffff;
+
+        /* Semantic status */
+        --destructive: #dc2626; /* red-600     */
+        --success: #047857; /* emerald-700 */
+        --warning: #f97316; /* orange-500  */
+        --info: #0f766e; /* teal-700 — teal, not cyan: cyan reads as the brand
+                                      blue when an info alert sits by a primary button */
+        /* orange-500 fails AA as text on white, so warning LABELS use orange-700.
+           Dark mode flips this: the surface is dark, so the text steps lighter. */
+        --warning-text: #c2410c; /* orange-700 */
+        --destructive-foreground: #ffffff;
+        --success-foreground: #ffffff;
+        --warning-foreground: #ffffff;
+        --info-foreground: #ffffff;
+
+        /* Brand identity — NEVER wire these to a semantic slot. Brand surfaces
+           only: favicon, artwork, splash. Mode-independent by design. */
+        --bloom: #e2552e;
+        --sand: #f2e9d2;
+
+        /* Radius — --radius is the shadcn scale root (0.375rem). */
+        --radius: 6px;
+        --radius-sm: 2px;
+        --radius-md: 4px;
+        --radius-lg: 6px; /* buttons, inputs  (rounded-lg)  */
+        --radius-xl: 10px; /* cards            (rounded-xl)  */
+        --radius-4xl: 22px; /* badges           (rounded-4xl) */
+
+        /* Type */
+        --font-sans: "Public Sans Variable", "Public Sans", system-ui, sans-serif;
+        --font-heading: "Outfit Variable", "Outfit", system-ui, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+        /* Chrome dimensions — mockup-only, no app equivalent to sync against. */
+        --appbar-h: 52px;
+        --sidebar-w: 260px;
+
+        /* Elevation. The app is a flat, ring-outlined UI: cards carry a ring, not
+           a shadow. Shadows are reserved for things that genuinely float. */
+        --shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.14);
+        --shadow-paper: 0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
+      }
+
+      /* Dark mode — add class="dark" to <html>, same switch the app uses. */
+      .dark {
+        --background: #18181b; /* zinc-900 */
+        --paper: #3f3f46; /* zinc-700 */
+        --card: #3f3f46;
+        --wrapper: #27272a; /* zinc-800 */
+        --popover: #3f3f46;
+
+        --foreground: #f1f5f9; /* slate-100 */
+        --muted-foreground: #94a3b8; /* slate-400 */
+        --muted: #27272a;
+        --accent: #27272a;
+
+        --border: #3f3f46;
+        --divider: #3f3f46;
+        --input-border: #27272a;
+        --ring: var(--brand-300);
+        --ring-card: rgba(255, 255, 255, 0.12);
+
+        /* Primary steps UP the ramp in dark mode, and --primary-dark (the
+           hover/emphasis slot) has to resolve LIGHTER than --primary. */
+        --primary: var(--brand-300);
+        --primary-dark: var(--brand-200);
+        --primary-light: var(--brand-400);
+        --primary-foreground: #18181b;
+        --primary-bg: var(--brand-900);
+
+        --secondary: #fcd34d;
+        --secondary-foreground: #18181b;
+
+        --destructive: #f87171; /* red-400     */
+        --success: #6ee7b7; /* emerald-300 */
+        --warning: #fdba74; /* orange-300  */
+        --warning-text: #fdba74; /* orange-300 — light text on a dark surface */
+        --info: #5eead4; /* teal-300    */
+        --destructive-foreground: #18181b;
+        --success-foreground: #18181b;
+        --warning-foreground: #18181b;
+        --info-foreground: #18181b;
+      }
+
+      /* ── Base ────────────────────────────────────────────────────────────────── */
+      body {
+        font-family: var(--font-sans);
+        background: var(--background);
+        color: var(--foreground);
+        font-size: 14px; /* MUI body2 — the app's working text size */
+        line-height: 1.6;
+      }
+
+      /* ── Typography ──────────────────────────────────────────────────────────────
+       * Matches theme.ts `typography`. Headings are Outfit; everything else is
+       * Public Sans. Only the variants mockups actually use are defined here.
+       * ------------------------------------------------------------------------- */
+      .h1,
+      .h2,
+      .h3,
+      .h4,
+      .h5,
+      .h6 {
+        font-family: var(--font-heading);
+      }
+      .h1 {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .h2 {
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.5;
+      }
+      .h3 {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1.5;
+      }
+      .h4 {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .h5 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .h6 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .deck {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      .body1 {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .body2 {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .caption {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .overline {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        letter-spacing: 0.03em;
+        font-variant-numeric: tabular-nums;
+      }
+      .muted {
+        color: var(--muted-foreground);
+      }
+      .num {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── App bar ─────────────────────────────────────────────────────────────────
+       * AppBar is transparent/elevation 0 over background.default in the app.
+       * ------------------------------------------------------------------------- */
+      .appbar {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: var(--background);
+        border-bottom: 1px solid var(--border);
+        height: var(--appbar-h);
+        display: flex;
+        align-items: center;
+        padding: 0 16px 0 0;
+        gap: 12px;
+      }
+      .appbar-hamburger {
+        width: var(--appbar-h);
+        height: var(--appbar-h);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .appbar-title {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        font-size: 1.05rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--foreground);
+      }
+      .appbar-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .appbar-search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-lg);
+        padding: 5px 12px;
+        font-size: 13px;
+        color: var(--muted-foreground);
+        background: var(--paper);
+        width: 220px;
+        cursor: text;
+      }
+      .appbar-search-kbd {
+        margin-left: auto;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1px 5px;
+        font-size: 10px;
+        color: var(--muted-foreground);
+        background: var(--wrapper);
+      }
+      .appbar-icon-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+      }
+      .appbar-icon-btn:hover {
+        background: var(--muted);
+      }
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      /* ── Layout & sidebar ────────────────────────────────────────────────────── */
+      .layout {
+        display: flex;
+        min-height: calc(100vh - var(--appbar-h));
+      }
+      .sidebar {
+        width: var(--sidebar-w);
+        flex-shrink: 0;
+        background: var(--background);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding-top: 8px;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 16px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .nav-item:hover {
+        background: var(--accent);
+        color: var(--foreground);
+      }
+      .nav-item.active {
+        color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+        font-weight: 600;
+      }
+      .nav-item.is-new::after {
+        content: "NEW";
+        margin-left: auto;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--primary);
+        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        border-radius: var(--radius-sm);
+        padding: 0 4px;
+      }
+      .nav-icon {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+      }
+      .nav-divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 6px 0;
+      }
+      .sidebar-footer {
+        margin-top: auto;
+        padding: 12px 0 8px;
+        border-top: 1px solid var(--border);
+      }
+      .sidebar-footer-link {
+        display: block;
+        padding: 6px 16px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+      }
+      .sidebar-footer-link:hover {
+        color: var(--foreground);
+      }
+      .main {
+        flex: 1;
+        padding: 20px 24px;
+        overflow: auto;
+        min-width: 0;
+      }
+
+      /* ── Breadcrumb ──────────────────────────────────────────────────────────── */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        color: var(--muted-foreground);
+        margin-bottom: 10px;
+      }
+      .breadcrumb a {
+        color: var(--muted-foreground);
+        text-decoration: none;
+      }
+      .breadcrumb a:hover {
+        text-decoration: underline;
+        color: var(--foreground);
+      }
+      .breadcrumb-sep {
+        color: var(--border);
+      }
+
+      /* ── Page header ─────────────────────────────────────────────────────────────
+       * OcotilloPageTitle renders Typography h3 with fontWeight 700, lineHeight 1.1.
+       * ------------------------------------------------------------------------- */
+      .page-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .page-title {
+        font-family: var(--font-heading);
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--foreground);
+      }
+      .page-subtitle {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        margin-top: 6px;
+      }
+      .header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      /* ── Buttons ─────────────────────────────────────────────────────────────────
+       * ui/button.tsx: rounded-lg, text-sm, font-medium, h-8 default.
+       * Variants map 1:1 to the app's cva variants.
+       * ------------------------------------------------------------------------- */
+      .btn {
+        font-family: var(--font-sans);
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        height: 32px;
+        padding: 0 10px;
+        border-radius: var(--radius-lg);
+        border: 1px solid transparent;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.12s ease;
+        background: transparent;
+        color: var(--foreground);
+      }
+      .btn:focus-visible {
+        outline: none;
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .btn-default {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .btn-default:hover {
+        background: color-mix(in oklab, var(--primary) 80%, transparent);
+      }
+      .btn-outline {
+        border-color: var(--border);
+        background: var(--background);
+      }
+      .btn-outline:hover {
+        background: var(--muted);
+      }
+      .btn-ghost {
+        background: transparent;
+      }
+      .btn-ghost:hover {
+        background: var(--muted);
+      }
+      .btn-secondary {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+      }
+      .btn-destructive {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+      }
+      .btn-destructive:hover {
+        background: color-mix(in oklab, var(--destructive) 20%, transparent);
+      }
+      .btn-link {
+        background: transparent;
+        color: var(--primary);
+        text-underline-offset: 4px;
+      }
+      .btn-link:hover {
+        text-decoration: underline;
+      }
+      /* Primary-outlined. MUI's `contained secondary` — an outlined button in all
+         but name — which the app still uses for secondary page actions. */
+      .btn-primary-outline {
+        background: var(--paper);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      .btn-primary-outline:hover {
+        background: var(--brand-50);
+        color: var(--primary-dark);
+        border-color: var(--primary-dark);
+      }
+
+      .btn-xs {
+        height: 24px;
+        padding: 0 8px;
+        font-size: 12px;
+        border-radius: var(--radius-md);
+      }
+      .btn-sm {
+        height: 28px;
+        padding: 0 10px;
+        font-size: 12.8px;
+      }
+      .btn-lg {
+        height: 36px;
+        padding: 0 10px;
+      }
+      .btn-icon {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+      }
+
+      /* ── Cards ───────────────────────────────────────────────────────────────────
+       * ui/card.tsx: rounded-xl, bg-card, ring-1 ring-foreground/10, NO shadow,
+       * --card-spacing 16px (12px at size=sm).
+       * ------------------------------------------------------------------------- */
+      .card {
+        --card-spacing: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: var(--card-spacing);
+        padding: var(--card-spacing) 0;
+        overflow: hidden;
+        border-radius: var(--radius-xl);
+        background: var(--card);
+        box-shadow: 0 0 0 1px var(--ring-card);
+        font-size: 14px;
+      }
+      .card.card-sm {
+        --card-spacing: 12px;
+      }
+      .card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 var(--card-spacing);
+      }
+      .card-header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+      }
+      .card-header-icon {
+        font-size: 16px;
+        color: var(--primary);
+      }
+      .card-title {
+        font-family: var(--font-heading);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.375;
+        color: var(--foreground);
+      }
+      .card-description,
+      .card-subtitle {
+        font-size: 13px;
+        color: var(--muted-foreground);
+      }
+      .card-content,
+      .card-body {
+        padding: 0 var(--card-spacing);
+        min-width: 0;
+      }
+      .card-footer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: var(--card-spacing);
+        margin-bottom: calc(-1 * var(--card-spacing));
+        border-top: 1px solid var(--border);
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .card-placeholder {
+        padding: 16px;
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        font-style: italic;
+        background: var(--wrapper);
+        margin: 0 var(--card-spacing);
+        border-radius: var(--radius-md);
+        border: 1px dashed var(--border);
+      }
+
+      /* ── Grid helpers ────────────────────────────────────────────────────────── */
+      .grid {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .g2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .g3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .g4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .g-main-aside {
+        grid-template-columns: 2fr minmax(0, 1fr);
+      }
+      .span2 {
+        grid-column: span 2;
+      }
+      .span3 {
+        grid-column: span 3;
+      }
+
+      /* ── Badges / chips ──────────────────────────────────────────────────────────
+       * ui/badge.tsx: h-5, rounded-4xl, px-2, text-xs, font-medium.
+       * The app's tint formula is `bg-<color>/10` with a `/30` border — do not
+       * hand-pick 50/200 hex pairs, they drift from the token the moment it moves.
+       * ------------------------------------------------------------------------- */
+      .badge,
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 20px;
+        width: fit-content;
+        flex-shrink: 0;
+        padding: 2px 8px;
+        border-radius: var(--radius-4xl);
+        border: 1px solid transparent;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .badge-default {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .badge-secondary {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+      }
+      .badge-outline {
+        border-color: var(--border);
+        color: var(--foreground);
+      }
+      .badge-ghost {
+        color: var(--muted-foreground);
+      }
+
+      /* Semantic tints — one formula, applied per token. */
+      .badge-destructive,
+      .badge-error {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+      }
+      .badge-warning {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        color: var(--warning-text);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+      }
+      .badge-success,
+      .badge-filter-emerald {
+        background: color-mix(in oklab, var(--success) 10%, transparent);
+        color: var(--success);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+      }
+      .badge-info {
+        background: color-mix(in oklab, var(--info) 10%, transparent);
+        color: var(--info);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+      }
+      .badge-filter,
+      .badge-primary {
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+      }
+      .badge-neutral,
+      .badge-muted {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        border-color: var(--border);
+      }
+
+      /* ── Domain badges ───────────────────────────────────────────────────────────
+       * Water-chemistry result flags. These are Ocotillo-specific meanings mapped
+       * onto the semantic tints above — never onto new one-off colors.
+       *   MCL   exceeds a health-based limit          → destructive
+       *   SMCL  exceeds a taste/odor/staining limit   → warning
+       *   ND    not detected, value is the det. limit → neutral
+       *   Calc. calculated, not directly measured     → neutral
+       * ------------------------------------------------------------------------- */
+      .chip-mcl {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+      }
+      .chip-smcl,
+      .chip-nd,
+      .chip-warn {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        color: var(--warning-text);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+      }
+      .chip-ok {
+        background: color-mix(in oklab, var(--success) 10%, transparent);
+        color: var(--success);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+      }
+      .chip-calc,
+      .chip-neutral {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        border-color: var(--border);
+      }
+      .chip-info {
+        background: color-mix(in oklab, var(--info) 10%, transparent);
+        color: var(--info);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+      }
+      .chip-primary {
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+      }
+
+      /* ── Tables ──────────────────────────────────────────────────────────────────
+       * Two table idioms exist in the app, and they look different on purpose:
+       *
+       *   .datagrid — MUI X DataGrid (theme.ts MuiDataGrid). Bordered container,
+       *               5px radius, 13px, tabular-nums. Use for record lists.
+       *   .table    — ui/table.tsx shadcn table. No outer border, 14px, row
+       *               border-b only. Use for tables inside a card.
+       * ------------------------------------------------------------------------- */
+      .datagrid {
+        border: 1px solid var(--divider);
+        border-radius: 5px;
+        overflow: hidden;
+        background: var(--paper);
+        font-size: 13px;
+        width: 100%;
+      }
+      .datagrid table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .datagrid thead th {
+        background: var(--paper);
+        border-bottom: 1px solid var(--divider);
+        padding: 0 12px;
+        height: 40px;
+        text-align: left;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--foreground);
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .datagrid tbody td {
+        padding: 0 12px;
+        height: 44px;
+        border-bottom: 1px solid var(--divider);
+        vertical-align: middle;
+        color: var(--foreground);
+        font-size: 13px;
+        font-variant-numeric: tabular-nums;
+      }
+      .datagrid tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .datagrid tbody tr:hover td {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .datagrid tbody tr.selected td {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .datagrid.dense tbody td {
+        height: 34px;
+      }
+      .datagrid.scroll-x {
+        overflow-x: auto;
+      }
+      /* Crosstab: first column pinned, parameters run across. */
+      .datagrid.crosstab {
+        overflow-x: auto;
+      }
+      .datagrid.crosstab th:first-child,
+      .datagrid.crosstab td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--paper);
+        z-index: 1;
+        box-shadow: 1px 0 0 var(--divider);
+      }
+      .datagrid.crosstab tbody tr:hover td:first-child {
+        background: var(--muted);
+      }
+      .grid-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 16px;
+        padding: 8px 12px;
+        border-top: 1px solid var(--divider);
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .sort-caret {
+        color: var(--muted-foreground);
+        font-size: 10px;
+        margin-left: 3px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        caption-side: bottom;
+      }
+      .table thead tr {
+        border-bottom: 1px solid var(--border);
+      }
+      .table th {
+        height: 40px;
+        padding: 0 8px;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: 500;
+        white-space: nowrap;
+        color: var(--foreground);
+      }
+      .table td {
+        padding: 8px;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--border);
+      }
+      .table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .table tbody tr:hover {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+
+      /* Cell furniture shared by both idioms. */
+      .cell-note {
+        display: block;
+        margin-top: 3px;
+        font-size: 10px;
+        color: var(--muted-foreground);
+      }
+      .unit-label {
+        display: block;
+        margin-top: 2px;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Forms ───────────────────────────────────────────────────────────────── */
+      .form-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+      }
+      .label,
+      .field-label-sm {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .input,
+      .select,
+      textarea.input {
+        font-family: var(--font-sans);
+        font-size: 13px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-lg);
+        padding: 0 10px;
+        height: 32px;
+        background: var(--paper);
+        color: var(--foreground);
+        min-width: 140px;
+      }
+      textarea.input {
+        height: auto;
+        padding: 8px 10px;
+        width: 100%;
+        resize: vertical;
+        line-height: 1.5;
+      }
+      .input:focus,
+      .select:focus,
+      textarea.input:focus {
+        outline: none;
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+      }
+      .input:disabled,
+      .select:disabled {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        cursor: not-allowed;
+      }
+      .input-mono {
+        font-family: var(--font-mono);
+        letter-spacing: 0.03em;
+      }
+      .helper {
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .error-text {
+        font-size: 11px;
+        color: var(--destructive);
+      }
+
+      /* Checkbox — ui/checkbox.tsx: size-4, rounded-sm, primary when checked. */
+      .box,
+      .row-check {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--input-border);
+        background: var(--paper);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        line-height: 1;
+        color: transparent;
+        cursor: pointer;
+      }
+      .box.on,
+      .row-check.on,
+      .check-item.on .box {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .check-list {
+        display: grid;
+        gap: 2px;
+      }
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        padding: 6px 8px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+      }
+      .check-item:hover {
+        background: var(--muted);
+      }
+      .check-item .box {
+        margin-top: 3px;
+      }
+      .check-text {
+        font-size: 13px;
+        color: var(--foreground);
+      }
+      .check-sub {
+        display: block;
+        font-size: 11px;
+        color: var(--muted-foreground);
+        line-height: 1.4;
+      }
+
+      /* Radio option cards. */
+      .opt-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .opt-card {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 11px 13px;
+        background: var(--paper);
+        cursor: pointer;
+      }
+      .opt-card:hover {
+        background: var(--muted);
+      }
+      .opt-card.on {
+        border-color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .opt-radio {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1.5px solid var(--muted-foreground);
+        flex-shrink: 0;
+        margin-top: 3px;
+        position: relative;
+      }
+      .opt-card.on .opt-radio {
+        border-color: var(--primary);
+      }
+      .opt-card.on .opt-radio::after {
+        content: "";
+        position: absolute;
+        inset: 3px;
+        border-radius: 50%;
+        background: var(--primary);
+      }
+      .opt-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--foreground);
+      }
+      .opt-desc {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+        line-height: 1.45;
+      }
+
+      /* Dropzone. */
+      .dropzone {
+        border: 1.5px dashed color-mix(in oklab, var(--primary) 40%, transparent);
+        border-radius: var(--radius-lg);
+        background: color-mix(in oklab, var(--primary) 6%, transparent);
+        padding: 22px 16px;
+        text-align: center;
+        cursor: pointer;
+      }
+      .dropzone:hover {
+        background: color-mix(in oklab, var(--primary) 12%, transparent);
+      }
+      .dropzone-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--primary-dark);
+      }
+      .dropzone-sub {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Alerts ──────────────────────────────────────────────────────────────── */
+      .alert {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        border-radius: var(--radius-lg);
+        border: 1px solid;
+        padding: 9px 12px;
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+      .alert-info {
+        background: color-mix(in oklab, var(--info) 8%, transparent);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-primary {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-ok,
+      .alert-success {
+        background: color-mix(in oklab, var(--success) 8%, transparent);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-warn {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-error {
+        background: color-mix(in oklab, var(--destructive) 8%, transparent);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+        color: var(--foreground);
+      }
+
+      /* ── Tabs ────────────────────────────────────────────────────────────────── */
+      .tabs-bar {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 16px;
+      }
+      .tab {
+        padding: 10px 16px;
+        font-size: 13.5px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        white-space: nowrap;
+      }
+      .tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+      .tab:hover:not(.active) {
+        color: var(--foreground);
+        background: var(--muted);
+      }
+      .tab-panel {
+        display: none;
+      }
+      .tab-panel.active {
+        display: block;
+      }
+
+      /* ── Toolbar ─────────────────────────────────────────────────────────────── */
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .toolbar-label {
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .toolbar-select,
+      .toolbar-search {
+        font-family: var(--font-sans);
+        font-size: 12px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-md);
+        padding: 4px 8px;
+        background: var(--paper);
+        color: var(--foreground);
+      }
+      .toolbar-search {
+        width: 200px;
+      }
+      .toolbar-spacer {
+        margin-left: auto;
+      }
+      .toggle-chip {
+        font-size: 12px;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        color: var(--muted-foreground);
+        border-radius: var(--radius-4xl);
+        padding: 3px 11px;
+        cursor: pointer;
+      }
+      .toggle-chip.on {
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+      }
+
+      /* ── Stat strip ──────────────────────────────────────────────────────────── */
+      .stat-strip {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--paper);
+      }
+      .stat-cell {
+        flex: 1;
+        padding: 9px 13px;
+        border-left: 1px solid var(--border);
+        min-width: 0;
+      }
+      .stat-cell:first-child {
+        border-left: none;
+      }
+      .stat-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .stat-value {
+        font-family: var(--font-heading);
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: var(--foreground);
+        font-variant-numeric: tabular-nums;
+      }
+      .stat-note {
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Key/value field grid ────────────────────────────────────────────────── */
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .field-cell {
+        padding: 10px 16px;
+        border-left: 1px solid var(--border);
+        min-width: 0;
+      }
+      .field-cell:first-child {
+        border-left: none;
+      }
+      .field-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        margin-bottom: 2px;
+      }
+      .field-value {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--foreground);
+      }
+
+      /* ── Step rail (wizard) ──────────────────────────────────────────────────── */
+      .steps {
+        display: flex;
+        align-items: stretch;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .step {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 16px;
+        border-left: 1px solid var(--border);
+        cursor: pointer;
+        min-width: 0;
+      }
+      .step:first-child {
+        border-left: none;
+      }
+      .step:hover {
+        background: var(--muted);
+      }
+      .step-num {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--muted);
+        color: var(--muted-foreground);
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .step-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted-foreground);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .step-sub {
+        font-size: 11px;
+        font-weight: 400;
+        color: var(--muted-foreground);
+      }
+      .step.active {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .step.active .step-num {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .step.active .step-label {
+        color: var(--primary);
+      }
+      .step.done .step-num {
+        background: color-mix(in oklab, var(--success) 12%, transparent);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+        color: var(--success);
+      }
+      .step-panel {
+        display: none;
+      }
+      .step-panel.active {
+        display: block;
+      }
+
+      /* ── Distribution meter ──────────────────────────────────────────────────────
+       * Where one value sits inside a reference distribution. Used for
+       * "this well vs. nearby wells" comparisons.
+       * ------------------------------------------------------------------------- */
+      .meter {
+        min-width: 150px;
+        padding: 4px 0;
+      }
+      .meter-track {
+        position: relative;
+        height: 8px;
+        border-radius: 4px;
+        background: var(--muted);
+        border: 1px solid var(--border);
+      }
+      .meter-band {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        border-radius: 4px;
+        background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+      }
+      .meter-median {
+        position: absolute;
+        top: -3px;
+        bottom: -3px;
+        width: 2px;
+        background: var(--muted-foreground);
+      }
+      .meter-mark {
+        position: absolute;
+        top: -5px;
+        width: 3px;
+        height: 16px;
+        border-radius: 2px;
+        background: var(--primary);
+      }
+      .meter-mark.over {
+        background: var(--destructive);
+      }
+      .meter-limit {
+        position: absolute;
+        top: -4px;
+        bottom: -4px;
+        width: 0;
+        border-left: 2px dashed var(--destructive);
+      }
+      .meter-scale {
+        display: flex;
+        justify-content: space-between;
+        font-size: 9.5px;
+        color: var(--muted-foreground);
+        margin-top: 3px;
+      }
+
+      /* ── Section rule ────────────────────────────────────────────────────────── */
+      .section-rule {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 26px 0 14px;
+      }
+      .section-rule::after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid var(--border);
+      }
+      .section-rule-title {
+        font-family: var(--font-heading);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Legend ──────────────────────────────────────────────────────────────── */
+      .legend {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding-top: 12px;
+        margin-top: 10px;
+        border-top: 1px solid var(--border);
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* ── Empty / state box ───────────────────────────────────────────────────── */
+      .state-box {
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--wrapper);
+        padding: 26px 16px;
+        text-align: center;
+        font-size: 12.5px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Popover / autocomplete ──────────────────────────────────────────────── */
+      .combo-wrap {
+        position: relative;
+      }
+      .popper {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        right: 0;
+        min-width: 240px;
+        max-height: 230px;
+        overflow: auto;
+        z-index: 50;
+        padding: 4px 0;
+        background: var(--popover);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-popover);
+      }
+      .popper-group {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        padding: 6px 12px 3px;
+      }
+      .popper-opt {
+        padding: 5px 12px;
+        cursor: pointer;
+      }
+      .popper-opt:hover,
+      .popper-opt.highlighted {
+        background: var(--muted);
+      }
+
+      /* ── Sticky selection tray ───────────────────────────────────────────────── */
+      .tray {
+        position: sticky;
+        bottom: 0;
+        z-index: 150;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 11px 24px;
+        background: var(--paper);
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -3px 10px rgba(15, 23, 42, 0.06);
+      }
+      .tray-count {
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .tray-chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+      .tray-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-radius: var(--radius-4xl);
+        padding: 1px 4px 1px 9px;
+      }
+      .tray-chip-x {
+        cursor: pointer;
+        color: var(--muted-foreground);
+        font-size: 12px;
+        padding: 0 3px;
+      }
+      .tray-chip-x:hover {
+        color: var(--destructive);
+      }
+
+      /* ── Printed report ("paper") ────────────────────────────────────────────────
+       * For mockups of PDF deliverables. The app renders these for real with
+       * @react-pdf/renderer (OcotilloUI/src/components/pdf). This is the on-screen
+       * approximation: a letter-width sheet floating on the wrapper surface.
+       * ------------------------------------------------------------------------- */
+      .paper-wrap {
+        background: var(--wrapper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        padding: 22px;
+        display: flex;
+        justify-content: center;
+      }
+      .report-page {
+        width: 850px;
+        max-width: 100%;
+        background: var(--paper);
+        box-shadow: var(--shadow-paper);
+        padding: 34px 40px 26px;
+        font-size: 12.5px;
+        line-height: 1.55;
+      }
+      .rp-head {
+        display: flex;
+        gap: 22px;
+        align-items: flex-start;
+        border-bottom: 2px solid var(--foreground);
+        padding-bottom: 14px;
+        margin-bottom: 16px;
+      }
+      .rp-org {
+        font-family: var(--font-heading);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-title {
+        font-family: var(--font-heading);
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-top: 2px;
+      }
+      .rp-sub {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        margin-top: 3px;
+      }
+      .rp-section {
+        margin-top: 20px;
+      }
+      .rp-h {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-family: var(--font-heading);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--primary);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 4px;
+        margin-bottom: 10px;
+      }
+      .rp-h-note {
+        margin-left: auto;
+        font-family: var(--font-sans);
+        font-size: 10.5px;
+        font-weight: 400;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--muted-foreground);
+      }
+      .rp-p {
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      .rp-cols2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .rp-kv {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+      }
+      .rp-kv-cell {
+        padding: 7px 11px;
+        border-left: 1px solid var(--border);
+        border-top: 1px solid var(--border);
+        min-width: 0;
+      }
+      .rp-kv-cell:nth-child(4n + 1) {
+        border-left: none;
+      }
+      .rp-kv-cell:nth-child(-n + 4) {
+        border-top: none;
+      }
+      .rp-kv-label {
+        font-size: 9.5px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-kv-value {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .rp-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11.5px;
+      }
+      .rp-table th {
+        text-align: left;
+        vertical-align: bottom;
+        border-bottom: 1.5px solid var(--foreground);
+        padding: 5px 8px;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-table td {
+        padding: 6px 8px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+      .rp-table tbody tr:nth-child(even) td {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .rp-table tr.row-exceed td {
+        background: color-mix(in oklab, var(--destructive) 7%, transparent);
+      }
+      .rp-table tr.row-smcl td {
+        background: color-mix(in oklab, var(--warning) 7%, transparent);
+      }
+      .rp-num {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .rp-callout {
+        border-left: 4px solid var(--destructive);
+        background: color-mix(in oklab, var(--destructive) 7%, transparent);
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        padding: 11px 14px;
+        font-size: 12px;
+      }
+      .rp-callout.ok {
+        border-left-color: var(--success);
+        background: color-mix(in oklab, var(--success) 8%, transparent);
+      }
+      .rp-callout.info {
+        border-left-color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .rp-callout-title {
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
+      .rp-callout ul {
+        margin: 6px 0 0 17px;
+      }
+      .rp-chart {
+        height: 118px;
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-md);
+        background: var(--wrapper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-style: italic;
+        color: var(--muted-foreground);
+      }
+      .rp-qr {
+        margin-left: auto;
+        flex-shrink: 0;
+        width: 118px;
+        text-align: center;
+      }
+      .rp-qr svg {
+        display: block;
+        width: 106px;
+        height: 106px;
+        margin: 0 auto;
+        padding: 4px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+      }
+      .rp-qr-cap {
+        font-size: 9.5px;
+        color: var(--muted-foreground);
+        line-height: 1.35;
+        margin-top: 4px;
+      }
+      .rp-priv {
+        font-size: 10.5px;
+        font-style: italic;
+        color: var(--muted-foreground);
+        margin-top: 7px;
+      }
+      .rp-glossary {
+        columns: 2;
+        column-gap: 22px;
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .rp-glossary p {
+        break-inside: avoid;
+        margin-bottom: 5px;
+      }
+      .rp-glossary strong {
+        color: var(--foreground);
+      }
+      .rp-foot {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-top: 24px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        font-size: 10.5px;
+        color: var(--muted-foreground);
+      }
+      .rp-foot svg {
+        width: 54px;
+        height: 54px;
+        flex-shrink: 0;
+      }
+      .rp-page-num {
+        margin-left: auto;
+        white-space: nowrap;
+      }
+
+      /* ── Mockup annotation ───────────────────────────────────────────────────────
+       * Mockup-only. Deliberately outside the token system so it never reads as
+       * product UI — a reviewer must be able to tell commentary from the design.
+       * Every mockup carries one, stating what is not real and what is unresolved.
+       * ------------------------------------------------------------------------- */
+      .mockup-note {
+        background: #fefce8;
+        border: 1px solid #fde047;
+        border-radius: var(--radius-lg);
+        padding: 10px 14px;
+        font-size: 12px;
+        color: #713f12;
+        margin-bottom: 16px;
+      }
+      .mockup-note strong {
+        font-weight: 600;
+      }
+      .mockup-note ul {
+        margin: 6px 0 0 18px;
+      }
+      .mockup-note li {
+        margin-bottom: 2px;
+      }
+      .dark .mockup-note {
+        background: #422006;
+        border-color: #854d0e;
+        color: #fef08a;
+      }
+    </style>
+    <!-- design-system:end -->
+    <style>
+      /* ── Page-specific ──
+         Shared styles live in design-system/ocotillo.css. */
+
+      .g-upload {
+        grid-template-columns: minmax(380px, 1.3fr) minmax(0, 1fr);
+        align-items: start;
+      }
+
+      /* ── Upload queue ── */
+      .file-list {
+        display: grid;
+        gap: 2px;
+        margin-top: 12px;
+      }
+      .file-row {
+        display: grid;
+        grid-template-columns: 20px minmax(0, 1fr) 78px 104px;
+        gap: 12px;
+        align-items: center;
+        padding: 8px 8px;
+        border-radius: var(--radius-md);
+      }
+      .file-row:hover {
+        background: color-mix(in oklab, var(--muted) 60%, transparent);
+      }
+      .file-icon {
+        font-size: 14px;
+        color: var(--muted-foreground);
+        text-align: center;
+      }
+      .file-name {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--foreground);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .file-bar {
+        height: 4px;
+        margin-top: 5px;
+        border-radius: 2px;
+        background: var(--muted);
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+      .file-fill {
+        height: 100%;
+        background: var(--primary);
+      }
+      .file-fill.done {
+        background: var(--success);
+      }
+      .file-size {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+      }
+      .file-status {
+        font-size: 11.5px;
+        text-align: right;
+        color: var(--muted-foreground);
+        font-variant-numeric: tabular-nums;
+      }
+      .file-status.ok {
+        color: var(--success);
+      }
+      .file-status.busy {
+        color: var(--primary);
+      }
+
+      /* ── Generated object path ── */
+      .path-preview {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        line-height: 1.7;
+        background: var(--wrapper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 10px 12px;
+        word-break: break-all;
+      }
+      .path-fixed {
+        color: var(--muted-foreground);
+      }
+      .path-var {
+        color: var(--primary);
+        font-weight: 500;
+      }
+      .cmd {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        background: var(--wrapper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 10px 12px;
+        overflow-x: auto;
+        white-space: pre;
+        color: var(--foreground);
+      }
+
+      /* ── Catalog cells ── */
+      .dl-dataset {
+        font-weight: 500;
+        color: var(--foreground);
+      }
+      .dl-path {
+        display: block;
+        margin-top: 2px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        color: var(--muted-foreground);
+        letter-spacing: 0.02em;
+      }
+      .owner-none {
+        color: var(--warning-text);
+        font-weight: 500;
+      }
+      .ingest-bar {
+        width: 74px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--muted);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        margin-top: 4px;
+      }
+      .ingest-fill {
+        height: 100%;
+        background: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── App bar ── -->
+    <div class="appbar">
+      <div class="appbar-hamburger">☰</div>
+      <span class="appbar-title">Ocotillo</span>
+      <div class="appbar-right">
+        <div class="appbar-search">
+          <span>🔍</span>
+          <span>Search records…</span>
+          <span class="appbar-search-kbd">⌘K</span>
+        </div>
+        <div class="appbar-icon-btn" title="Report a bug">🐛</div>
+        <div class="avatar">LL</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- ── Sidebar ── -->
+      <div class="sidebar">
+        <div class="nav-item"><span class="nav-icon">⌂</span> Home</div>
+        <div class="nav-item"><span class="nav-icon">◉</span> Wells</div>
+        <div class="nav-item"><span class="nav-icon">◎</span> Springs</div>
+        <div class="nav-item"><span class="nav-icon">◈</span> Map</div>
+        <div class="nav-item"><span class="nav-icon">☎</span> Contacts</div>
+        <div class="nav-item"><span class="nav-icon">⊞</span> Projects</div>
+        <div class="nav-item"><span class="nav-icon">📄</span> Field Sheets</div>
+        <div class="nav-item active is-new">
+          <span class="nav-icon">▤</span> Data Lake
+        </div>
+        <div class="nav-item"><span class="nav-icon">⇪</span> Batch Export</div>
+        <div class="nav-item"><span class="nav-icon">📎</span> Assets</div>
+        <hr class="nav-divider" />
+        <div class="nav-item" style="color: var(--muted-foreground)">
+          <span class="nav-icon">🔒</span> Admin
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-footer-link">About</div>
+          <div class="sidebar-footer-link">Connect Desktop GIS</div>
+          <div class="sidebar-footer-link">Report a Bug</div>
+          <div style="padding: 8px 16px; margin-top: 4px">
+            <button
+              id="mode-btn"
+              class="btn btn-outline"
+              style="font-size: 11px; padding: 3px 10px"
+              onclick="toggleMode()"
+            >
+              ☾ Dark mode
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Main ── -->
+      <div class="main">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+          <a href="#">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="#">Data Lake</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Upload</span>
+        </div>
+
+        <!-- Page header -->
+        <div class="page-header">
+          <div>
+            <div class="page-title">Data Lake</div>
+            <div class="page-subtitle">
+              Put a tranche of files into Ocotillo storage today &nbsp;·&nbsp;
+              <span class="mono">gs://ocotillo-datalake</span> &nbsp;·&nbsp;
+              us-central1 + us-east1, versioned &nbsp;·&nbsp; Editor and above
+            </div>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-outline">▤ Browse bucket</button>
+            <button class="btn btn-default">⇧ Upload files</button>
+          </div>
+        </div>
+
+        <!-- Mockup note -->
+        <div class="mockup-note">
+          <strong>Lo-fi mockup — not functional.</strong> Nothing here is wired:
+          no bucket, no upload, no catalog table, no ingestion job. It proposes
+          a faster on-ramp into Ocotillo storage — somewhere to put a tranche of
+          data <em>now</em>, with normalization following ingestion instead of
+          gating it. Positions this mockup takes, all up for debate:
+          <ul>
+            <li>
+              <strong>Upload is never blocked on metadata.</strong> Four fields
+              are required — dataset, project, sensitivity, ingestion owner —
+              and everything else is added later from the catalog row.
+            </li>
+            <li>
+              <strong>The object path is generated, never typed.</strong>
+              <span class="mono">raw/&lt;project&gt;/&lt;dataset&gt;/&lt;upload-date&gt;/</span>
+              — no user-authored folder trees, because a folder tree is the
+              network share this is meant to replace.
+            </li>
+            <li>
+              Files may land <strong>unlinked to any well, spring, or project
+              record</strong>. An orphan tranche in the lake beats a tranche on
+              someone's desktop.
+            </li>
+            <li>
+              Every dataset names an <strong>ingestion owner — a person, not a
+              queue</strong>. Datasets without one read
+              <em>Unassigned</em> and are counted in the header. That count is
+              the point of the screen.
+            </li>
+            <li>
+              Its own nav item, <em>not</em> a tab under <strong>Assets</strong>.
+              Assets attach to a record; lake objects have no record yet. Is
+              that the right split, or does it just make two upload buttons?
+            </li>
+            <li>
+              Browser upload caps at <strong>5 GB per file</strong>; anything
+              larger gets a generated <span class="mono">gcloud storage</span>
+              command. Acceptable, or does this need resumable browser upload on
+              day one?
+            </li>
+          </ul>
+        </div>
+
+        <!-- Stat strip -->
+        <div class="stat-strip" style="margin-bottom: 18px">
+          <div class="stat-cell">
+            <div class="stat-label">Objects</div>
+            <div class="stat-value">41,208</div>
+            <div class="stat-note">across 186 datasets</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-label">Stored</div>
+            <div class="stat-value">2.74 TB</div>
+            <div class="stat-note">dual-region, versioned</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-label">Uploaded this month</div>
+            <div class="stat-value">1,412</div>
+            <div class="stat-note">by 23 staff</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-label">Ingested to Ocotillo</div>
+            <div class="stat-value">31</div>
+            <div class="stat-note">of 186 datasets</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-label">No ingestion owner</div>
+            <div class="stat-value" style="color: var(--warning-text)">9</div>
+            <div class="stat-note">ready, waiting on a person</div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SECTION A — Upload                         -->
+        <!-- ══════════════════════════════════════════ -->
+        <div class="section-rule">
+          <span class="section-rule-title">A · Upload a tranche</span>
+        </div>
+
+        <div class="grid g-upload">
+          <!-- Left: dropzone + queue -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <span class="card-header-icon">⇧</span>
+                <span class="card-title">Files</span>
+              </div>
+              <div class="header-actions">
+                <span class="badge badge-neutral">5 files · 2.73 GB</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="tabs-bar" style="margin-bottom: 12px">
+                <div class="tab active" onclick="switchTab('progress')">
+                  Uploading
+                </div>
+                <div class="tab" onclick="switchTab('dupe')">
+                  Duplicate detected
+                </div>
+                <div class="tab" onclick="switchTab('toobig')">
+                  Over the browser cap
+                </div>
+              </div>
+
+              <!-- Uploading -->
+              <div id="tab-progress" class="tab-panel active">
+                <div class="dropzone">
+                  <div class="dropzone-title">
+                    Drop files or a folder here, or click to browse
+                  </div>
+                  <div class="dropzone-sub">
+                    Any format. Nothing is validated, converted, or renamed on
+                    the way in — the lake takes the bytes as they are.
+                  </div>
+                </div>
+
+                <div class="file-list">
+                  <div class="file-row">
+                    <span class="file-icon">▤</span>
+                    <div>
+                      <div class="file-name">
+                        mesilla-bolson-water-levels-2019-2024.csv
+                      </div>
+                      <div class="file-bar">
+                        <div class="file-fill done" style="width: 100%"></div>
+                      </div>
+                    </div>
+                    <span class="file-size">41.2 MB</span>
+                    <span class="file-status ok">✓ Uploaded</span>
+                  </div>
+
+                  <div class="file-row">
+                    <span class="file-icon">◈</span>
+                    <div>
+                      <div class="file-name">
+                        aquifer-char-mesilla-v3.gpkg
+                      </div>
+                      <div class="file-bar">
+                        <div class="file-fill" style="width: 62%"></div>
+                      </div>
+                    </div>
+                    <span class="file-size">780 MB</span>
+                    <span class="file-status busy">62% · 1m 40s</span>
+                  </div>
+
+                  <div class="file-row">
+                    <span class="file-icon">▤</span>
+                    <div>
+                      <div class="file-name">
+                        sandoval-gravity-survey-2025.xlsx
+                      </div>
+                      <div class="file-bar">
+                        <div class="file-fill done" style="width: 100%"></div>
+                      </div>
+                    </div>
+                    <span class="file-size">2.1 MB</span>
+                    <span class="file-status ok">✓ Uploaded</span>
+                  </div>
+
+                  <div class="file-row">
+                    <span class="file-icon">📄</span>
+                    <div>
+                      <div class="file-name">
+                        otero-field-notes-2026-03.pdf
+                      </div>
+                      <div class="file-bar">
+                        <div class="file-fill" style="width: 0%"></div>
+                      </div>
+                    </div>
+                    <span class="file-size">8.4 MB</span>
+                    <span class="file-status">Queued</span>
+                  </div>
+
+                  <div class="file-row">
+                    <span class="file-icon">🗜</span>
+                    <div>
+                      <div class="file-name">WL-1187-transducer-raw.zip</div>
+                      <div class="file-bar">
+                        <div class="file-fill" style="width: 0%"></div>
+                      </div>
+                    </div>
+                    <span class="file-size">1.90 GB</span>
+                    <span class="file-status">Queued</span>
+                  </div>
+                </div>
+
+                <div class="helper" style="margin-top: 10px">
+                  Uploads continue if you navigate away inside Ocotillo; closing
+                  the tab stops them. Partial objects are cleaned up after 24 h.
+                  <strong>Open question:</strong> is that good enough, or does a
+                  1.9 GB file need resume-after-reload?
+                </div>
+              </div>
+
+              <!-- Duplicate -->
+              <div id="tab-dupe" class="tab-panel">
+                <div class="alert alert-warn" style="margin-bottom: 14px">
+                  <span>⚠</span>
+                  <span>
+                    <strong>Byte-identical file already in the lake.</strong>
+                    Checksum <span class="mono">md5:9f3c…a41b</span> matches an
+                    object uploaded by <strong>Siânin Spaur</strong> on 12 Feb
+                    2026.
+                  </span>
+                </div>
+
+                <div class="file-row" style="background: var(--wrapper)">
+                  <span class="file-icon">▤</span>
+                  <div>
+                    <div class="file-name">
+                      mesilla-bolson-water-levels-2019-2024.csv
+                    </div>
+                    <span class="dl-path"
+                      >raw/statewide-aquifer-char/mesilla-bolson-water-levels/2026-02-12/</span
+                    >
+                  </div>
+                  <span class="file-size">41.2 MB</span>
+                  <span class="file-status">Blocked</span>
+                </div>
+
+                <div class="form-row" style="margin-top: 14px">
+                  <button class="btn btn-outline btn-sm">Skip this file</button>
+                  <button class="btn btn-primary-outline btn-sm">
+                    Keep as a new version
+                  </button>
+                  <button class="btn btn-ghost btn-sm">
+                    Open the existing object
+                  </button>
+                </div>
+
+                <div class="helper" style="margin-top: 10px">
+                  <strong>Open question:</strong> the bucket has object
+                  versioning on, so "new version" is free and nothing is ever
+                  lost. Should an identical checksum be a hard block, a warning
+                  like this, or silently deduplicated with a second reference?
+                </div>
+              </div>
+
+              <!-- Too big -->
+              <div id="tab-toobig" class="tab-panel">
+                <div class="alert alert-error" style="margin-bottom: 14px">
+                  <span>✕</span>
+                  <span>
+                    <strong>14.6 GB exceeds the 5 GB browser limit.</strong> The
+                    destination and metadata below are already reserved — run
+                    this from a terminal and the object lands in the same place,
+                    catalogued the same way.
+                  </span>
+                </div>
+
+                <div class="file-row" style="background: var(--wrapper)">
+                  <span class="file-icon">🗜</span>
+                  <div>
+                    <div class="file-name">
+                      nm-aquifer-char-statewide-v3.gdb.zip
+                    </div>
+                  </div>
+                  <span class="file-size">14.6 GB</span>
+                  <span class="file-status">Too large</span>
+                </div>
+
+                <div class="label" style="margin: 14px 0 5px">
+                  Run this instead
+                </div>
+                <div class="cmd">gcloud storage cp nm-aquifer-char-statewide-v3.gdb.zip \
+  gs://ocotillo-datalake/raw/statewide-aquifer-char/\
+mesilla-bolson-aquifer-char/2026-09-01/</div>
+
+                <div class="form-row" style="margin-top: 12px">
+                  <button class="btn btn-outline btn-sm">⧉ Copy command</button>
+                  <button class="btn btn-ghost btn-sm">
+                    How do I get gcloud?
+                  </button>
+                </div>
+
+                <div class="helper" style="margin-top: 10px">
+                  <strong>Open question:</strong> handing a geologist a terminal
+                  command is exactly the friction this screen exists to remove.
+                  Is a 5 GB cap acceptable for a first release, or is chunked
+                  resumable upload table stakes?
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: batch metadata -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <span class="card-header-icon">✦</span>
+                <span class="card-title">Applies to this batch</span>
+              </div>
+              <div class="header-actions">
+                <span class="badge badge-filter">4 required</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="field" style="margin-bottom: 12px">
+                <label class="field-label-sm">Dataset *</label>
+                <input
+                  class="input"
+                  style="width: 100%"
+                  value="Mesilla Bolson aquifer characterization"
+                />
+                <span class="helper"
+                  >The unit people ask for by name. One dataset can be uploaded
+                  to many times.</span
+                >
+              </div>
+
+              <div class="field" style="margin-bottom: 12px">
+                <label class="field-label-sm">Project *</label>
+                <select class="input" style="width: 100%">
+                  <option>Statewide Aquifer Characterization (SAC)</option>
+                  <option>Aquifer Mapping Program — Otero County</option>
+                  <option>Healy Collaborative Groundwater Monitoring</option>
+                  <option>Pecos Slope Regional Study</option>
+                  <option>— No project —</option>
+                </select>
+              </div>
+
+              <div class="field" style="margin-bottom: 12px">
+                <label class="field-label-sm">Sensitivity *</label>
+                <div class="opt-cards" style="grid-template-columns: 1fr">
+                  <div class="opt-card" onclick="pickSensitivity(this)">
+                    <div class="opt-radio"></div>
+                    <div>
+                      <div class="opt-title">Public</div>
+                      <div class="opt-desc">
+                        Releasable as-is. Published locations, no owner
+                        information.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="opt-card on" onclick="pickSensitivity(this)">
+                    <div class="opt-radio"></div>
+                    <div>
+                      <div class="opt-title">Internal</div>
+                      <div class="opt-desc">
+                        Bureau staff. The default — an unreviewed tranche is
+                        internal until someone says otherwise.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="opt-card" onclick="pickSensitivity(this)">
+                    <div class="opt-radio"></div>
+                    <div>
+                      <div class="opt-title">Restricted</div>
+                      <div class="opt-desc">
+                        Landowner PII, exact private-well locations, or data
+                        under a cooperator agreement.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field" style="margin-bottom: 12px">
+                <label class="field-label-sm">Ingestion owner *</label>
+                <select class="input" style="width: 100%">
+                  <option>Unassigned — raw storage only</option>
+                  <option selected>Geoff Rawling — hydrogeology</option>
+                  <option>Siânin Spaur — data management</option>
+                  <option>Jake Ross — engineering</option>
+                </select>
+                <span class="helper">
+                  The named person responsible for getting this into Ocotillo's
+                  structured tables. Not a queue, not a team.
+                  <em>Unassigned</em> is allowed — it just shows up in the
+                  header count.
+                </span>
+              </div>
+
+              <div class="field" style="margin-bottom: 12px">
+                <label class="field-label-sm">Description</label>
+                <textarea class="input" rows="2">
+Water levels, driller's logs, and lithology picks compiled for the Mesilla Bolson characterization. Units are mixed; not yet normalized.</textarea
+                >
+              </div>
+
+              <div class="field" style="margin-bottom: 14px">
+                <label class="field-label-sm">Link to records — optional</label>
+                <div class="tray-chips" style="margin: 4px 0 4px">
+                  <span class="tray-chip"
+                    >WL-1187 <span class="tray-chip-x">×</span></span
+                  >
+                  <span class="tray-chip"
+                    >WL-1188 <span class="tray-chip-x">×</span></span
+                  >
+                  <span class="tray-chip"
+                    >WL-1191 <span class="tray-chip-x">×</span></span
+                  >
+                </div>
+                <span class="helper">
+                  Leave empty. A tranche that links to nothing is still worth
+                  more in the lake than on a desktop — links can be added from
+                  the catalog row later.
+                </span>
+              </div>
+
+              <div class="label" style="margin-bottom: 5px">
+                Destination — generated
+              </div>
+              <div class="path-preview">
+                <span class="path-fixed">gs://ocotillo-datalake/raw/</span
+                ><span class="path-var">statewide-aquifer-char</span
+                ><span class="path-fixed">/</span
+                ><span class="path-var">mesilla-bolson-aquifer-char</span
+                ><span class="path-fixed">/</span
+                ><span class="path-var">2026-09-01</span
+                ><span class="path-fixed">/&lt;filename&gt;</span>
+              </div>
+              <div class="helper" style="margin-top: 6px">
+                Slugged from project and dataset. Not editable — the path is an
+                address, not a filing system.
+              </div>
+
+              <div class="alert alert-info" style="margin-top: 14px">
+                <span>ℹ</span>
+                <span>
+                  Objects are versioned, replicated to a second region, and
+                  retained for 7 years. Nothing uploaded here can be
+                  permanently deleted from this screen.
+                </span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <span class="muted caption">5 files · 2.73 GB · ~4 min</span>
+              <div class="header-actions" style="margin-left: auto">
+                <button class="btn btn-ghost btn-sm">Cancel</button>
+                <button class="btn btn-default">Start upload</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SECTION B — What happens after upload      -->
+        <!-- ══════════════════════════════════════════ -->
+        <div class="section-rule">
+          <span class="section-rule-title">B · After the bytes land</span>
+        </div>
+
+        <div class="steps">
+          <div class="step done">
+            <span class="step-num">✓</span>
+            <div>
+              <div class="step-label">Stored</div>
+              <div class="step-sub">Seconds. Secure, backed up, addressable.</div>
+            </div>
+          </div>
+          <div class="step done">
+            <span class="step-num">✓</span>
+            <div>
+              <div class="step-label">Catalogued</div>
+              <div class="step-sub">
+                Searchable row, checksum, who and when.
+              </div>
+            </div>
+          </div>
+          <div class="step active">
+            <span class="step-num">3</span>
+            <div>
+              <div class="step-label">Owner named</div>
+              <div class="step-sub">A person, not a backlog. Manual.</div>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">4</span>
+            <div>
+              <div class="step-label">Ingested</div>
+              <div class="step-sub">
+                Mapped into Ocotillo tables. Code someone writes.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-warn">
+          <span>⚠</span>
+          <span>
+            <strong>Steps 1–2 are the whole product; steps 3–4 are staffing.</strong>
+            Some datasets already map cleanly onto Ocotillo and could be ingested
+            immediately — Geoff Rawling's well aquifer characterization is
+            sitting in the lake now, 214 files, and nothing technical is in its
+            way. What is missing is a named engineer to write the ingestion code.
+            This screen makes that gap visible instead of letting it stay a
+            conversation. <strong>Open question:</strong> should
+            <em>Unassigned</em> be allowed at all, or should upload require a
+            volunteer?
+          </span>
+        </div>
+
+        <!-- ══════════════════════════════════════════ -->
+        <!-- SECTION C — Catalog                        -->
+        <!-- ══════════════════════════════════════════ -->
+        <div class="section-rule">
+          <span class="section-rule-title">C · Datasets in the lake</span>
+        </div>
+
+        <div class="toolbar">
+          <input
+            class="toolbar-search"
+            placeholder="Search datasets, files, descriptions…"
+          />
+          <select class="toolbar-select">
+            <option>All projects</option>
+            <option>Statewide Aquifer Characterization</option>
+            <option>Aquifer Mapping Program — Otero County</option>
+          </select>
+          <span class="toolbar-label">Show</span>
+          <span class="toggle-chip on" onclick="toggleChip(this)">All</span>
+          <span class="toggle-chip" onclick="toggleChip(this)">Mine</span>
+          <span class="toggle-chip" onclick="toggleChip(this)">
+            No ingestion owner · 9
+          </span>
+          <span class="toggle-chip" onclick="toggleChip(this)">Restricted</span>
+          <span class="toolbar-spacer"></span>
+          <button class="btn btn-outline btn-sm">↓ Export catalog CSV</button>
+        </div>
+
+        <div class="datagrid scroll-x">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 30%">Dataset</th>
+                <th>Files</th>
+                <th>Size</th>
+                <th>Sensitivity</th>
+                <th>Uploaded by</th>
+                <th>Last upload</th>
+                <th>Ingestion owner</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="selected">
+                <td>
+                  <span class="dl-dataset"
+                    >Well aquifer characterization</span
+                  >
+                  <span class="dl-path"
+                    >raw/statewide-aquifer-char/well-aquifer-char/</span
+                  >
+                </td>
+                <td>214</td>
+                <td>6.10 GB</td>
+                <td><span class="chip badge-neutral">Internal</span></td>
+                <td>Geoff Rawling</td>
+                <td>27 Aug 2026</td>
+                <td><span class="owner-none">Unassigned</span></td>
+                <td>
+                  <span class="chip badge-warning">Ready to ingest</span>
+                  <span class="cell-note">Maps cleanly. Needs an engineer.</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <span class="dl-dataset"
+                    >Mesilla Bolson water levels 2019–2024</span
+                  >
+                  <span class="dl-path"
+                    >raw/statewide-aquifer-char/mesilla-bolson-water-levels/</span
+                  >
+                </td>
+                <td>3</td>
+                <td>41.2 MB</td>
+                <td><span class="chip badge-neutral">Internal</span></td>
+                <td>Siânin Spaur</td>
+                <td>12 Feb 2026</td>
+                <td>Siânin Spaur</td>
+                <td><span class="chip badge-success">Ingested</span></td>
+              </tr>
+
+              <tr>
+                <td>
+                  <span class="dl-dataset"
+                    >Roswell Artesian Basin pump tests</span
+                  >
+                  <span class="dl-path"
+                    >raw/pecos-slope/roswell-artesian-pump-tests/</span
+                  >
+                </td>
+                <td>88</td>
+                <td>2.31 GB</td>
+                <td><span class="chip badge-neutral">Internal</span></td>
+                <td>Jake Ross</td>
+                <td>19 Aug 2026</td>
+                <td>Jake Ross</td>
+                <td>
+                  <span class="chip badge-primary">Ingesting</span>
+                  <div class="ingest-bar">
+                    <div class="ingest-fill" style="width: 62%"></div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <span class="dl-dataset"
+                    >Otero County field notes &amp; photos</span
+                  >
+                  <span class="dl-path"
+                    >raw/amp-otero/otero-field-notes/</span
+                  >
+                </td>
+                <td>1,204</td>
+                <td>12.4 GB</td>
+                <td><span class="chip badge-destructive">Restricted</span></td>
+                <td>Geoff Rawling</td>
+                <td>04 Aug 2026</td>
+                <td>— none —</td>
+                <td>
+                  <span class="chip badge-neutral">Raw only</span>
+                  <span class="cell-note">Reference material, never ingested.</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <span class="dl-dataset">Sandoval County gravity survey</span>
+                  <span class="dl-path">raw/no-project/sandoval-gravity-survey/</span>
+                </td>
+                <td>12</td>
+                <td>640 MB</td>
+                <td><span class="chip badge-success">Public</span></td>
+                <td>Siânin Spaur</td>
+                <td>02 Sep 2026</td>
+                <td><span class="owner-none">Unassigned</span></td>
+                <td>
+                  <span class="chip badge-warning">Ready to ingest</span>
+                  <span class="cell-note">No project — uploaded unlinked.</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <span class="dl-dataset"
+                    >Estancia Basin transducer archive</span
+                  >
+                  <span class="dl-path"
+                    >raw/healy-collaborative/estancia-transducer-archive/</span
+                  >
+                </td>
+                <td>5,610</td>
+                <td>88.2 GB</td>
+                <td><span class="chip badge-neutral">Internal</span></td>
+                <td>Jake Ross</td>
+                <td>29 Jul 2026</td>
+                <td><span class="owner-none">Unassigned</span></td>
+                <td>
+                  <span class="chip badge-warning">Ready to ingest</span>
+                  <span class="cell-note">Uploaded with gcloud, 3 sessions.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="grid-footer">
+            <span>6 of 186 datasets</span>
+            <span>Rows per page: 25</span>
+            <span>1–6</span>
+          </div>
+        </div>
+
+        <div class="legend">
+          <span class="legend-item"
+            ><span class="chip badge-success">Ingested</span> In Ocotillo's structured
+            tables; the lake copy is the original of record.</span
+          >
+          <span class="legend-item"
+            ><span class="chip badge-primary">Ingesting</span> Code is running
+            now.</span
+          >
+          <span class="legend-item"
+            ><span class="chip badge-warning">Ready to ingest</span> Maps onto
+            Ocotillo; blocked on a named owner.</span
+          >
+          <span class="legend-item"
+            ><span class="chip badge-neutral">Raw only</span> Deliberately stays a
+            file. A legitimate end state.</span
+          >
+        </div>
+
+        <!-- Scope note -->
+        <div class="mockup-note" style="margin: 18px 0 8px">
+          <strong>Out of scope for this mockup.</strong> Bucket IAM — access
+          follows existing Ocotillo roles plus the sensitivity field; there is no
+          per-object ACL UI here and this mockup assumes there should not be one.
+          Lifecycle and cost policy (Nearline at 365 days, Coldline at 3 years)
+          is Admin configuration, not a per-upload choice. Migration of the
+          existing network shares is a separate exercise: this screen is the
+          on-ramp for new tranches, and moving 20 years of
+          <span class="mono">\\bureau-fs01</span> is its own project with its own
+          owner.
+        </div>
+      </div>
+      <!-- /main -->
+    </div>
+    <!-- /layout -->
+
+    <script>
+      function switchTab(name) {
+        const names = ["progress", "dupe", "toobig"];
+        document.querySelectorAll(".tab").forEach((t, i) => {
+          t.classList.toggle("active", names[i] === name);
+        });
+        document.querySelectorAll(".tab-panel").forEach((p) => {
+          p.classList.toggle("active", p.id === "tab-" + name);
+        });
+      }
+
+      function pickSensitivity(el) {
+        el.parentNode
+          .querySelectorAll(".opt-card")
+          .forEach((c) => c.classList.remove("on"));
+        el.classList.add("on");
+      }
+
+      function toggleChip(el) {
+        el.classList.toggle("on");
+      }
+
+      function toggleMode() {
+        const dark = document.documentElement.classList.toggle("dark");
+        document.getElementById("mode-btn").textContent = dark
+          ? "☀ Light mode"
+          : "☾ Dark mode";
+      }
+    </script>
+  </body>
+</html>
