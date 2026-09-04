@@ -1865,67 +1865,87 @@
       /* ── Page-specific ──
          Shared styles live in design-system/ocotillo.css. */
       /* ── Sample meta ── */
-            .sample-meta {
-              font-size: 12px;
-              color: var(--muted-foreground);
-              margin-bottom: 12px;
-            }
+      .sample-meta {
+        font-size: 12px;
+        color: var(--muted-foreground);
+        margin-bottom: 12px;
+      }
       .sample-meta strong {
-              color: var(--foreground);
-              font-weight: 600;
-            }
+        color: var(--foreground);
+        font-weight: 600;
+      }
       .sample-context {
-              display: grid;
-              grid-template-columns: repeat(4, minmax(0, 1fr));
-              border: 1px solid var(--divider);
-              border-radius: 5px;
-              overflow: hidden;
-              margin-bottom: 12px;
-              background: var(--paper);
-            }
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border: 1px solid var(--divider);
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 12px;
+        background: var(--paper);
+      }
       .sample-context-cell {
-              padding: 9px 12px;
-              border-left: 1px solid var(--divider);
-              min-width: 0;
-            }
+        padding: 9px 12px;
+        border-left: 1px solid var(--divider);
+        min-width: 0;
+      }
       .sample-context-cell:first-child {
-              border-left: none;
-            }
+        border-left: none;
+      }
       .sample-note {
-              margin-bottom: 12px;
-              padding: 9px 12px;
-              border-radius: 5px;
-              border: 1px solid #bfdbfe;
-              background: #eff6ff;
-              font-size: 12px;
-              color: var(--foreground);
-            }
+        margin-bottom: 12px;
+        padding: 9px 12px;
+        border-radius: 5px;
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+        font-size: 12px;
+        color: var(--foreground);
+      }
+      .value-exceed {
+        color: var(--destructive);
+        font-weight: 700;
+      }
+      .standard-pending {
+        color: var(--muted-foreground);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+      #tab-field .datagrid.crosstab th:last-child,
+      #tab-field .datagrid.crosstab td:last-child,
+      #tab-chem .datagrid.crosstab th:last-child,
+      #tab-chem .datagrid.crosstab td:last-child,
+      #tab-tracers .datagrid.crosstab th:last-child,
+      #tab-tracers .datagrid.crosstab td:last-child,
+      #tab-additional .datagrid.crosstab th:last-child,
+      #tab-additional .datagrid.crosstab td:last-child {
+        min-width: max-content;
+        white-space: nowrap;
+      }
       /* ── QA banner ── */
-            .qa-banner {
-              display: flex;
-              align-items: center;
-              gap: 8px;
-              background: #f0fdf4;
-              border: 1px solid #bbf7d0;
-              border-radius: 5px;
-              padding: 7px 12px;
-              font-size: 12px;
-              color: #166534;
-              margin-bottom: 12px;
-            }
+      .qa-banner {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 5px;
+        padding: 7px 12px;
+        font-size: 12px;
+        color: #166534;
+        margin-bottom: 12px;
+      }
       /* ── Time series hint ── */
-            .ts-hint {
-              margin-top: 12px;
-              padding: 10px 14px;
-              background: var(--wrapper);
-              border-radius: 5px;
-              font-size: 12px;
-              color: var(--muted-foreground);
-              border: 1px solid var(--divider);
-              display: flex;
-              align-items: center;
-              gap: 8px;
-            }
+      .ts-hint {
+        margin-top: 12px;
+        padding: 10px 14px;
+        background: var(--wrapper);
+        border-radius: 5px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        border: 1px solid var(--divider);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
     </style>
   </head>
   <body>
@@ -2153,6 +2173,7 @@
                 <option>Export CSV</option>
                 <option>Export GeoJSON</option>
                 <option>Export Crosstab</option>
+                <option>Export all views cross-tab</option>
               </select>
               <button class="btn btn-primary-outline" style="font-size: 12px">
                 ↓ Export
@@ -2184,13 +2205,18 @@
                 <option>Above SMCL only</option>
                 <option>Non-detects only</option>
               </select>
+              <span class="toolbar-label" style="margin-left: 8px">View</span>
+              <select id="chemistry-view-select" class="toolbar-select">
+                <option>Current tab</option>
+                <option>Cross-tab for all views</option>
+              </select>
               <span class="toolbar-spacer"></span>
               <span class="toolbar-label"
                 >Export limited to displayed well WL-0433</span
               >
             </div>
 
-            <div class="sample-note">
+            <div id="field-sample-note" class="sample-note">
               <strong>Sampling Event Note:</strong> Low-flow purge completed
               before collection; slight sulfur odor observed at the spring box.
               This event-level note applies to the full WL-0433C sampling event.
@@ -2207,6 +2233,9 @@
               <div class="tab" onclick="switchTab('tracers')">
                 Environmental Tracers
               </div>
+              <div class="tab" onclick="switchTab('additional')">
+                Additional Analyses
+              </div>
             </div>
 
             <!-- ── Tab: Field Parameters ── -->
@@ -2215,7 +2244,7 @@
                 Selected sample <strong>WL-0433C</strong> &nbsp;·&nbsp;
                 Collected May 15, 2026 &nbsp;·&nbsp; Staff: Siânin Spaur, Talon
               </div>
-              <div class="datagrid">
+              <div id="field-current-table" class="datagrid">
                 <table>
                   <thead>
                     <tr>
@@ -2228,11 +2257,25 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Temperature</td>
-                      <td>14.8</td>
-                      <td>°C</td>
+                      <td>Discharge Rate</td>
+                      <td>~0.02</td>
+                      <td>gal/min</td>
+                      <td>—</td>
+                      <td>Estimated — too slow to measure directly</td>
+                    </tr>
+                    <tr>
+                      <td>Dissolved Oxygen</td>
+                      <td>5.8</td>
+                      <td>mg/L</td>
                       <td>Yes</td>
-                      <td></td>
+                      <td>Flow cell used</td>
+                    </tr>
+                    <tr>
+                      <td>ORP / Redox</td>
+                      <td>142</td>
+                      <td>mV</td>
+                      <td>No</td>
+                      <td>Flow cell used; reading did not stabilize.</td>
                     </tr>
                     <tr>
                       <td>pH</td>
@@ -2249,18 +2292,11 @@
                       <td></td>
                     </tr>
                     <tr>
-                      <td>ORP / Redox</td>
-                      <td>142</td>
-                      <td>mV</td>
+                      <td>Temperature</td>
+                      <td>14.8</td>
+                      <td>°C</td>
                       <td>Yes</td>
-                      <td>Flow cell used</td>
-                    </tr>
-                    <tr>
-                      <td>Dissolved Oxygen</td>
-                      <td>5.8</td>
-                      <td>mg/L</td>
-                      <td>Yes</td>
-                      <td>Flow cell used</td>
+                      <td></td>
                     </tr>
                     <tr>
                       <td>Turbidity</td>
@@ -2269,12 +2305,85 @@
                       <td>Yes</td>
                       <td>Clear groundwater</td>
                     </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div id="field-crosstab-table" class="datagrid crosstab" hidden>
+                <table>
+                  <thead>
                     <tr>
-                      <td>Discharge Rate</td>
-                      <td>~0.02</td>
-                      <td>gal/min</td>
-                      <td>—</td>
-                      <td>Estimated — too slow to measure directly</td>
+                      <th>Sample</th>
+                      <th>Sample Collection Date</th>
+                      <th>
+                        Discharge Rate
+                        <span class="unit-label">gal/min</span>
+                      </th>
+                      <th>
+                        Dissolved Oxygen
+                        <span class="unit-label">mg/L</span>
+                      </th>
+                      <th>ORP / Redox <span class="unit-label">mV</span></th>
+                      <th>pH <span class="unit-label">S.U.</span></th>
+                      <th>
+                        Specific Conductance
+                        <span class="unit-label">µS/cm</span>
+                      </th>
+                      <th>Temperature <span class="unit-label">°C</span></th>
+                      <th>Turbidity <span class="unit-label">NTU</span></th>
+                      <th>Sampling Event Note</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <strong>WL-0433A</strong
+                        ><span class="unit-label">field meter</span>
+                      </td>
+                      <td>Jan 12, 2024</td>
+                      <td>0.03<span class="unit-label">estimated</span></td>
+                      <td>6.2<span class="unit-label">stabilized</span></td>
+                      <td>136<span class="unit-label">stabilized</span></td>
+                      <td>7.38<span class="unit-label">stabilized</span></td>
+                      <td>472<span class="unit-label">stabilized</span></td>
+                      <td>13.9<span class="unit-label">stabilized</span></td>
+                      <td>0.6<span class="unit-label">clear</span></td>
+                      <td>Initial winter sample.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>WL-0433B</strong
+                        ><span class="unit-label">field meter</span>
+                      </td>
+                      <td>Sep 04, 2025</td>
+                      <td>0.02<span class="unit-label">estimated</span></td>
+                      <td>5.5<span class="unit-label">stabilized</span></td>
+                      <td>
+                        149<span class="unit-label">did not stabilize</span>
+                      </td>
+                      <td>7.46<span class="unit-label">stabilized</span></td>
+                      <td>491<span class="unit-label">stabilized</span></td>
+                      <td>15.6<span class="unit-label">stabilized</span></td>
+                      <td>0.8<span class="unit-label">clear</span></td>
+                      <td>Low flow; extended stabilization time.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>WL-0433C</strong
+                        ><span class="unit-label">field meter</span>
+                      </td>
+                      <td>May 15, 2026</td>
+                      <td>~0.02<span class="unit-label">estimated</span></td>
+                      <td>5.8<span class="unit-label">stabilized</span></td>
+                      <td>
+                        142<span class="unit-label">did not stabilize</span>
+                      </td>
+                      <td>7.42<span class="unit-label">stabilized</span></td>
+                      <td>485<span class="unit-label">stabilized</span></td>
+                      <td>14.8<span class="unit-label">stabilized</span></td>
+                      <td>0.7<span class="unit-label">clear</span></td>
+                      <td>
+                        Low-flow purge completed; slight sulfur odor observed.
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -2283,13 +2392,6 @@
 
             <!-- ── Tab: General Chemistry ── -->
             <div id="tab-chem" class="tab-panel">
-              <div class="sample-meta">
-                Selected sample <strong>WL-0433C</strong> &nbsp;·&nbsp; Analyzed
-                at Bonnie's Lab &nbsp;·&nbsp; Results received Jun 2, 2026
-              </div>
-              <div class="qa-banner">
-                ✓ Ion balance ±2.1% — within acceptable range (lab QA/QC passed)
-              </div>
               <div class="datagrid crosstab">
                 <table>
                   <thead>
@@ -2297,61 +2399,55 @@
                       <th>Sample</th>
                       <th>Sample Collection Date</th>
                       <th>
-                        Calcium
-                        <span class="unit-label">mg/L · DL 0.05 · ±0.8</span>
-                      </th>
-                      <th>
-                        Magnesium
-                        <span class="unit-label">mg/L · DL 0.05 · ±0.3</span>
-                      </th>
-                      <th>
-                        Sodium
-                        <span class="unit-label">mg/L · DL 0.05 · ±0.6</span>
-                      </th>
-                      <th>
-                        Potassium
-                        <span class="unit-label">mg/L · DL 0.05 · ±0.1</span>
+                        Arsenic
+                        <span class="unit-label">mg/L</span>
                       </th>
                       <th>
                         Bicarbonate (HCO₃)
-                        <span class="unit-label">mg/L · DL 5 · ±4</span>
+                        <span class="unit-label">mg/L</span>
                       </th>
                       <th>
-                        Sulfate
-                        <span class="unit-label">mg/L · DL 0.5 · ±1.0</span>
+                        Calcium
+                        <span class="unit-label">mg/L</span>
                       </th>
                       <th>
                         Chloride
-                        <span class="unit-label">mg/L · DL 0.5 · ±0.6</span>
+                        <span class="unit-label">mg/L</span>
                       </th>
-                      <th>
-                        Nitrate as N
-                        <span class="unit-label">mg/L · DL 0.05 · ±0.02</span>
-                      </th>
-                      <th>
-                        Arsenic
-                        <span class="unit-label"
-                          >mg/L · DL 0.001 · ±0.0004</span
-                        >
-                      </th>
+                      <th>Ion Balance <span class="unit-label">%</span></th>
                       <th>
                         Iron
-                        <span class="unit-label"
-                          >mg/L · DL 0.005 · SMCL 0.3</span
-                        >
+                        <span class="unit-label">mg/L</span>
+                      </th>
+                      <th>
+                        Magnesium
+                        <span class="unit-label">mg/L</span>
                       </th>
                       <th>
                         Manganese
-                        <span class="unit-label"
-                          >mg/L · DL 0.005 · SMCL 0.05</span
-                        >
+                        <span class="unit-label">mg/L</span>
+                      </th>
+                      <th>
+                        Nitrate as N
+                        <span class="unit-label">mg/L</span>
+                      </th>
+                      <th>
+                        Potassium
+                        <span class="unit-label">mg/L</span>
+                      </th>
+                      <th>
+                        Sodium
+                        <span class="unit-label">mg/L</span>
+                      </th>
+                      <th>
+                        Sulfate
+                        <span class="unit-label">mg/L</span>
                       </th>
                       <th>
                         TDS
-                        <span class="unit-label"
-                          >mg/L · calculated · SMCL 500</span
-                        >
+                        <span class="unit-label">mg/L · calculated</span>
                       </th>
+                      <th>Applicable Standard</th>
                       <th>Sampling Event Note</th>
                     </tr>
                   </thead>
@@ -2362,18 +2458,22 @@
                         ><span class="unit-label">Bureau lab</span>
                       </td>
                       <td>Jan 12, 2024</td>
-                      <td>47.4</td>
-                      <td>11.8</td>
-                      <td>30.7</td>
-                      <td>2.7</td>
-                      <td>214</td>
-                      <td>41.9</td>
-                      <td>17.8</td>
-                      <td>&lt;0.05 <span class="chip chip-nd">ND</span></td>
                       <td>0.004</td>
+                      <td>214</td>
+                      <td>47.4</td>
+                      <td>17.8</td>
+                      <td>−1.8</td>
                       <td>0.09</td>
-                      <td>&lt;0.005 <span class="chip chip-nd">ND</span></td>
+                      <td>11.8</td>
+                      <td><span class="chip chip-nd">ND</span></td>
+                      <td><span class="chip chip-nd">ND</span></td>
+                      <td>2.7</td>
+                      <td>30.7</td>
+                      <td>41.9</td>
                       <td>365 <span class="chip chip-calc">Calc.</span></td>
+                      <td>
+                        <span class="standard-pending">Pending Siânin/Ted</span>
+                      </td>
                       <td>Initial winter sample.</td>
                     </tr>
                     <tr>
@@ -2382,46 +2482,52 @@
                         ><span class="unit-label">Bureau lab</span>
                       </td>
                       <td>Sep 04, 2025</td>
-                      <td>49.0</td>
-                      <td>12.4</td>
-                      <td>32.0</td>
-                      <td>2.9</td>
-                      <td>221</td>
-                      <td>43.2</td>
-                      <td>18.7</td>
-                      <td>&lt;0.05 <span class="chip chip-nd">ND</span></td>
                       <td>0.005</td>
+                      <td>221</td>
+                      <td>49.0</td>
+                      <td>18.7</td>
+                      <td>−2.4</td>
                       <td>
-                        0.34 <span class="chip chip-smcl">Above SMCL</span>
+                        <span class="value-exceed">0.34</span>
                       </td>
+                      <td>12.4</td>
                       <td>0.011</td>
+                      <td><span class="chip chip-nd">ND</span></td>
+                      <td>2.9</td>
+                      <td>32.0</td>
+                      <td>43.2</td>
                       <td>382 <span class="chip chip-calc">Calc.</span></td>
+                      <td>
+                        <span class="standard-pending">Pending Siânin/Ted</span>
+                      </td>
                       <td>Low flow; extended stabilization time.</td>
                     </tr>
                     <tr>
                       <td>
                         <strong>WL-0433C</strong>
-                        <span class="chip chip-ok">Most recent</span
-                        ><span class="unit-label">Bureau lab</span>
+                        <span class="unit-label">Bureau lab</span>
                       </td>
                       <td>May 15, 2026</td>
-                      <td>48.2</td>
-                      <td>12.1</td>
-                      <td>31.4</td>
-                      <td>2.8</td>
-                      <td>218</td>
-                      <td>42.6</td>
-                      <td>18.3</td>
-                      <td>&lt;0.05 <span class="chip chip-nd">ND</span></td>
                       <td>
-                        0.006 <span class="chip chip-mcl">Above MCL</span
-                        ><span class="cell-note"
-                          >Observation note: result confirmed by rerun</span
-                        >
+                        <span class="value-exceed">0.006</span>
                       </td>
+                      <td>218</td>
+                      <td>48.2</td>
+                      <td>18.3</td>
+                      <td>−2.1</td>
                       <td>0.12</td>
-                      <td>&lt;0.005 <span class="chip chip-nd">ND</span></td>
+                      <td>12.1</td>
+                      <td><span class="chip chip-nd">ND</span></td>
+                      <td>
+                        <span class="chip chip-nd">ND</span>
+                      </td>
+                      <td>2.8</td>
+                      <td>31.4</td>
+                      <td>42.6</td>
                       <td>374 <span class="chip chip-calc">Calc.</span></td>
+                      <td>
+                        <span class="standard-pending">Pending Siânin/Ted</span>
+                      </td>
                       <td>
                         Low-flow purge completed; slight sulfur odor observed.
                       </td>
@@ -2431,16 +2537,8 @@
               </div>
               <div class="legend">
                 <div class="legend-item">
-                  <span class="chip chip-nd">ND</span> Not detected — value
-                  shown is detection limit
-                </div>
-                <div class="legend-item">
-                  <span class="chip chip-mcl">Above MCL</span> Exceeds EPA
-                  drinking water limit
-                </div>
-                <div class="legend-item">
-                  <span class="chip chip-smcl">Above SMCL</span> Exceeds
-                  secondary drinking water limit
+                  <span class="chip chip-nd">ND</span> Not detected; detection
+                  limits are hidden in the quick display
                 </div>
                 <div class="legend-item">
                   <span class="chip chip-calc">Calc.</span> Calculated, not
@@ -2451,29 +2549,33 @@
 
             <!-- ── Tab: Environmental Tracers ── -->
             <div id="tab-tracers" class="tab-panel">
-              <div class="sample-meta">
-                Selected sample <strong>WL-0433C</strong> &nbsp;·&nbsp; Multiple
-                external labs &nbsp;·&nbsp; Results received Jun 10, 2026
-              </div>
               <div class="datagrid crosstab">
                 <table>
                   <thead>
                     <tr>
                       <th>Sample</th>
                       <th>Sample Collection Date</th>
-                      <th>δ¹⁸O <span class="unit-label">‰ VSMOW</span></th>
-                      <th>δD (δ²H) <span class="unit-label">‰ VSMOW</span></th>
-                      <th>δ¹⁷O <span class="unit-label">‰ VSMOW</span></th>
-                      <th>Tritium <span class="unit-label">TU</span></th>
+                      <th>
+                        Carbon-14 apparent age
+                        <span class="unit-label">years before present</span>
+                      </th>
                       <th>
                         Carbon-14 percent modern carbon
                         <span class="unit-label">pmC</span>
                       </th>
                       <th>
-                        Carbon-14 apparent age
-                        <span class="unit-label">years before present</span>
+                        δ<sup>13</sup>C <span class="unit-label">‰ VPDB</span>
                       </th>
-                      <th>Carbon-13 <span class="unit-label">‰ VPDB</span></th>
+                      <th>
+                        δ<sup>17</sup>O <span class="unit-label">‰ VSMOW</span>
+                      </th>
+                      <th>
+                        δ<sup>18</sup>O <span class="unit-label">‰ VSMOW</span>
+                      </th>
+                      <th>
+                        δ<sup>2</sup>H <span class="unit-label">‰ VSMOW</span>
+                      </th>
+                      <th>Tritium <span class="unit-label">TU</span></th>
                       <th>Sampling Event Note</th>
                     </tr>
                   </thead>
@@ -2484,17 +2586,17 @@
                         ><span class="unit-label">multiple labs</span>
                       </td>
                       <td>Jan 12, 2024</td>
-                      <td>−10.35<span class="unit-label">Bureau</span></td>
-                      <td>−74.1<span class="unit-label">Bureau</span></td>
-                      <td>—<span class="unit-label">not requested</span></td>
-                      <td>0.9<span class="unit-label">Univ. of Miami</span></td>
+                      <td>2,930<span class="unit-label">calculated</span></td>
                       <td>
                         70.1<span class="unit-label">Commercial lab</span>
                       </td>
-                      <td>2,930<span class="unit-label">calculated</span></td>
                       <td>
                         −13.0<span class="unit-label">Commercial lab</span>
                       </td>
+                      <td>—<span class="unit-label">not requested</span></td>
+                      <td>−10.35<span class="unit-label">Bureau</span></td>
+                      <td>−74.1<span class="unit-label">Bureau</span></td>
+                      <td>0.9<span class="unit-label">Univ. of Miami</span></td>
                       <td>Initial winter sample.</td>
                     </tr>
                     <tr>
@@ -2503,45 +2605,643 @@
                         ><span class="unit-label">multiple labs</span>
                       </td>
                       <td>Sep 04, 2025</td>
-                      <td>−10.50<span class="unit-label">Bureau</span></td>
-                      <td>−75.0<span class="unit-label">Bureau</span></td>
+                      <td>3,290<span class="unit-label">calculated</span></td>
+                      <td>
+                        67.2<span class="unit-label">Commercial lab</span>
+                      </td>
+                      <td>
+                        −13.4<span class="unit-label">Commercial lab</span>
+                      </td>
                       <td>
                         —<span class="unit-label"
                           >pending field list review</span
                         >
                       </td>
+                      <td>−10.50<span class="unit-label">Bureau</span></td>
+                      <td>−75.0<span class="unit-label">Bureau</span></td>
                       <td>0.7<span class="unit-label">Univ. of Miami</span></td>
-                      <td>
-                        67.2<span class="unit-label">Commercial lab</span>
-                      </td>
-                      <td>3,290<span class="unit-label">calculated</span></td>
-                      <td>
-                        −13.4<span class="unit-label">Commercial lab</span>
-                      </td>
                       <td>Low flow; extended stabilization time.</td>
                     </tr>
                     <tr>
                       <td>
                         <strong>WL-0433C</strong>
-                        <span class="chip chip-ok">Most recent</span
-                        ><span class="unit-label">multiple labs</span>
+                        <span class="unit-label">multiple labs</span>
                       </td>
                       <td>May 15, 2026</td>
-                      <td>−10.42<span class="unit-label">Bureau</span></td>
-                      <td>−74.8<span class="unit-label">Bureau</span></td>
+                      <td>3,140<span class="unit-label">calculated</span></td>
+                      <td>
+                        68.4<span class="unit-label">Commercial lab</span>
+                      </td>
+                      <td>
+                        −13.2<span class="unit-label">Commercial lab</span>
+                      </td>
                       <td>
                         —<span class="unit-label">Pending · July 2026</span>
                       </td>
+                      <td>−10.42<span class="unit-label">Bureau</span></td>
+                      <td>−74.8<span class="unit-label">Bureau</span></td>
                       <td>
                         0.8<span class="unit-label">Univ. of Miami · low</span>
                       </td>
                       <td>
-                        68.4<span class="unit-label">Commercial lab</span>
+                        Low-flow purge completed; slight sulfur odor observed.
                       </td>
-                      <td>3,140<span class="unit-label">calculated</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ── Tab: Additional Analyses ── -->
+            <div id="tab-additional" class="tab-panel">
+              <div class="datagrid crosstab">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Sample</th>
+                      <th>Sample Collection Date</th>
+                      <th>
+                        Age of Water using dissolved gases
+                        <span class="unit-label">3H:3He Age</span>
+                      </th>
+                      <th>
+                        Alkalinity as OH- <span class="unit-label">OH</span>
+                      </th>
+                      <th>
+                        Alkalinity, Total <span class="unit-label">ALK</span>
+                      </th>
+                      <th>Aluminum <span class="unit-label">Al</span></th>
+                      <th>
+                        Aluminum, total, unfiltered
+                        <span class="unit-label">Al(total)</span>
+                      </th>
+                      <th>Ammonia <span class="unit-label">NH3</span></th>
+                      <th>Ammonium <span class="unit-label">NH4</span></th>
+                      <th>Antimony <span class="unit-label">Sb</span></th>
+                      <th>
+                        Antimony, total, unfiltered
+                        <span class="unit-label">Sb(total)</span>
+                      </th>
+                      <th>
+                        Arsenate (arsenic species)
+                        <span class="unit-label">AsV</span>
+                      </th>
+                      <th>
+                        Arsenic, total, unfiltered
+                        <span class="unit-label">As(total)</span>
+                      </th>
+                      <th>
+                        Arsenite (arsenic species)
+                        <span class="unit-label">AsIII</span>
+                      </th>
+                      <th>Barium <span class="unit-label">Ba</span></th>
+                      <th>
+                        Barium, total, unfiltered
+                        <span class="unit-label">Ba(total)</span>
+                      </th>
+                      <th>Beryllium <span class="unit-label">Be</span></th>
+                      <th>
+                        Beryllium, total, unfiltered
+                        <span class="unit-label">Be(total)</span>
+                      </th>
+                      <th>Boron <span class="unit-label">B</span></th>
+                      <th>
+                        Boron, total, unfiltered
+                        <span class="unit-label">B(total)</span>
+                      </th>
+                      <th>Bromide <span class="unit-label">Br</span></th>
+                      <th>Cadmium <span class="unit-label">Cd</span></th>
+                      <th>
+                        Cadmium, total, unfiltered
+                        <span class="unit-label">Cd(total)</span>
+                      </th>
+                      <th>
+                        Calcium, total, unfiltered
+                        <span class="unit-label">Ca(total)</span>
+                      </th>
+                      <th>Carbonate <span class="unit-label">CO3</span></th>
+                      <th>
+                        Chlorofluorocarbon-11 avg age
+                        <span class="unit-label">CFC11</span>
+                      </th>
+                      <th>
+                        Chlorofluorocarbon-113 avg age
+                        <span class="unit-label">CFC113</span>
+                      </th>
+                      <th>
+                        Chlorofluorocarbon-113/12 avg RATIO age
+                        <span class="unit-label">CFC113_12</span>
+                      </th>
+                      <th>
+                        Chlorofluorocarbon-12 avg age
+                        <span class="unit-label">CFC12</span>
+                      </th>
+                      <th>Chromium <span class="unit-label">Cr</span></th>
+                      <th>
+                        Chromium, total, unfiltered
+                        <span class="unit-label">Cr(total)</span>
+                      </th>
+                      <th>Cobalt <span class="unit-label">Co</span></th>
+                      <th>
+                        Cobalt, total, unfiltered
+                        <span class="unit-label">Co(total)</span>
+                      </th>
+                      <th>
+                        Conductivity, laboratory (µS)
+                        <span class="unit-label">CONDLAB</span>
+                      </th>
+                      <th>Copper <span class="unit-label">Cu</span></th>
+                      <th>
+                        Copper, total, unfiltered
+                        <span class="unit-label">Cu(total)</span>
+                      </th>
+                      <th>Cyanide <span class="unit-label">CN6</span></th>
+                      <th>
+                        delta C13 of dissolved inorganic carbon
+                        <span class="unit-label">d13C-DIC</span>
+                      </th>
+                      <th>
+                        delta O18 sulfate
+                        <span class="unit-label">d18O-SO4</span>
+                      </th>
+                      <th>
+                        Dissolved organic carbon
+                        <span class="unit-label">DOC</span>
+                      </th>
+                      <th>
+                        Estimated recharge temperature
+                        <span class="unit-label">ERT</span>
+                      </th>
+                      <th>Fluoride <span class="unit-label">F</span></th>
+                      <th>
+                        Hardness (CaCO3) <span class="unit-label">HRD</span>
+                      </th>
+                      <th>
+                        Hydrogen sulfide <span class="unit-label">H2S</span>
+                      </th>
+                      <th>
+                        Ion Balance <span class="unit-label">IONBAL</span>
+                      </th>
+                      <th>
+                        Iron, total, unfiltered
+                        <span class="unit-label">Fe(total)</span>
+                      </th>
+                      <th>Lead <span class="unit-label">Pb</span></th>
+                      <th>
+                        Lead, total, unfiltered
+                        <span class="unit-label">Pb(total)</span>
+                      </th>
+                      <th>Lithium <span class="unit-label">Li</span></th>
+                      <th>
+                        Lithium, total, unfiltered
+                        <span class="unit-label">Li(total)</span>
+                      </th>
+                      <th>
+                        Magnesium, total, unfiltered
+                        <span class="unit-label">Mg(total)</span>
+                      </th>
+                      <th>
+                        Manganese, total, unfiltered
+                        <span class="unit-label">Mn(total)</span>
+                      </th>
+                      <th>Mercury <span class="unit-label">Hg</span></th>
+                      <th>
+                        Mercury, total, unfiltered
+                        <span class="unit-label">Hg(total)</span>
+                      </th>
+                      <th>Molybdenum <span class="unit-label">Mo</span></th>
+                      <th>
+                        Molybdenum, total, unfiltered
+                        <span class="unit-label">Mo(total)</span>
+                      </th>
+                      <th>Nickel <span class="unit-label">Ni</span></th>
+                      <th>
+                        Nickel, total, unfiltered
+                        <span class="unit-label">Ni(total)</span>
+                      </th>
+                      <th>
+                        Nitrate (as N) <span class="unit-label">NO3(N)</span>
+                      </th>
+                      <th>
+                        Nitrate (as NO3) <span class="unit-label">NO3</span>
+                      </th>
+                      <th>
+                        Nitrite (as NO2) <span class="unit-label">NO2</span>
+                      </th>
+                      <th>pH,laboratory <span class="unit-label">pHL</span></th>
+                      <th>Phosphate <span class="unit-label">PO4</span></th>
+                      <th>
+                        Potassium, total, unfiltered
+                        <span class="unit-label">K(total)</span>
+                      </th>
+                      <th>Selenium <span class="unit-label">Se</span></th>
+                      <th>
+                        Selenium, total, unfiltered
+                        <span class="unit-label">Se(total)</span>
+                      </th>
+                      <th>Silica <span class="unit-label">SiO2</span></th>
+                      <th>Silicon <span class="unit-label">Si</span></th>
+                      <th>
+                        Silicon, total, unfiltered
+                        <span class="unit-label">Si(total)</span>
+                      </th>
+                      <th>Silver <span class="unit-label">Ag</span></th>
+                      <th>
+                        Silver, total, unfiltered
+                        <span class="unit-label">Ag(total)</span>
+                      </th>
+                      <th>
+                        Sodium and Potassium combined
+                        <span class="unit-label">Na+K</span>
+                      </th>
+                      <th>
+                        Sodium, total, unfiltered
+                        <span class="unit-label">Na(total)</span>
+                      </th>
+                      <th>Strontium <span class="unit-label">Sr</span></th>
+                      <th>
+                        Strontium 87:86 ratio
+                        <span class="unit-label">Sr87:Sr86</span>
+                      </th>
+                      <th>
+                        Strontium, total, unfiltered
+                        <span class="unit-label">Sr(total)</span>
+                      </th>
+                      <th>
+                        Sulfate 34 isotope ratio
+                        <span class="unit-label">d34S-SO4</span>
+                      </th>
+                      <th>
+                        Sulfur hexafluoride <span class="unit-label">Sf6</span>
+                      </th>
+                      <th>Thallium <span class="unit-label">Tl</span></th>
+                      <th>
+                        Thallium, total, unfiltered
+                        <span class="unit-label">Tl(total)</span>
+                      </th>
+                      <th>Thorium <span class="unit-label">Th</span></th>
+                      <th>
+                        Thorium, total, unfiltered
+                        <span class="unit-label">Th(total)</span>
+                      </th>
+                      <th>Tin <span class="unit-label">Sn</span></th>
+                      <th>
+                        Tin, total, unfiltered
+                        <span class="unit-label">Sn(total)</span>
+                      </th>
+                      <th>Titanium <span class="unit-label">Ti</span></th>
+                      <th>
+                        Titanium, total, unfiltered
+                        <span class="unit-label">Ti(total)</span>
+                      </th>
+                      <th>Total Anions <span class="unit-label">TAn</span></th>
+                      <th>
+                        Total Cations <span class="unit-label">TCat</span>
+                      </th>
+                      <th>
+                        Total Kjeldahl nitrogen
+                        <span class="unit-label">TKN</span>
+                      </th>
+                      <th>Total nitrogen <span class="unit-label">TN</span></th>
+                      <th>
+                        Total organic carbon <span class="unit-label">TOC</span>
+                      </th>
+                      <th>
+                        Uncorrected C14 age
+                        <span class="unit-label">C14_years</span>
+                      </th>
+                      <th>
+                        Uranium (total, by ICP-MS)
+                        <span class="unit-label">U</span>
+                      </th>
+                      <th>
+                        Uranium, total, unfiltered
+                        <span class="unit-label">U(total)</span>
+                      </th>
+                      <th>Vanadium <span class="unit-label">V</span></th>
+                      <th>
+                        Vanadium, total, unfiltered
+                        <span class="unit-label">V(total)</span>
+                      </th>
+                      <th>Zinc <span class="unit-label">Zn</span></th>
+                      <th>
+                        Zinc, total, unfiltered
+                        <span class="unit-label">Zn(total)</span>
+                      </th>
+                      <th>Sampling Event Note</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
                       <td>
-                        −13.2<span class="unit-label">Commercial lab</span>
+                        <strong>WL-0433A</strong
+                        ><span class="unit-label">Bureau lab</span>
                       </td>
+                      <td>Jan 12, 2024</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>176</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.041</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.08</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.42</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.018</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>31.2</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.61</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>Initial winter sample.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>WL-0433B</strong
+                        ><span class="unit-label">Bureau lab</span>
+                      </td>
+                      <td>Sep 04, 2025</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>181</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.044</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.09</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.45</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.020</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>32.8</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.64</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>Low flow; extended stabilization time.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>WL-0433C</strong
+                        ><span class="unit-label">Bureau lab</span>
+                      </td>
+                      <td>May 15, 2026</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>179</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.043</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.08</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.44</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.019</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>32.1</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>0.63</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
                       <td>
                         Low-flow purge completed; slight sulfur odor observed.
                       </td>
@@ -2562,7 +3262,9 @@
               <span class="card-header-icon">📝</span>
               <span class="card-title">Notes</span>
             </div>
-            <span style="font-size: 12px; color: var(--muted-foreground)">▼</span>
+            <span style="font-size: 12px; color: var(--muted-foreground)"
+              >▼</span
+            >
           </div>
           <div class="card-placeholder">[ Site and visit notes accordion ]</div>
         </div>
@@ -2572,15 +3274,31 @@
     <!-- /layout -->
 
     <script>
+      function syncFieldParametersView() {
+        const viewSelect = document.getElementById("chemistry-view-select");
+        const currentTable = document.getElementById("field-current-table");
+        const crosstabTable = document.getElementById("field-crosstab-table");
+        const showCrosstab = viewSelect.value === "Cross-tab for all views";
+
+        currentTable.hidden = showCrosstab;
+        crosstabTable.hidden = !showCrosstab;
+      }
+
       function switchTab(name) {
-        const names = ["field", "chem", "tracers"];
+        const names = ["field", "chem", "tracers", "additional"];
         document.querySelectorAll(".tab").forEach((t, i) => {
           t.classList.toggle("active", names[i] === name);
         });
         document.querySelectorAll(".tab-panel").forEach((p) => {
           p.classList.toggle("active", p.id === "tab-" + name);
         });
+        document.getElementById("field-sample-note").hidden = name !== "field";
       }
+
+      document
+        .getElementById("chemistry-view-select")
+        .addEventListener("change", syncFieldParametersView);
+      syncFieldParametersView();
     </script>
   </body>
 </html>
