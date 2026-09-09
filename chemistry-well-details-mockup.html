@@ -778,10 +778,10 @@
       /* ── Domain badges ───────────────────────────────────────────────────────────
        * Water-chemistry result flags. These are Ocotillo-specific meanings mapped
        * onto the semantic tints above — never onto new one-off colors.
-       *   MCL   exceeds a health-based limit          → destructive
-       *   SMCL  exceeds a taste/odor/staining limit   → warning
-       *   ND    not detected, value is the det. limit → neutral
-       *   Calc. calculated, not directly measured     → neutral
+       *   MCL   EPA primary drinking-water standard   → destructive
+       *   SMCL  EPA secondary drinking-water standard → warning
+       *   ND    not detected                          → neutral
+       *   Calc. calculated                            → neutral
        * ------------------------------------------------------------------------- */
       .chip-mcl {
         background: color-mix(in oklab, var(--destructive) 10%, transparent);
@@ -789,7 +789,6 @@
         border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
       }
       .chip-smcl,
-      .chip-nd,
       .chip-warn {
         background: color-mix(in oklab, var(--warning) 10%, transparent);
         color: var(--warning-text);
@@ -801,6 +800,7 @@
         border-color: color-mix(in oklab, var(--success) 30%, transparent);
       }
       .chip-calc,
+      .chip-nd,
       .chip-neutral {
         background: var(--muted);
         color: var(--muted-foreground);
@@ -2474,7 +2474,7 @@
                     1 <span class="chip chip-mcl">MCL</span>
                   </div>
                   <div class="chem-summary-label">
-                    Primary exceedance in selected sample
+                    Result exceeds an EPA primary drinking-water standard
                   </div>
                 </div>
                 <div class="chem-summary-cell">
@@ -2482,7 +2482,7 @@
                     4 <span class="chip chip-smcl">SMCL</span>
                   </div>
                   <div class="chem-summary-label">
-                    Secondary exceedances in selected sample
+                    Result exceeds an EPA secondary drinking-water standard
                   </div>
                 </div>
                 <div class="chem-summary-cell">
@@ -2769,12 +2769,10 @@
               </div>
               <div class="legend">
                 <div class="legend-item">
-                  <span class="chip chip-nd">ND</span> Not detected; detection
-                  limits are hidden in the quick display
+                  <span class="chip chip-nd">ND</span> Not detected
                 </div>
                 <div class="legend-item">
-                  <span class="chip chip-calc">Calc.</span> Calculated, not
-                  directly measured
+                  <span class="chip chip-calc">Calc.</span> Calculated
                 </div>
               </div>
             </div>
