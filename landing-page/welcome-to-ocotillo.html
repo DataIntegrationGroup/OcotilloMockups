@@ -2240,6 +2240,11 @@
       });
     </script>
     <script>document.addEventListener('DOMContentLoaded', function () { var note = document.createElement('div'); note.className = 'mockup-note welcome-note'; note.innerHTML = '<strong>Lo-fi landing-page mockup — for feedback only.</strong> This is not functional.'; document.querySelector('.welcome-content').prepend(note); });</script>
+    <style>
+      .welcome-top-note { max-width: 1536px; box-sizing: border-box; margin: 16px auto; padding: 16px 32px; }
+      .welcome-content .welcome-note { display: none; }
+    </style>
+    <script>document.addEventListener('DOMContentLoaded', function () { var note = document.createElement('div'); note.className = 'mockup-note welcome-top-note'; note.innerHTML = '<strong>Lo-fi landing-page mockup — for feedback only.</strong> This is not functional.'; document.body.insertBefore(note, document.querySelector('.welcome-page')); });</script>
   </head>
   <body>
     <div class="welcome-page">
