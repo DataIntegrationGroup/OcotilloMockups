@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>One program, from field to report</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" /><link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <!-- design-system:start — generated from design-system/ocotillo.css
              by design-system/sync.py. Do not edit this block by hand. -->
     <style>
@@ -117,7 +122,8 @@
         --radius-4xl: 22px; /* badges           (rounded-4xl) */
 
         /* Type */
-        --font-sans: "Public Sans Variable", "Public Sans", system-ui, sans-serif;
+        --font-sans:
+          "Public Sans Variable", "Public Sans", system-ui, sans-serif;
         --font-heading: "Outfit Variable", "Outfit", system-ui, sans-serif;
         --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
@@ -128,7 +134,8 @@
         /* Elevation. The app is a flat, ring-outlined UI: cards carry a ring, not
            a shadow. Shadows are reserved for things that genuinely float. */
         --shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.14);
-        --shadow-paper: 0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
+        --shadow-paper:
+          0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
       }
 
       /* Dark mode — add class="dark" to <html>, same switch the app uses. */
@@ -1118,7 +1125,8 @@
 
       /* Dropzone. */
       .dropzone {
-        border: 1.5px dashed color-mix(in oklab, var(--primary) 40%, transparent);
+        border: 1.5px dashed
+          color-mix(in oklab, var(--primary) 40%, transparent);
         border-radius: var(--radius-lg);
         background: color-mix(in oklab, var(--primary) 6%, transparent);
         padding: 22px 16px;
@@ -1412,7 +1420,11 @@
         top: 0;
         bottom: 0;
         border-radius: 4px;
-        background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+        background: color-mix(
+          in oklab,
+          var(--muted-foreground) 35%,
+          transparent
+        );
       }
       .meter-median {
         position: absolute;
@@ -1858,15 +1870,447 @@
     <!-- design-system:end -->
     <style>
       /* ── Page-specific ── */
-      .landing{max-width:1120px;margin:auto;padding:0 28px 72px}.landing-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border)}.brand{display:flex;align-items:center;gap:10px;font:700 21px var(--font-heading)}.brand-mark{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:var(--primary);color:#fff}.nav-links{display:flex;gap:20px;align-items:center;font-size:13px;color:var(--muted-foreground)}.nav-links a{color:inherit;text-decoration:none}.mockup-note{margin:18px 0}.hero{display:grid;grid-template-columns:1fr .8fr;gap:65px;align-items:end;padding:76px 0 68px}.eyebrow{color:var(--primary);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}.hero h1{font:700 clamp(42px,6vw,68px)/1.05 var(--font-heading);letter-spacing:-.045em}.hero p{font-size:18px;color:var(--muted-foreground);margin:20px 0 25px;max-width:540px}.hero-side{border-left:3px solid var(--bloom);padding:3px 0 3px 22px}.hero-side strong{font:600 23px/1.25 var(--font-heading)}.hero-side p{font-size:14px;margin-top:10px}.section{padding:64px 0;border-top:1px solid var(--border)}.section-heading{max-width:620px;margin-bottom:30px}.section-heading h2{font:600 34px/1.15 var(--font-heading);letter-spacing:-.025em}.section-heading p{color:var(--muted-foreground);margin-top:9px;font-size:16px}.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:0}.step{position:relative;padding:18px 17px 18px 0;margin-right:17px;border-top:2px solid var(--border)}.step:after{content:'→';position:absolute;right:-7px;top:-15px;color:var(--border);font-size:22px}.step:last-child:after{display:none}.step-num{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:var(--primary);color:#fff;font:600 12px var(--font-heading);margin-bottom:16px}.step h3{font:600 18px var(--font-heading);margin-bottom:7px}.step p{font-size:13px;color:var(--muted-foreground)}.audiences{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.audience{padding:21px;min-height:180px}.audience h3{font:600 19px var(--font-heading);margin-bottom:9px}.audience p{font-size:13px;color:var(--muted-foreground)}.audience .badge{margin-bottom:19px}.quote{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}.quote-card{padding:28px;background:var(--brand-950);color:#fff;border-radius:10px}.quote-card blockquote{font:600 23px/1.3 var(--font-heading)}.quote-card cite{display:block;color:var(--brand-200);font-size:12px;font-style:normal;margin-top:18px}.proof{padding:25px}.proof strong{font:700 30px var(--font-heading);color:var(--primary)}.proof span{display:block;color:var(--muted-foreground);font-size:13px;margin-top:4px}.closing{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:28px;border:1px solid color-mix(in oklab,var(--primary) 25%,transparent);background:color-mix(in oklab,var(--primary) 8%,var(--paper));border-radius:10px}.closing h2{font:600 25px var(--font-heading)}.closing p{color:var(--muted-foreground);margin-top:5px}@media(max-width:780px){.nav-links a{display:none}.hero{grid-template-columns:1fr;padding-top:50px;gap:30px}.workflow{grid-template-columns:1fr 1fr;gap:14px}.step{margin:0}.step:after{display:none}.audiences,.quote{grid-template-columns:1fr}.closing{display:block}.closing .btn{margin-top:18px}}
+      .landing {
+        max-width: 1160px;
+        margin: auto;
+        padding: 0 28px 70px;
+      }
+      .landing-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .brand {
+        font: 700 21px var(--font-heading);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .brand-mark {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        display: grid;
+        place-items: center;
+        background: var(--primary);
+        color: #fff;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        font-size: 13px;
+        color: var(--muted-foreground);
+      }
+      .nav-links a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .mockup-note {
+        margin: 18px 0;
+      }
+      .hero {
+        text-align: center;
+        padding: 72px 0 44px;
+      }
+      .eyebrow {
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .hero h1 {
+        max-width: 760px;
+        margin: 14px auto 16px;
+        font: 700 clamp(40px, 6vw, 64px) / 1.05 var(--font-heading);
+        letter-spacing: -0.04em;
+      }
+      .hero p {
+        max-width: 620px;
+        margin: auto;
+        color: var(--muted-foreground);
+        font-size: 18px;
+      }
+      .explorer {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 14px;
+        margin-top: 35px;
+      }
+      .map-card {
+        min-height: 450px;
+        padding: 0;
+        overflow: hidden;
+        background: var(--brand-50);
+        position: relative;
+      }
+      .map-toolbar {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+        padding: 12px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--border);
+      }
+      .map-canvas {
+        height: 390px;
+        position: relative;
+        background:
+          radial-gradient(
+            ellipse at 52% 35%,
+            color-mix(in oklab, var(--brand-200) 75%, white),
+            transparent 48%
+          ),
+          linear-gradient(145deg, var(--sand), var(--brand-100));
+        overflow: hidden;
+      }
+      .map-canvas:before,
+      .map-canvas:after {
+        content: "";
+        position: absolute;
+        border: 2px solid color-mix(in oklab, var(--primary) 35%, transparent);
+        border-radius: 48% 52% 43% 57%;
+        transform: rotate(-18deg);
+      }
+      .map-canvas:before {
+        width: 470px;
+        height: 160px;
+        left: -35px;
+        top: 85px;
+      }
+      .map-canvas:after {
+        width: 400px;
+        height: 130px;
+        right: -50px;
+        bottom: 55px;
+        transform: rotate(23deg);
+      }
+      .river {
+        position: absolute;
+        width: 10px;
+        height: 470px;
+        left: 49%;
+        top: -30px;
+        background: color-mix(in oklab, var(--primary) 55%, white);
+        border-radius: 50%;
+        transform: rotate(17deg);
+        opacity: 0.7;
+      }
+      .pin {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        background: var(--primary);
+        border: 3px solid white;
+        box-shadow: 0 1px 4px #0003;
+        cursor: pointer;
+      }
+      .pin span {
+        display: block;
+        transform: rotate(45deg);
+        color: white;
+        text-align: center;
+        font-size: 10px;
+        margin-top: 2px;
+      }
+      .p1 {
+        left: 26%;
+        top: 33%;
+      }
+      .p2 {
+        left: 57%;
+        top: 22%;
+        background: var(--bloom);
+      }
+      .p3 {
+        left: 69%;
+        top: 58%;
+      }
+      .p4 {
+        left: 38%;
+        top: 72%;
+        background: var(--success);
+      }
+      .map-legend {
+        position: absolute;
+        bottom: 14px;
+        left: 14px;
+        padding: 9px 11px;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        font-size: 11px;
+      }
+      .legend-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--primary);
+        margin-right: 4px;
+      }
+      .record-panel {
+        padding: 20px;
+      }
+      .record-panel h2 {
+        font: 600 23px var(--font-heading);
+        margin-bottom: 6px;
+      }
+      .record-panel > p {
+        color: var(--muted-foreground);
+        font-size: 13px;
+        margin-bottom: 18px;
+      }
+      .record-list {
+        display: grid;
+        gap: 8px;
+      }
+      .record {
+        padding: 12px;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .record:hover,
+      .record.selected {
+        border-color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 6%, var(--paper));
+      }
+      .record-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .record strong {
+        font: 600 15px var(--font-heading);
+      }
+      .record small {
+        display: block;
+        color: var(--muted-foreground);
+        font-size: 11px;
+        margin-top: 3px;
+      }
+      .record-detail {
+        margin-top: 16px;
+        padding-top: 15px;
+        border-top: 1px solid var(--border);
+        font-size: 12px;
+      }
+      .record-detail b {
+        font-size: 20px;
+        font-family: var(--font-heading);
+      }
+      .cta {
+        text-align: center;
+        padding: 62px 0 0;
+      }
+      .cta h2 {
+        font: 600 30px var(--font-heading);
+      }
+      .cta p {
+        color: var(--muted-foreground);
+        margin: 7px 0 18px;
+      }
+      @media (max-width: 780px) {
+        .nav-links a {
+          display: none;
+        }
+        .explorer {
+          grid-template-columns: 1fr;
+        }
+        .map-card {
+          min-height: 350px;
+        }
+        .map-canvas {
+          height: 290px;
+        }
+        .hero {
+          padding-top: 50px;
+        }
+      }
     </style>
     <style>
-      .landing-nav { display: none; }
-      .landing-appbar { position: sticky; top: 0; z-index: 200; width: 100%; box-sizing: border-box; background: var(--background); border-bottom: 1px solid var(--border); height: var(--appbar-h); display: flex; align-items: center; padding: 0 16px 0 0; gap: 12px; }
+      .landing-nav {
+        display: none;
+      }
+      .landing-appbar {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        width: 100%;
+        box-sizing: border-box;
+        background: var(--background);
+        border-bottom: 1px solid var(--border);
+        height: var(--appbar-h);
+        display: flex;
+        align-items: center;
+        padding: 0 16px 0 0;
+        gap: 12px;
+      }
     </style>
-    <script>document.addEventListener('DOMContentLoaded', function () { var bar = document.createElement('div'); bar.className = 'landing-appbar'; bar.innerHTML = '<div class="appbar-hamburger">☰</div><span class="appbar-title">Ocotillo</span><div class="appbar-right"><button class="btn btn-default btn-sm" onclick="showMessage(\'Log-in flow would open here.\')">Log in</button><button class="btn btn-ghost btn-sm" onclick="showMessage(\'Sign-up flow would open here.\')">Sign up</button></div>'; document.body.prepend(bar); });</script>
-    <style>.landing { max-width: 1536px; padding-left: 32px; padding-right: 32px; }</style>
-    <script>document.addEventListener('DOMContentLoaded', function () { var note = document.querySelector('.mockup-note'); if (note) note.innerHTML = '<strong>Lo-fi landing-page mockup — for feedback only.</strong> This is not functional.'; });</script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var bar = document.createElement("div");
+        bar.className = "landing-appbar";
+        bar.innerHTML =
+          '<div class="appbar-hamburger">☰</div><span class="appbar-title">Ocotillo</span><div class="appbar-right"><button class="btn btn-default btn-sm" onclick="document.getElementById(\'cta\').textContent=\'Log-in flow would open here.\'">Log in</button><button class="btn btn-ghost btn-sm" onclick="document.getElementById(\'cta\').textContent=\'Sign-up flow would open here.\'">Sign up</button></div>';
+        document.body.prepend(bar);
+      });
+    </script>
+    <style>
+      .landing {
+        max-width: 1536px;
+        padding-left: 32px;
+        padding-right: 32px;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var note = document.querySelector(".mockup-note");
+        if (note)
+          note.innerHTML =
+            "<strong>Lo-fi landing-page mockup — for feedback only.</strong> This is not functional.";
+      });
+    </script>
   </head>
-  <body><div class="landing"><div class="landing-nav"><div class="brand"><span class="brand-mark">✣</span> Ocotillo</div><div class="nav-links"><a href="#workflow">Workflow</a><a href="#teams">For teams</a><button class="btn btn-outline btn-sm" onclick="showMessage('Sign-in flow would open here.')">Sign in</button></div></div><div class="mockup-note"><strong>Lo-fi landing-page mockup — for feedback only.</strong> This is not functional. </div><section class="hero"><div><div class="eyebrow">From field program to shared understanding</div><h1>One program. Every record in context.</h1><p>Ocotillo helps groundwater teams keep field work, observations, chemistry, and reporting moving in the same direction.</p><button class="btn btn-default btn-lg" onclick="showMessage('Opening the Ocotillo app…')">Open Ocotillo</button><div id="message" class="caption" style="margin-top:11px;color:var(--primary)"></div></div><div class="hero-side"><strong>Good decisions need more than a point on a map.</strong><p>They need the sample history, the standard, the person who knows the site, and a report everyone can trust.</p></div></section><section class="section" id="workflow"><div class="section-heading"><div class="eyebrow">A connected working rhythm</div><h2>Keep the handoffs visible.</h2><p>Each step builds on the one before it, so the story of a monitoring program does not get lost between systems.</p></div><div class="workflow"><div class="step"><div class="step-num">1</div><h3>Plan the work</h3><p>Mint IDs, organize projects, and give field teams the context they need.</p></div><div class="step"><div class="step-num">2</div><h3>Capture the record</h3><p>Bring wells, springs, assets, contacts, and observations into one place.</p></div><div class="step"><div class="step-num">3</div><h3>Review the evidence</h3><p>Compare chemistry, trends, and standards without losing the source values.</p></div><div class="step"><div class="step-num">4</div><h3>Share the answer</h3><p>Export clear reports and give the next decision a durable reference.</p></div></div></section><section class="section" id="teams"><div class="section-heading"><div class="eyebrow">Designed around real work</div><h2>Useful to the whole water team.</h2></div><div class="audiences"><div class="card audience"><span class="badge badge-primary">Program leads</span><h3>See the whole program</h3><p>Understand what is current, what needs review, and where a decision is waiting on better context.</p></div><div class="card audience"><span class="badge badge-info">Field teams</span><h3>Arrive prepared</h3><p>Carry the right point IDs, site details, and previous observations into the field.</p></div><div class="card audience"><span class="badge badge-success">Analysts &amp; partners</span><h3>Share work that holds up</h3><p>Trace a conclusion back to the records and produce reports people can actually use.</p></div></div></section><section class="section"><div class="quote"><div class="quote-card"><blockquote>“The map is the beginning of the conversation, not the end of it.”</blockquote><cite>Ocotillo landing-page concept · sample message</cite></div><div class="card proof"><strong>184</strong><span>active groundwater points represented in this sample workspace</span><hr style="border:0;border-top:1px solid var(--border);margin:20px 0"><strong>26</strong><span>samples ready for review this month</span></div></div></section><section class="section"><div class="closing"><div><h2>Bring the pieces together.</h2><p>Open Ocotillo and see what a connected groundwater program feels like.</p></div><button class="btn btn-default btn-lg" onclick="showMessage('Opening the Ocotillo app…')">Sign in to Ocotillo</button></div></section></div><script>function showMessage(text){document.getElementById('message').textContent=text;}</script></body>
+  <body>
+    <div class="landing">
+      <div class="landing-nav">
+        <div class="brand"><span class="brand-mark">✣</span> Ocotillo</div>
+        <div class="nav-links">
+          <a href="#explore">Explore</a><a href="#how">How it works</a
+          ><button
+            class="btn btn-outline btn-sm"
+            onclick="document.getElementById('cta').textContent='Sign-in flow would open here.'"
+          >
+            Sign in
+          </button>
+        </div>
+      </div>
+      <div class="mockup-note">
+        <strong>Lo-fi landing-page mockup — for feedback only.</strong> This is
+        not functional.
+      </div>
+      <section class="hero">
+        <div class="eyebrow">A clearer view of the water system</div>
+        <h1>Explore the water beneath the map.</h1>
+        <p>
+          Find the well, spring, sample, or trend that answers the question in
+          front of you.
+        </p>
+        <div style="margin-top: 22px">
+          <a class="btn btn-default btn-lg" href="#explore"
+            >Explore the workspace</a
+          >
+        </div>
+      </section>
+      <section class="explorer" id="explore">
+        <div class="card map-card">
+          <div class="map-toolbar">
+            <span class="badge badge-primary">184 points</span
+            ><button class="btn btn-outline btn-xs">All counties</button
+            ><button class="btn btn-outline btn-xs">All types</button>
+          </div>
+          <div class="map-canvas">
+            <div class="river"></div>
+            <div class="pin p1" onclick="selectRecord('WL-0433')">
+              <span>1</span>
+            </div>
+            <div class="pin p2" onclick="selectRecord('WL-1187')">
+              <span>2</span>
+            </div>
+            <div class="pin p3" onclick="selectRecord('WL-0902')">
+              <span>3</span>
+            </div>
+            <div class="pin p4" onclick="selectRecord('WL-0211')">
+              <span>4</span>
+            </div>
+            <div class="map-legend">
+              <span class="legend-dot"></span> Monitoring point &nbsp;
+              <span class="legend-dot" style="background: var(--bloom)"></span>
+              Review needed
+            </div>
+          </div>
+        </div>
+        <div class="card record-panel">
+          <div class="eyebrow">Sample workspace</div>
+          <h2>Nearby records</h2>
+          <p>Sandoval County · Rio Grande basin</p>
+          <div class="record-list">
+            <div
+              class="record selected"
+              data-record="WL-0433"
+              onclick="selectRecord('WL-0433')"
+            >
+              <div class="record-top">
+                <strong>WL-0433</strong
+                ><span class="badge badge-success">Current</span>
+              </div>
+              <small>Santa Ana Seep Spring · sampled May 15, 2026</small>
+            </div>
+            <div
+              class="record"
+              data-record="WL-1187"
+              onclick="selectRecord('WL-1187')"
+            >
+              <div class="record-top">
+                <strong>WL-1187</strong
+                ><span class="badge badge-warning">Review</span>
+              </div>
+              <small>Corrales monitoring well · sampled Apr 29, 2026</small>
+            </div>
+            <div
+              class="record"
+              data-record="WL-0902"
+              onclick="selectRecord('WL-0902')"
+            >
+              <div class="record-top">
+                <strong>WL-0902</strong
+                ><span class="badge badge-info">Sampled</span>
+              </div>
+              <small>Rio Rancho well · sampled May 03, 2026</small>
+            </div>
+          </div>
+          <div class="record-detail" id="record-detail">
+            <span class="caption">Selected record</span><br /><b>WL-0433</b
+            ><br /><span class="muted"
+              >Santa Fe Group aquifer · 35.4421° N, 106.8273° W</span
+            >
+          </div>
+        </div>
+      </section>
+      <section class="cta" id="how">
+        <h2>Start with the question. Keep the evidence.</h2>
+        <p>Sign in to bring your own monitoring program into focus.</p>
+        <button
+          class="btn btn-default btn-lg"
+          onclick="document.getElementById('cta').textContent='Opening the Ocotillo app…'"
+        >
+          Open Ocotillo
+        </button>
+        <div
+          id="cta"
+          class="caption"
+          style="margin-top: 10px; color: var(--primary)"
+        ></div>
+      </section>
+    </div>
+    <script>
+      function selectRecord(id) {
+        document.querySelectorAll(".record").forEach(function (r) {
+          r.classList.toggle("selected", r.dataset.record === id);
+        });
+        document.getElementById("record-detail").innerHTML =
+          '<span class="caption">Selected record</span><br /><b>' +
+          id +
+          '</b><br /><span class="muted">Groundwater monitoring point · record preview</span>';
+      }
+    </script>
+  </body>
 </html>
