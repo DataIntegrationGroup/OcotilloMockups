@@ -1899,6 +1899,11 @@
       .mockup-note { margin:18px 0 0; }
       @media (max-width:760px) { .nav-links a:not(:last-child) { display:none; } .hero { grid-template-columns:1fr; padding-top:52px; gap:38px; } .app-preview { transform:none; } .feature-grid { grid-template-columns:1fr; } .closing { display:block; } .closing .btn { margin-top:18px; } }
     </style>
+    <style>
+      .landing-nav { display: none; }
+      .landing-appbar { position: sticky; top: 0; z-index: 200; background: var(--background); border-bottom: 1px solid var(--border); height: var(--appbar-h); display: flex; align-items: center; padding: 0 16px 0 0; gap: 12px; }
+    </style>
+    <script>document.addEventListener('DOMContentLoaded', function () { var bar = document.createElement('div'); bar.className = 'landing-appbar'; bar.innerHTML = '<div class="appbar-hamburger">☰</div><span class="appbar-title">Ocotillo</span><div class="appbar-right"><button class="btn btn-outline btn-sm" onclick="showMessage(\'Sign-in flow would open here.\')">Log in / Sign up</button></div>'; document.querySelector('.landing').prepend(bar); });</script>
   </head>
   <body>
     <div class="landing">
