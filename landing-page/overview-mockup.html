@@ -1901,9 +1901,9 @@
     </style>
     <style>
       .landing-nav { display: none; }
-      .landing-appbar { position: sticky; top: 0; z-index: 200; background: var(--background); border-bottom: 1px solid var(--border); height: var(--appbar-h); display: flex; align-items: center; padding: 0 16px 0 0; gap: 12px; }
+      .landing-appbar { position: sticky; top: 0; z-index: 200; width: 100%; box-sizing: border-box; background: var(--background); border-bottom: 1px solid var(--border); height: var(--appbar-h); display: flex; align-items: center; padding: 0 16px 0 0; gap: 12px; }
     </style>
-    <script>document.addEventListener('DOMContentLoaded', function () { var bar = document.createElement('div'); bar.className = 'landing-appbar'; bar.innerHTML = '<div class="appbar-hamburger">☰</div><span class="appbar-title">Ocotillo</span><div class="appbar-right"><button class="btn btn-outline btn-sm" onclick="showMessage(\'Sign-in flow would open here.\')">Log in / Sign up</button></div>'; document.querySelector('.landing').prepend(bar); });</script>
+    <script>document.addEventListener('DOMContentLoaded', function () { var bar = document.createElement('div'); bar.className = 'landing-appbar'; bar.innerHTML = '<div class="appbar-hamburger">☰</div><span class="appbar-title">Ocotillo</span><div class="appbar-right"><button class="btn btn-default btn-sm" onclick="showMessage(\'Log-in flow would open here.\')">Log in</button><button class="btn btn-ghost btn-sm" onclick="showMessage(\'Sign-up flow would open here.\')">Sign up</button></div>'; document.body.prepend(bar); });</script>
   </head>
   <body>
     <div class="landing">
