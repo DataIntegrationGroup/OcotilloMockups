@@ -557,14 +557,6 @@
       .btn-destructive:hover {
         background: color-mix(in oklab, var(--destructive) 20%, transparent);
       }
-      .btn-link {
-        background: transparent;
-        color: var(--primary);
-        text-underline-offset: 4px;
-      }
-      .btn-link:hover {
-        text-decoration: underline;
-      }
       /* Primary-outlined. MUI's `contained secondary` — an outlined button in all
          but name — which the app still uses for secondary page actions. */
       .btn-primary-outline {
@@ -1912,8 +1904,18 @@
         margin: 18px 0;
       }
       .hero {
+        min-height: 390px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         text-align: center;
-        padding: 72px 0 44px;
+        padding: 72px 56px 64px;
+        border-radius: 3px;
+        background:
+          linear-gradient(90deg, rgba(5, 25, 37, 0.58), rgba(5, 25, 37, 0) 72%),
+          url("../assets/ocotillo-hero.jpeg") center / cover;
+        color: #fff;
       }
       .eyebrow {
         color: var(--primary);
@@ -1924,15 +1926,18 @@
       }
       .hero h1 {
         max-width: 760px;
-        margin: 14px auto 16px;
+        margin: 14px 0 16px;
         font: 700 clamp(40px, 6vw, 64px) / 1.05 var(--font-heading);
         letter-spacing: -0.04em;
       }
       .hero p {
         max-width: 620px;
-        margin: auto;
-        color: var(--muted-foreground);
+        margin: 0;
+        color: rgba(255, 255, 255, 0.88);
         font-size: 18px;
+      }
+      .hero .eyebrow {
+        color: var(--brand-200);
       }
       .explorer {
         display: grid;
@@ -2136,36 +2141,239 @@
         color: var(--muted-foreground);
         font-size: 16px;
       }
-      .showcase-section { padding: 30px 0 68px; border-top: 1px solid var(--border); }
-      .showcase-intro { max-width: 650px; margin-bottom: 42px; }
-      .showcase-intro h2 { font: 700 34px/1.15 var(--font-heading); letter-spacing: -0.025em; }
-      .showcase-intro p { max-width: 590px; margin-top: 10px; color: var(--muted-foreground); font-size: 16px; }
-      .showcase-row { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 58px; align-items: center; padding: 42px 0; border-top: 1px solid var(--border); }
-      .showcase-row.reverse { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
-      .showcase-row.reverse .showcase-copy { order: 2; }
-      .showcase-row.reverse .showcase-visual { order: 1; }
-      .showcase-copy h3 { margin-top: 12px; font: 600 27px/1.15 var(--font-heading); letter-spacing: -0.02em; }
-      .showcase-copy p { max-width: 440px; margin-top: 12px; color: var(--muted-foreground); font-size: 15px; line-height: 1.6; }
-      .showcase-visual { min-height: 285px; padding: 16px; overflow: hidden; border: 1px solid var(--ring-card); border-radius: 12px; background: color-mix(in oklab, var(--primary) 5%, var(--paper)); box-shadow: 0 16px 34px rgba(15,23,42,.08); }
-      .showcase-window { height: 100%; min-height: 251px; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--paper); }
-      .showcase-window-bar { display: flex; align-items: center; gap: 5px; height: 30px; padding: 0 11px; border-bottom: 1px solid var(--border); background: var(--muted); }
-      .showcase-window-bar i { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
-      .showcase-window-body { display: grid; grid-template-columns: 1.1fr .9fr; gap: 12px; height: 220px; padding: 14px; }
-      .showcase-map { position: relative; overflow: hidden; border-radius: 6px; background: linear-gradient(32deg, transparent 48%, color-mix(in oklab, var(--primary) 25%, transparent) 49% 51%, transparent 52%), linear-gradient(145deg, transparent 43%, color-mix(in oklab, var(--primary) 18%, transparent) 44% 46%, transparent 47%), color-mix(in oklab, var(--primary) 9%, var(--paper)); }
-      .showcase-map::after { position: absolute; right: 18%; top: 24%; width: 32%; height: 42%; border: 1px solid color-mix(in oklab, var(--primary) 28%, transparent); border-radius: 48% 35% 55% 40%; content: ""; transform: rotate(24deg); }
-      .showcase-pin { position: absolute; z-index: 1; width: 13px; height: 13px; border: 3px solid var(--paper); border-radius: 50%; background: var(--primary); box-shadow: 0 1px 3px rgba(15,23,42,.3); }
-      .showcase-pin.one { left: 26%; top: 34%; } .showcase-pin.two { left: 58%; top: 58%; background: var(--bloom); } .showcase-pin.three { left: 72%; top: 26%; }
-      .showcase-side { display: grid; gap: 8px; align-content: start; }
-      .showcase-side-title { width: 70%; height: 10px; border-radius: 3px; background: var(--foreground); }
-      .showcase-side-line { width: 92%; height: 7px; border-radius: 3px; background: var(--border); } .showcase-side-line.short { width: 62%; }
-      .showcase-record { margin-top: 5px; padding: 10px; border: 1px solid var(--border); border-radius: 5px; }
-      .showcase-record strong { display: block; font: 600 12px var(--font-heading); } .showcase-record span { display: block; margin-top: 4px; color: var(--muted-foreground); font-size: 9px; }
-      .showcase-table { display: grid; gap: 7px; width: 100%; margin-top: 10px; }
-      .showcase-table-row { display: grid; grid-template-columns: 1.2fr .8fr .7fr; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--muted-foreground); font-size: 10px; }
-      .showcase-table-row:first-child { color: var(--foreground); font-weight: 600; }
-      .showcase-chart { display: flex; align-items: end; gap: 12px; height: 148px; margin-top: 12px; padding: 16px 22px 0; border-bottom: 1px solid var(--border); background: repeating-linear-gradient(to bottom, transparent 0 35px, var(--border) 36px 37px); }
-      .showcase-bar { flex: 1; min-height: 24px; border-radius: 4px 4px 0 0; background: color-mix(in oklab, var(--primary) 72%, var(--paper)); } .showcase-bar:nth-child(2) { height: 68%; } .showcase-bar:nth-child(3) { height: 88%; background: var(--primary); } .showcase-bar:nth-child(4) { height: 52%; } .showcase-bar:nth-child(5) { height: 74%; background: var(--bloom); }
-      .showcase-chart-label { margin-top: 10px; color: var(--muted-foreground); font-size: 10px; }
+      .showcase-section {
+        padding: 30px 0 68px;
+        border-top: 1px solid var(--border);
+      }
+      .showcase-intro {
+        max-width: 650px;
+        margin-bottom: 42px;
+      }
+      .showcase-intro h2 {
+        font: 700 34px/1.15 var(--font-heading);
+        letter-spacing: -0.025em;
+      }
+      .showcase-intro p {
+        max-width: 590px;
+        margin-top: 10px;
+        color: var(--muted-foreground);
+        font-size: 16px;
+      }
+      .showcase-row {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 58px;
+        align-items: center;
+        padding: 42px 0;
+        border-top: 1px solid var(--border);
+      }
+      .showcase-row.reverse {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      }
+      .showcase-row.reverse .showcase-copy {
+        order: 2;
+      }
+      .showcase-row.reverse .showcase-visual {
+        order: 1;
+      }
+      .showcase-copy h3 {
+        margin-top: 12px;
+        font: 600 27px/1.15 var(--font-heading);
+        letter-spacing: -0.02em;
+      }
+      .showcase-copy p {
+        max-width: 440px;
+        margin-top: 12px;
+        color: var(--muted-foreground);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .showcase-visual {
+        min-height: 285px;
+        padding: 16px;
+        overflow: hidden;
+        border: 1px solid var(--ring-card);
+        border-radius: 12px;
+        background: color-mix(in oklab, var(--primary) 5%, var(--paper));
+        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
+      }
+      .showcase-window {
+        height: 100%;
+        min-height: 251px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--paper);
+      }
+      .showcase-window-bar {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        height: 30px;
+        padding: 0 11px;
+        border-bottom: 1px solid var(--border);
+        background: var(--muted);
+      }
+      .showcase-window-bar i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--border);
+      }
+      .showcase-window-body {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 12px;
+        height: 220px;
+        padding: 14px;
+      }
+      .showcase-map {
+        position: relative;
+        overflow: hidden;
+        border-radius: 6px;
+        background:
+          linear-gradient(
+            32deg,
+            transparent 48%,
+            color-mix(in oklab, var(--primary) 25%, transparent) 49% 51%,
+            transparent 52%
+          ),
+          linear-gradient(
+            145deg,
+            transparent 43%,
+            color-mix(in oklab, var(--primary) 18%, transparent) 44% 46%,
+            transparent 47%
+          ),
+          color-mix(in oklab, var(--primary) 9%, var(--paper));
+      }
+      .showcase-map::after {
+        position: absolute;
+        right: 18%;
+        top: 24%;
+        width: 32%;
+        height: 42%;
+        border: 1px solid color-mix(in oklab, var(--primary) 28%, transparent);
+        border-radius: 48% 35% 55% 40%;
+        content: "";
+        transform: rotate(24deg);
+      }
+      .showcase-pin {
+        position: absolute;
+        z-index: 1;
+        width: 13px;
+        height: 13px;
+        border: 3px solid var(--paper);
+        border-radius: 50%;
+        background: var(--primary);
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.3);
+      }
+      .showcase-pin.one {
+        left: 26%;
+        top: 34%;
+      }
+      .showcase-pin.two {
+        left: 58%;
+        top: 58%;
+        background: var(--bloom);
+      }
+      .showcase-pin.three {
+        left: 72%;
+        top: 26%;
+      }
+      .showcase-side {
+        display: grid;
+        gap: 8px;
+        align-content: start;
+      }
+      .showcase-side-title {
+        width: 70%;
+        height: 10px;
+        border-radius: 3px;
+        background: var(--foreground);
+      }
+      .showcase-side-line {
+        width: 92%;
+        height: 7px;
+        border-radius: 3px;
+        background: var(--border);
+      }
+      .showcase-side-line.short {
+        width: 62%;
+      }
+      .showcase-record {
+        margin-top: 5px;
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+      }
+      .showcase-record strong {
+        display: block;
+        font: 600 12px var(--font-heading);
+      }
+      .showcase-record span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted-foreground);
+        font-size: 9px;
+      }
+      .showcase-table {
+        display: grid;
+        gap: 7px;
+        width: 100%;
+        margin-top: 10px;
+      }
+      .showcase-table-row {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr 0.7fr;
+        gap: 8px;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted-foreground);
+        font-size: 10px;
+      }
+      .showcase-table-row:first-child {
+        color: var(--foreground);
+        font-weight: 600;
+      }
+      .showcase-chart {
+        display: flex;
+        align-items: end;
+        gap: 12px;
+        height: 148px;
+        margin-top: 12px;
+        padding: 16px 22px 0;
+        border-bottom: 1px solid var(--border);
+        background: repeating-linear-gradient(
+          to bottom,
+          transparent 0 35px,
+          var(--border) 36px 37px
+        );
+      }
+      .showcase-bar {
+        flex: 1;
+        min-height: 24px;
+        border-radius: 4px 4px 0 0;
+        background: color-mix(in oklab, var(--primary) 72%, var(--paper));
+      }
+      .showcase-bar:nth-child(2) {
+        height: 68%;
+      }
+      .showcase-bar:nth-child(3) {
+        height: 88%;
+        background: var(--primary);
+      }
+      .showcase-bar:nth-child(4) {
+        height: 52%;
+      }
+      .showcase-bar:nth-child(5) {
+        height: 74%;
+        background: var(--bloom);
+      }
+      .showcase-chart-label {
+        margin-top: 10px;
+        color: var(--muted-foreground);
+        font-size: 10px;
+      }
       .feature-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -2199,6 +2407,19 @@
         color: var(--muted-foreground);
         margin: 7px 0 18px;
       }
+      .closing {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        margin-top: 18px;
+        padding: 28px;
+        background: color-mix(in oklab, var(--primary) 9%, var(--paper));
+        border: 1px solid color-mix(in oklab, var(--primary) 25%, transparent);
+        border-radius: 10px;
+      }
+      .closing h2 { font: 600 25px var(--font-heading); }
+      .closing p { color: var(--muted-foreground); margin-top: 5px; }
       @media (max-width: 780px) {
         .nav-links a {
           display: none;
@@ -2213,14 +2434,27 @@
           height: 290px;
         }
         .hero {
-          padding-top: 50px;
+          min-height: 340px;
+          padding: 50px 28px;
         }
         .feature-grid {
           grid-template-columns: 1fr;
         }
-        .showcase-section { padding-bottom: 42px; }
-        .showcase-row, .showcase-row.reverse { grid-template-columns: 1fr; gap: 26px; padding: 34px 0; }
-        .showcase-row.reverse .showcase-copy, .showcase-row.reverse .showcase-visual { order: initial; }
+        .showcase-section {
+          padding-bottom: 42px;
+        }
+        .showcase-row,
+        .showcase-row.reverse {
+          grid-template-columns: 1fr;
+          gap: 26px;
+          padding: 34px 0;
+        }
+        .showcase-row.reverse .showcase-copy,
+        .showcase-row.reverse .showcase-visual {
+          order: initial;
+        }
+        .closing { display: block; }
+        .closing .btn { margin-top: 18px; }
       }
     </style>
     <style>
@@ -2287,16 +2521,20 @@
       </div>
       <section class="hero">
         <div class="eyebrow">A clearer view of the water system</div>
-        <h1>Explore the water beneath the map.</h1>
+        <h1>Explore the data beneath the map.</h1>
         <p>
           Find the well, spring, sample, or trend that answers the question in
           front of you.
         </p>
         <div style="margin-top: 22px">
-          <a class="btn btn-default btn-lg" href="#explore"
-            >Explore the workspace</a
+          <button
+            class="btn btn-default btn-lg"
+            onclick="document.getElementById('cta').textContent='Account creation flow would open here.'"
           >
+            Create an account
+          </button>
         </div>
+        <div id="cta" class="caption" style="margin-top: 10px; color: var(--primary)"></div>
       </section>
       <section class="explorer" id="explore">
         <div class="explorer-heading">
@@ -2383,20 +2621,122 @@
       <section class="showcase-section" aria-labelledby="showcase-title">
         <div class="showcase-intro">
           <div class="eyebrow">A clearer path through the data</div>
-          <h2 id="showcase-title">From the first question to the field decision.</h2>
-          <p>Keep the map, the record, and the evidence together as the work moves from exploration to a defensible answer.</p>
+          <h2 id="showcase-title">
+            From the first question to the field decision.
+          </h2>
+          <p>
+            Keep the map, the record, and the evidence together as the work
+            moves from exploration to a defensible answer.
+          </p>
         </div>
         <article class="showcase-row">
-          <div class="showcase-copy"><div class="eyebrow">01 · Find the place</div><h3>Start with the question, not a blank map.</h3><p>Search by well, county, aquifer, or site name and quickly see which records can help answer the question in front of you.</p></div>
-          <div class="showcase-visual" aria-label="Illustration of a groundwater map and search results"><div class="showcase-window"><div class="showcase-window-bar"><i></i><i></i><i></i></div><div class="showcase-window-body"><div class="showcase-map"><span class="showcase-pin one"></span><span class="showcase-pin two"></span><span class="showcase-pin three"></span></div><div class="showcase-side"><div class="showcase-side-title"></div><div class="showcase-side-line"></div><div class="showcase-side-line short"></div><div class="showcase-record"><strong>WL-0433</strong><span>Santa Ana Seep Spring</span></div><div class="showcase-record"><strong>WL-1187</strong><span>Corrales monitoring well</span></div></div></div></div></div>
+          <div class="showcase-copy">
+            <div class="eyebrow">01 · Find the place</div>
+            <h3>Start with the question, not a blank map.</h3>
+            <p>
+              Search by well, county, aquifer, or site name and quickly see
+              which records can help answer the question in front of you.
+            </p>
+          </div>
+          <div
+            class="showcase-visual"
+            aria-label="Illustration of a groundwater map and search results"
+          >
+            <div class="showcase-window">
+              <div class="showcase-window-bar"><i></i><i></i><i></i></div>
+              <div class="showcase-window-body">
+                <div class="showcase-map">
+                  <span class="showcase-pin one"></span
+                  ><span class="showcase-pin two"></span
+                  ><span class="showcase-pin three"></span>
+                </div>
+                <div class="showcase-side">
+                  <div class="showcase-side-title"></div>
+                  <div class="showcase-side-line"></div>
+                  <div class="showcase-side-line short"></div>
+                  <div class="showcase-record">
+                    <strong>WL-0433</strong><span>Santa Ana Seep Spring</span>
+                  </div>
+                  <div class="showcase-record">
+                    <strong>WL-1187</strong
+                    ><span>Corrales monitoring well</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </article>
         <article class="showcase-row reverse">
-          <div class="showcase-copy"><div class="eyebrow">02 · Keep the evidence</div><h3>See the record behind every point.</h3><p>Move from a location to the measurements, sample history, and field context that make the record useful to the whole team.</p></div>
-          <div class="showcase-visual" aria-label="Illustration of a groundwater record table"><div class="showcase-window"><div class="showcase-window-bar"><i></i><i></i><i></i></div><div class="showcase-table"><div class="showcase-table-row"><span>Parameter</span><span>Result</span><span>Unit</span></div><div class="showcase-table-row"><span>Water level</span><span>42.6</span><span>ft</span></div><div class="showcase-table-row"><span>Specific conductance</span><span>618</span><span>µS/cm</span></div><div class="showcase-table-row"><span>Temperature</span><span>18.4</span><span>°C</span></div><div class="showcase-table-row"><span>Sample date</span><span>05/15/26</span><span>local</span></div></div></div></div>
+          <div class="showcase-copy">
+            <div class="eyebrow">02 · Keep the evidence</div>
+            <h3>See the record behind every point.</h3>
+            <p>
+              Move from a location to the measurements, sample history, and
+              field context that make the record useful to the whole team.
+            </p>
+          </div>
+          <div
+            class="showcase-visual"
+            aria-label="Illustration of a groundwater record table"
+          >
+            <div class="showcase-window">
+              <div class="showcase-window-bar"><i></i><i></i><i></i></div>
+              <div class="showcase-table">
+                <div class="showcase-table-row">
+                  <span>Parameter</span><span>Result</span><span>Unit</span>
+                </div>
+                <div class="showcase-table-row">
+                  <span>Water level</span><span>42.6</span><span>ft</span>
+                </div>
+                <div class="showcase-table-row">
+                  <span>Specific conductance</span><span>618</span
+                  ><span>µS/cm</span>
+                </div>
+                <div class="showcase-table-row">
+                  <span>Temperature</span><span>18.4</span><span>°C</span>
+                </div>
+                <div class="showcase-table-row">
+                  <span>Sample date</span><span>05/15/26</span
+                  ><span>local</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </article>
         <article class="showcase-row">
-          <div class="showcase-copy"><div class="eyebrow">03 · Share the signal</div><h3>Turn field observations into shared context.</h3><p>Compare trends, prepare a clear handoff, and bring the same trustworthy view into the tools your team already uses.</p></div>
-          <div class="showcase-visual" aria-label="Illustration of a groundwater trend chart"><div class="showcase-window"><div class="showcase-window-bar"><i></i><i></i><i></i></div><div style="padding:14px"><div class="showcase-side-title"></div><div class="showcase-side-line short" style="margin-top:8px"></div><div class="showcase-chart"><span class="showcase-bar" style="height:42%"></span><span class="showcase-bar"></span><span class="showcase-bar"></span><span class="showcase-bar"></span><span class="showcase-bar"></span></div><div class="showcase-chart-label">Water level trend · Santa Ana Seep Spring</div></div></div></div>
+          <div class="showcase-copy">
+            <div class="eyebrow">03 · Share the signal</div>
+            <h3>Turn field observations into shared context.</h3>
+            <p>
+              Compare trends, prepare a clear handoff, and bring the same
+              trustworthy view into the tools your team already uses.
+            </p>
+          </div>
+          <div
+            class="showcase-visual"
+            aria-label="Illustration of a groundwater trend chart"
+          >
+            <div class="showcase-window">
+              <div class="showcase-window-bar"><i></i><i></i><i></i></div>
+              <div style="padding: 14px">
+                <div class="showcase-side-title"></div>
+                <div
+                  class="showcase-side-line short"
+                  style="margin-top: 8px"
+                ></div>
+                <div class="showcase-chart">
+                  <span class="showcase-bar" style="height: 42%"></span
+                  ><span class="showcase-bar"></span
+                  ><span class="showcase-bar"></span
+                  ><span class="showcase-bar"></span
+                  ><span class="showcase-bar"></span>
+                </div>
+                <div class="showcase-chart-label">
+                  Water level trend · Santa Ana Seep Spring
+                </div>
+              </div>
+            </div>
+          </div>
         </article>
       </section>
       <section class="welcome-section" id="how">
@@ -2434,6 +2774,18 @@
             <p>Connect Ocotillo to ArcGIS Pro or QGIS.</p>
           </article>
         </div>
+      </section>
+      <section class="closing">
+        <div>
+          <h2>Ready to make the next question easier?</h2>
+          <p>Start building a clearer view of New Mexico water data.</p>
+        </div>
+        <button
+          class="btn btn-default btn-lg"
+          onclick="document.getElementById('cta').textContent='Account creation flow would open here.'"
+        >
+          Create an account
+        </button>
       </section>
     </div>
     <script>
