@@ -37,7 +37,7 @@ BLOCK_RE = re.compile(
 
 def targets():
     """Every standalone mockup, plus the starter template."""
-    return sorted(ROOT.glob("*-mockup.html")) + [
+    return sorted(ROOT.glob("**/*-mockup.html")) + [
         ROOT / "design-system" / "template.html"
     ]
 
