@@ -1,0 +1,3333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lo-fi Mockup — Advanced Query · Ocotillo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- design-system:start — generated from design-system/ocotillo.css
+             by design-system/sync.py. Do not edit this block by hand. -->
+    <style>
+      /* ============================================================================
+       * Ocotillo Mockup Design System
+       * ----------------------------------------------------------------------------
+       * Derived from the real application. Source of truth, in priority order:
+       *
+       *   OcotilloUI/src/index.css   → design tokens (shadcn/Tailwind layer)
+       *   OcotilloUI/src/theme.ts    → design tokens (MUI layer) + brand ramp
+       *   OcotilloUI/src/components/ui/*.tsx → component specs (button, badge,
+       *                                        card, table, input, checkbox)
+       *
+       * When the app changes, change this file. Do not fork values into a mockup.
+       * See README.md for the conventions and the app→mockup mapping table.
+       * ========================================================================== */
+
+      /* ── Reset ───────────────────────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ── Tokens ──────────────────────────────────────────────────────────────────
+       * Mirrors src/index.css :root. Written as hex rather than oklch so mockup
+       * authors can read them; the values are the same colors.
+       * ------------------------------------------------------------------------- */
+      :root {
+        /* Ocotillo brand blue — the one ramp that is NOT from Tailwind.
+           Sampled from the pixel water-splash mark and the desert sky in the
+           masthead photo. Hue ~235–245: water/desert-sky blue, no violet cast. */
+        --brand-50: #eff8fd;
+        --brand-100: #dceffb;
+        --brand-200: #b8dff6;
+        --brand-300: #83c6ee;
+        --brand-400: #47a6dd;
+        --brand-500: #1e88c4;
+        --brand-600: #0e6da8;
+        --brand-700: #0f5786;
+        --brand-800: #12496e;
+        --brand-900: #143d5b;
+        --brand-950: #0d273c;
+
+        /* Surfaces */
+        --background: #fafafa; /* zinc-50  — page */
+        --paper: #ffffff; /* white    — cards, popovers, grids */
+        --card: #ffffff;
+        --wrapper: #fafafa; /* zinc-50  — inset wells, placeholders */
+        --popover: #ffffff;
+
+        /* Text */
+        --foreground: #0f172a; /* slate-900 */
+        --muted-foreground: #64748b; /* slate-500 */
+        --muted: #f5f5f5; /* neutral-100 — hover/selected fills */
+        --accent: #f0f0f0; /* neutral-150 — hover/active */
+
+        /* Lines.
+           Two different line colors exist in the app and both are correct:
+             --border  neutral-200, the shadcn/Tailwind border token (tables, inputs)
+             --divider stone-300,   MUI's palette.divider (DataGrid, MUI rules)
+           --ring-card is `ring-1 ring-foreground/10`, how shadcn Cards are outlined. */
+        --border: #e5e5e5;
+        --divider: #d6d3d1;
+        --input-border: #e5e5e5;
+        --ring: #0e6da8;
+        --ring-card: rgba(15, 23, 42, 0.1);
+
+        /* Primary — brand-600 on light surfaces. `--primary-dark` is the
+           hover/emphasis slot, not "a darker primary". */
+        --primary: var(--brand-600);
+        --primary-dark: var(--brand-700);
+        --primary-light: var(--brand-300);
+        --primary-foreground: #ffffff;
+        --primary-bg: var(--brand-50);
+
+        /* Secondary — amber. Deliberately NOT the ocotillo bloom: the bloom sits
+           11.6 degrees of hue from `warning` and reads as an alarm in UI chrome. */
+        --secondary: #d97706; /* amber-600 */
+        --secondary-light: #fcd34d; /* amber-300 */
+        --secondary-dark: #92400e; /* amber-800 */
+        --secondary-foreground: #ffffff;
+
+        /* Semantic status */
+        --destructive: #dc2626; /* red-600     */
+        --success: #047857; /* emerald-700 */
+        --warning: #f97316; /* orange-500  */
+        --info: #0f766e; /* teal-700 — teal, not cyan: cyan reads as the brand
+                                      blue when an info alert sits by a primary button */
+        /* orange-500 fails AA as text on white, so warning LABELS use orange-700.
+           Dark mode flips this: the surface is dark, so the text steps lighter. */
+        --warning-text: #c2410c; /* orange-700 */
+        --destructive-foreground: #ffffff;
+        --success-foreground: #ffffff;
+        --warning-foreground: #ffffff;
+        --info-foreground: #ffffff;
+
+        /* Brand identity — NEVER wire these to a semantic slot. Brand surfaces
+           only: favicon, artwork, splash. Mode-independent by design. */
+        --bloom: #e2552e;
+        --sand: #f2e9d2;
+
+        /* Radius — --radius is the shadcn scale root (0.375rem). */
+        --radius: 6px;
+        --radius-sm: 2px;
+        --radius-md: 4px;
+        --radius-lg: 6px; /* buttons, inputs  (rounded-lg)  */
+        --radius-xl: 10px; /* cards            (rounded-xl)  */
+        --radius-4xl: 22px; /* badges           (rounded-4xl) */
+
+        /* Type */
+        --font-sans: "Public Sans Variable", "Public Sans", system-ui, sans-serif;
+        --font-heading: "Outfit Variable", "Outfit", system-ui, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+        /* Chrome dimensions — mockup-only, no app equivalent to sync against. */
+        --appbar-h: 52px;
+        --sidebar-w: 260px;
+
+        /* Elevation. The app is a flat, ring-outlined UI: cards carry a ring, not
+           a shadow. Shadows are reserved for things that genuinely float. */
+        --shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.14);
+        --shadow-paper: 0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
+      }
+
+      /* Dark mode — add class="dark" to <html>, same switch the app uses. */
+      .dark {
+        --background: #18181b; /* zinc-900 */
+        --paper: #3f3f46; /* zinc-700 */
+        --card: #3f3f46;
+        --wrapper: #27272a; /* zinc-800 */
+        --popover: #3f3f46;
+
+        --foreground: #f1f5f9; /* slate-100 */
+        --muted-foreground: #94a3b8; /* slate-400 */
+        --muted: #27272a;
+        --accent: #27272a;
+
+        --border: #3f3f46;
+        --divider: #3f3f46;
+        --input-border: #27272a;
+        --ring: var(--brand-300);
+        --ring-card: rgba(255, 255, 255, 0.12);
+
+        /* Primary steps UP the ramp in dark mode, and --primary-dark (the
+           hover/emphasis slot) has to resolve LIGHTER than --primary. */
+        --primary: var(--brand-300);
+        --primary-dark: var(--brand-200);
+        --primary-light: var(--brand-400);
+        --primary-foreground: #18181b;
+        --primary-bg: var(--brand-900);
+
+        --secondary: #fcd34d;
+        --secondary-foreground: #18181b;
+
+        --destructive: #f87171; /* red-400     */
+        --success: #6ee7b7; /* emerald-300 */
+        --warning: #fdba74; /* orange-300  */
+        --warning-text: #fdba74; /* orange-300 — light text on a dark surface */
+        --info: #5eead4; /* teal-300    */
+        --destructive-foreground: #18181b;
+        --success-foreground: #18181b;
+        --warning-foreground: #18181b;
+        --info-foreground: #18181b;
+      }
+
+      /* ── Base ────────────────────────────────────────────────────────────────── */
+      body {
+        font-family: var(--font-sans);
+        background: var(--background);
+        color: var(--foreground);
+        font-size: 14px; /* MUI body2 — the app's working text size */
+        line-height: 1.6;
+      }
+
+      /* ── Typography ──────────────────────────────────────────────────────────────
+       * Matches theme.ts `typography`. Headings are Outfit; everything else is
+       * Public Sans. Only the variants mockups actually use are defined here.
+       * ------------------------------------------------------------------------- */
+      .h1,
+      .h2,
+      .h3,
+      .h4,
+      .h5,
+      .h6 {
+        font-family: var(--font-heading);
+      }
+      .h1 {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .h2 {
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.5;
+      }
+      .h3 {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1.5;
+      }
+      .h4 {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .h5 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .h6 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .deck {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      .body1 {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .body2 {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .caption {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .overline {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        letter-spacing: 0.03em;
+        font-variant-numeric: tabular-nums;
+      }
+      .muted {
+        color: var(--muted-foreground);
+      }
+      .num {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── App bar ─────────────────────────────────────────────────────────────────
+       * AppBar is transparent/elevation 0 over background.default in the app.
+       * ------------------------------------------------------------------------- */
+      .appbar {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: var(--background);
+        border-bottom: 1px solid var(--border);
+        height: var(--appbar-h);
+        display: flex;
+        align-items: center;
+        padding: 0 16px 0 0;
+        gap: 12px;
+      }
+      .appbar-hamburger {
+        width: var(--appbar-h);
+        height: var(--appbar-h);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .appbar-title {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        font-size: 1.05rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--foreground);
+      }
+      .appbar-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .appbar-search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-lg);
+        padding: 5px 12px;
+        font-size: 13px;
+        color: var(--muted-foreground);
+        background: var(--paper);
+        width: 220px;
+        cursor: text;
+      }
+      .appbar-search-kbd {
+        margin-left: auto;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1px 5px;
+        font-size: 10px;
+        color: var(--muted-foreground);
+        background: var(--wrapper);
+      }
+      .appbar-icon-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+      }
+      .appbar-icon-btn:hover {
+        background: var(--muted);
+      }
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      /* ── Layout & sidebar ────────────────────────────────────────────────────── */
+      .layout {
+        display: flex;
+        min-height: calc(100vh - var(--appbar-h));
+      }
+      .sidebar {
+        width: var(--sidebar-w);
+        flex-shrink: 0;
+        background: var(--background);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding-top: 8px;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 16px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .nav-item:hover {
+        background: var(--accent);
+        color: var(--foreground);
+      }
+      .nav-item.active {
+        color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+        font-weight: 600;
+      }
+      .nav-item.is-new::after {
+        content: "NEW";
+        margin-left: auto;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--primary);
+        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        border-radius: var(--radius-sm);
+        padding: 0 4px;
+      }
+      .nav-icon {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+      }
+      .nav-divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 6px 0;
+      }
+      .sidebar-footer {
+        margin-top: auto;
+        padding: 12px 0 8px;
+        border-top: 1px solid var(--border);
+      }
+      .sidebar-footer-link {
+        display: block;
+        padding: 6px 16px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+      }
+      .sidebar-footer-link:hover {
+        color: var(--foreground);
+      }
+      .main {
+        flex: 1;
+        padding: 20px 24px;
+        overflow: auto;
+        min-width: 0;
+      }
+
+      /* ── Breadcrumb ──────────────────────────────────────────────────────────── */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        color: var(--muted-foreground);
+        margin-bottom: 10px;
+      }
+      .breadcrumb a {
+        color: var(--muted-foreground);
+        text-decoration: none;
+      }
+      .breadcrumb a:hover {
+        text-decoration: underline;
+        color: var(--foreground);
+      }
+      .breadcrumb-sep {
+        color: var(--border);
+      }
+
+      /* ── Page header ─────────────────────────────────────────────────────────────
+       * OcotilloPageTitle renders Typography h3 with fontWeight 700, lineHeight 1.1.
+       * ------------------------------------------------------------------------- */
+      .page-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .page-title {
+        font-family: var(--font-heading);
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--foreground);
+      }
+      .page-subtitle {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        margin-top: 6px;
+      }
+      .header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      /* ── Buttons ─────────────────────────────────────────────────────────────────
+       * ui/button.tsx: rounded-lg, text-sm, font-medium, h-8 default.
+       * Variants map 1:1 to the app's cva variants.
+       * ------------------------------------------------------------------------- */
+      .btn {
+        font-family: var(--font-sans);
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        height: 32px;
+        padding: 0 10px;
+        border-radius: var(--radius-lg);
+        border: 1px solid transparent;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.12s ease;
+        background: transparent;
+        color: var(--foreground);
+      }
+      .btn:focus-visible {
+        outline: none;
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .btn-default {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .btn-default:hover {
+        background: color-mix(in oklab, var(--primary) 80%, transparent);
+      }
+      .btn-outline {
+        border-color: var(--border);
+        background: var(--background);
+      }
+      .btn-outline:hover {
+        background: var(--muted);
+      }
+      .btn-ghost {
+        background: transparent;
+      }
+      .btn-ghost:hover {
+        background: var(--muted);
+      }
+      .btn-secondary {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+      }
+      .btn-destructive {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+      }
+      .btn-destructive:hover {
+        background: color-mix(in oklab, var(--destructive) 20%, transparent);
+      }
+      .btn-link {
+        background: transparent;
+        color: var(--primary);
+        text-underline-offset: 4px;
+      }
+      .btn-link:hover {
+        text-decoration: underline;
+      }
+      /* Primary-outlined. MUI's `contained secondary` — an outlined button in all
+         but name — which the app still uses for secondary page actions. */
+      .btn-primary-outline {
+        background: var(--paper);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      .btn-primary-outline:hover {
+        background: var(--brand-50);
+        color: var(--primary-dark);
+        border-color: var(--primary-dark);
+      }
+
+      .btn-xs {
+        height: 24px;
+        padding: 0 8px;
+        font-size: 12px;
+        border-radius: var(--radius-md);
+      }
+      .btn-sm {
+        height: 28px;
+        padding: 0 10px;
+        font-size: 12.8px;
+      }
+      .btn-lg {
+        height: 36px;
+        padding: 0 10px;
+      }
+      .btn-icon {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+      }
+
+      /* ── Cards ───────────────────────────────────────────────────────────────────
+       * ui/card.tsx: rounded-xl, bg-card, ring-1 ring-foreground/10, NO shadow,
+       * --card-spacing 16px (12px at size=sm).
+       * ------------------------------------------------------------------------- */
+      .card {
+        --card-spacing: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: var(--card-spacing);
+        padding: var(--card-spacing) 0;
+        overflow: hidden;
+        border-radius: var(--radius-xl);
+        background: var(--card);
+        box-shadow: 0 0 0 1px var(--ring-card);
+        font-size: 14px;
+      }
+      .card.card-sm {
+        --card-spacing: 12px;
+      }
+      .card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 var(--card-spacing);
+      }
+      .card-header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+      }
+      .card-header-icon {
+        font-size: 16px;
+        color: var(--primary);
+      }
+      .card-title {
+        font-family: var(--font-heading);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.375;
+        color: var(--foreground);
+      }
+      .card-description,
+      .card-subtitle {
+        font-size: 13px;
+        color: var(--muted-foreground);
+      }
+      .card-content,
+      .card-body {
+        padding: 0 var(--card-spacing);
+        min-width: 0;
+      }
+      .card-footer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: var(--card-spacing);
+        margin-bottom: calc(-1 * var(--card-spacing));
+        border-top: 1px solid var(--border);
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .card-placeholder {
+        padding: 16px;
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        font-style: italic;
+        background: var(--wrapper);
+        margin: 0 var(--card-spacing);
+        border-radius: var(--radius-md);
+        border: 1px dashed var(--border);
+      }
+
+      /* ── Grid helpers ────────────────────────────────────────────────────────── */
+      .grid {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .g2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .g3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .g4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .g-main-aside {
+        grid-template-columns: 2fr minmax(0, 1fr);
+      }
+      .span2 {
+        grid-column: span 2;
+      }
+      .span3 {
+        grid-column: span 3;
+      }
+
+      /* ── Badges / chips ──────────────────────────────────────────────────────────
+       * ui/badge.tsx: h-5, rounded-4xl, px-2, text-xs, font-medium.
+       * The app's tint formula is `bg-<color>/10` with a `/30` border — do not
+       * hand-pick 50/200 hex pairs, they drift from the token the moment it moves.
+       * ------------------------------------------------------------------------- */
+      .badge,
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 20px;
+        width: fit-content;
+        flex-shrink: 0;
+        padding: 2px 8px;
+        border-radius: var(--radius-4xl);
+        border: 1px solid transparent;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .badge-default {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .badge-secondary {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+      }
+      .badge-outline {
+        border-color: var(--border);
+        color: var(--foreground);
+      }
+      .badge-ghost {
+        color: var(--muted-foreground);
+      }
+
+      /* Semantic tints — one formula, applied per token. */
+      .badge-destructive,
+      .badge-error {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+      }
+      .badge-warning {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        color: var(--warning-text);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+      }
+      .badge-success,
+      .badge-filter-emerald {
+        background: color-mix(in oklab, var(--success) 10%, transparent);
+        color: var(--success);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+      }
+      .badge-info {
+        background: color-mix(in oklab, var(--info) 10%, transparent);
+        color: var(--info);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+      }
+      .badge-filter,
+      .badge-primary {
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+      }
+      .badge-neutral,
+      .badge-muted {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        border-color: var(--border);
+      }
+
+      /* ── Domain badges ───────────────────────────────────────────────────────────
+       * Water-chemistry result flags. These are Ocotillo-specific meanings mapped
+       * onto the semantic tints above — never onto new one-off colors.
+       *   MCL   exceeds a health-based limit          → destructive
+       *   SMCL  exceeds a taste/odor/staining limit   → warning
+       *   ND    not detected, value is the det. limit → neutral
+       *   Calc. calculated, not directly measured     → neutral
+       * ------------------------------------------------------------------------- */
+      .chip-mcl {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+      }
+      .chip-smcl,
+      .chip-nd,
+      .chip-warn {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        color: var(--warning-text);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+      }
+      .chip-ok {
+        background: color-mix(in oklab, var(--success) 10%, transparent);
+        color: var(--success);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+      }
+      .chip-calc,
+      .chip-neutral {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        border-color: var(--border);
+      }
+      .chip-info {
+        background: color-mix(in oklab, var(--info) 10%, transparent);
+        color: var(--info);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+      }
+      .chip-primary {
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+      }
+
+      /* ── Tables ──────────────────────────────────────────────────────────────────
+       * Two table idioms exist in the app, and they look different on purpose:
+       *
+       *   .datagrid — MUI X DataGrid (theme.ts MuiDataGrid). Bordered container,
+       *               5px radius, 13px, tabular-nums. Use for record lists.
+       *   .table    — ui/table.tsx shadcn table. No outer border, 14px, row
+       *               border-b only. Use for tables inside a card.
+       * ------------------------------------------------------------------------- */
+      .datagrid {
+        border: 1px solid var(--divider);
+        border-radius: 5px;
+        overflow: hidden;
+        background: var(--paper);
+        font-size: 13px;
+        width: 100%;
+      }
+      .datagrid table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .datagrid thead th {
+        background: var(--paper);
+        border-bottom: 1px solid var(--divider);
+        padding: 0 12px;
+        height: 40px;
+        text-align: left;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--foreground);
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .datagrid tbody td {
+        padding: 0 12px;
+        height: 44px;
+        border-bottom: 1px solid var(--divider);
+        vertical-align: middle;
+        color: var(--foreground);
+        font-size: 13px;
+        font-variant-numeric: tabular-nums;
+      }
+      .datagrid tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .datagrid tbody tr:hover td {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .datagrid tbody tr.selected td {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .datagrid.dense tbody td {
+        height: 34px;
+      }
+      .datagrid.scroll-x {
+        overflow-x: auto;
+      }
+      /* Crosstab: first column pinned, parameters run across. */
+      .datagrid.crosstab {
+        overflow-x: auto;
+      }
+      .datagrid.crosstab th:first-child,
+      .datagrid.crosstab td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--paper);
+        z-index: 1;
+        box-shadow: 1px 0 0 var(--divider);
+      }
+      .datagrid.crosstab tbody tr:hover td:first-child {
+        background: var(--muted);
+      }
+      .grid-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 16px;
+        padding: 8px 12px;
+        border-top: 1px solid var(--divider);
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .sort-caret {
+        color: var(--muted-foreground);
+        font-size: 10px;
+        margin-left: 3px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        caption-side: bottom;
+      }
+      .table thead tr {
+        border-bottom: 1px solid var(--border);
+      }
+      .table th {
+        height: 40px;
+        padding: 0 8px;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: 500;
+        white-space: nowrap;
+        color: var(--foreground);
+      }
+      .table td {
+        padding: 8px;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--border);
+      }
+      .table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .table tbody tr:hover {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+
+      /* Cell furniture shared by both idioms. */
+      .cell-note {
+        display: block;
+        margin-top: 3px;
+        font-size: 10px;
+        color: var(--muted-foreground);
+      }
+      .unit-label {
+        display: block;
+        margin-top: 2px;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Forms ───────────────────────────────────────────────────────────────── */
+      .form-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+      }
+      .label,
+      .field-label-sm {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .input,
+      .select,
+      textarea.input {
+        font-family: var(--font-sans);
+        font-size: 13px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-lg);
+        padding: 0 10px;
+        height: 32px;
+        background: var(--paper);
+        color: var(--foreground);
+        min-width: 140px;
+      }
+      textarea.input {
+        height: auto;
+        padding: 8px 10px;
+        width: 100%;
+        resize: vertical;
+        line-height: 1.5;
+      }
+      .input:focus,
+      .select:focus,
+      textarea.input:focus {
+        outline: none;
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+      }
+      .input:disabled,
+      .select:disabled {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        cursor: not-allowed;
+      }
+      .input-mono {
+        font-family: var(--font-mono);
+        letter-spacing: 0.03em;
+      }
+      .helper {
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .error-text {
+        font-size: 11px;
+        color: var(--destructive);
+      }
+
+      /* Checkbox — ui/checkbox.tsx: size-4, rounded-sm, primary when checked. */
+      .box,
+      .row-check {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--input-border);
+        background: var(--paper);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        line-height: 1;
+        color: transparent;
+        cursor: pointer;
+      }
+      .box.on,
+      .row-check.on,
+      .check-item.on .box {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .check-list {
+        display: grid;
+        gap: 2px;
+      }
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        padding: 6px 8px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+      }
+      .check-item:hover {
+        background: var(--muted);
+      }
+      .check-item .box {
+        margin-top: 3px;
+      }
+      .check-text {
+        font-size: 13px;
+        color: var(--foreground);
+      }
+      .check-sub {
+        display: block;
+        font-size: 11px;
+        color: var(--muted-foreground);
+        line-height: 1.4;
+      }
+
+      /* Radio option cards. */
+      .opt-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .opt-card {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 11px 13px;
+        background: var(--paper);
+        cursor: pointer;
+      }
+      .opt-card:hover {
+        background: var(--muted);
+      }
+      .opt-card.on {
+        border-color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .opt-radio {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1.5px solid var(--muted-foreground);
+        flex-shrink: 0;
+        margin-top: 3px;
+        position: relative;
+      }
+      .opt-card.on .opt-radio {
+        border-color: var(--primary);
+      }
+      .opt-card.on .opt-radio::after {
+        content: "";
+        position: absolute;
+        inset: 3px;
+        border-radius: 50%;
+        background: var(--primary);
+      }
+      .opt-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--foreground);
+      }
+      .opt-desc {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+        line-height: 1.45;
+      }
+
+      /* Dropzone. */
+      .dropzone {
+        border: 1.5px dashed color-mix(in oklab, var(--primary) 40%, transparent);
+        border-radius: var(--radius-lg);
+        background: color-mix(in oklab, var(--primary) 6%, transparent);
+        padding: 22px 16px;
+        text-align: center;
+        cursor: pointer;
+      }
+      .dropzone:hover {
+        background: color-mix(in oklab, var(--primary) 12%, transparent);
+      }
+      .dropzone-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--primary-dark);
+      }
+      .dropzone-sub {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Alerts ──────────────────────────────────────────────────────────────── */
+      .alert {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        border-radius: var(--radius-lg);
+        border: 1px solid;
+        padding: 9px 12px;
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+      .alert-info {
+        background: color-mix(in oklab, var(--info) 8%, transparent);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-primary {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-ok,
+      .alert-success {
+        background: color-mix(in oklab, var(--success) 8%, transparent);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-warn {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-error {
+        background: color-mix(in oklab, var(--destructive) 8%, transparent);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+        color: var(--foreground);
+      }
+
+      /* ── Tabs ────────────────────────────────────────────────────────────────── */
+      .tabs-bar {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 16px;
+      }
+      .tab {
+        padding: 10px 16px;
+        font-size: 13.5px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        white-space: nowrap;
+      }
+      .tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+      .tab:hover:not(.active) {
+        color: var(--foreground);
+        background: var(--muted);
+      }
+      .tab-panel {
+        display: none;
+      }
+      .tab-panel.active {
+        display: block;
+      }
+
+      /* ── Toolbar ─────────────────────────────────────────────────────────────── */
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .toolbar-label {
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .toolbar-select,
+      .toolbar-search {
+        font-family: var(--font-sans);
+        font-size: 12px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-md);
+        padding: 4px 8px;
+        background: var(--paper);
+        color: var(--foreground);
+      }
+      .toolbar-search {
+        width: 200px;
+      }
+      .toolbar-spacer {
+        margin-left: auto;
+      }
+      .toggle-chip {
+        font-size: 12px;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        color: var(--muted-foreground);
+        border-radius: var(--radius-4xl);
+        padding: 3px 11px;
+        cursor: pointer;
+      }
+      .toggle-chip.on {
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+      }
+
+      /* ── Stat strip ──────────────────────────────────────────────────────────── */
+      .stat-strip {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--paper);
+      }
+      .stat-cell {
+        flex: 1;
+        padding: 9px 13px;
+        border-left: 1px solid var(--border);
+        min-width: 0;
+      }
+      .stat-cell:first-child {
+        border-left: none;
+      }
+      .stat-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .stat-value {
+        font-family: var(--font-heading);
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: var(--foreground);
+        font-variant-numeric: tabular-nums;
+      }
+      .stat-note {
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Key/value field grid ────────────────────────────────────────────────── */
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .field-cell {
+        padding: 10px 16px;
+        border-left: 1px solid var(--border);
+        min-width: 0;
+      }
+      .field-cell:first-child {
+        border-left: none;
+      }
+      .field-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        margin-bottom: 2px;
+      }
+      .field-value {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--foreground);
+      }
+
+      /* ── Step rail (wizard) ──────────────────────────────────────────────────── */
+      .steps {
+        display: flex;
+        align-items: stretch;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .step {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 16px;
+        border-left: 1px solid var(--border);
+        cursor: pointer;
+        min-width: 0;
+      }
+      .step:first-child {
+        border-left: none;
+      }
+      .step:hover {
+        background: var(--muted);
+      }
+      .step-num {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--muted);
+        color: var(--muted-foreground);
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .step-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted-foreground);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .step-sub {
+        font-size: 11px;
+        font-weight: 400;
+        color: var(--muted-foreground);
+      }
+      .step.active {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .step.active .step-num {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .step.active .step-label {
+        color: var(--primary);
+      }
+      .step.done .step-num {
+        background: color-mix(in oklab, var(--success) 12%, transparent);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+        color: var(--success);
+      }
+      .step-panel {
+        display: none;
+      }
+      .step-panel.active {
+        display: block;
+      }
+
+      /* ── Distribution meter ──────────────────────────────────────────────────────
+       * Where one value sits inside a reference distribution. Used for
+       * "this well vs. nearby wells" comparisons.
+       * ------------------------------------------------------------------------- */
+      .meter {
+        min-width: 150px;
+        padding: 4px 0;
+      }
+      .meter-track {
+        position: relative;
+        height: 8px;
+        border-radius: 4px;
+        background: var(--muted);
+        border: 1px solid var(--border);
+      }
+      .meter-band {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        border-radius: 4px;
+        background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+      }
+      .meter-median {
+        position: absolute;
+        top: -3px;
+        bottom: -3px;
+        width: 2px;
+        background: var(--muted-foreground);
+      }
+      .meter-mark {
+        position: absolute;
+        top: -5px;
+        width: 3px;
+        height: 16px;
+        border-radius: 2px;
+        background: var(--primary);
+      }
+      .meter-mark.over {
+        background: var(--destructive);
+      }
+      .meter-limit {
+        position: absolute;
+        top: -4px;
+        bottom: -4px;
+        width: 0;
+        border-left: 2px dashed var(--destructive);
+      }
+      .meter-scale {
+        display: flex;
+        justify-content: space-between;
+        font-size: 9.5px;
+        color: var(--muted-foreground);
+        margin-top: 3px;
+      }
+
+      /* ── Section rule ────────────────────────────────────────────────────────── */
+      .section-rule {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 26px 0 14px;
+      }
+      .section-rule::after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid var(--border);
+      }
+      .section-rule-title {
+        font-family: var(--font-heading);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Legend ──────────────────────────────────────────────────────────────── */
+      .legend {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding-top: 12px;
+        margin-top: 10px;
+        border-top: 1px solid var(--border);
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* ── Empty / state box ───────────────────────────────────────────────────── */
+      .state-box {
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--wrapper);
+        padding: 26px 16px;
+        text-align: center;
+        font-size: 12.5px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Popover / autocomplete ──────────────────────────────────────────────── */
+      .combo-wrap {
+        position: relative;
+      }
+      .popper {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        right: 0;
+        min-width: 240px;
+        max-height: 230px;
+        overflow: auto;
+        z-index: 50;
+        padding: 4px 0;
+        background: var(--popover);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-popover);
+      }
+      .popper-group {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        padding: 6px 12px 3px;
+      }
+      .popper-opt {
+        padding: 5px 12px;
+        cursor: pointer;
+      }
+      .popper-opt:hover,
+      .popper-opt.highlighted {
+        background: var(--muted);
+      }
+
+      /* ── Sticky selection tray ───────────────────────────────────────────────── */
+      .tray {
+        position: sticky;
+        bottom: 0;
+        z-index: 150;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 11px 24px;
+        background: var(--paper);
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -3px 10px rgba(15, 23, 42, 0.06);
+      }
+      .tray-count {
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .tray-chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+      .tray-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-radius: var(--radius-4xl);
+        padding: 1px 4px 1px 9px;
+      }
+      .tray-chip-x {
+        cursor: pointer;
+        color: var(--muted-foreground);
+        font-size: 12px;
+        padding: 0 3px;
+      }
+      .tray-chip-x:hover {
+        color: var(--destructive);
+      }
+
+      /* ── Printed report ("paper") ────────────────────────────────────────────────
+       * For mockups of PDF deliverables. The app renders these for real with
+       * @react-pdf/renderer (OcotilloUI/src/components/pdf). This is the on-screen
+       * approximation: a letter-width sheet floating on the wrapper surface.
+       * ------------------------------------------------------------------------- */
+      .paper-wrap {
+        background: var(--wrapper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        padding: 22px;
+        display: flex;
+        justify-content: center;
+      }
+      .report-page {
+        width: 850px;
+        max-width: 100%;
+        background: var(--paper);
+        box-shadow: var(--shadow-paper);
+        padding: 34px 40px 26px;
+        font-size: 12.5px;
+        line-height: 1.55;
+      }
+      .rp-head {
+        display: flex;
+        gap: 22px;
+        align-items: flex-start;
+        border-bottom: 2px solid var(--foreground);
+        padding-bottom: 14px;
+        margin-bottom: 16px;
+      }
+      .rp-org {
+        font-family: var(--font-heading);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-title {
+        font-family: var(--font-heading);
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-top: 2px;
+      }
+      .rp-sub {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        margin-top: 3px;
+      }
+      .rp-section {
+        margin-top: 20px;
+      }
+      .rp-h {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-family: var(--font-heading);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--primary);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 4px;
+        margin-bottom: 10px;
+      }
+      .rp-h-note {
+        margin-left: auto;
+        font-family: var(--font-sans);
+        font-size: 10.5px;
+        font-weight: 400;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--muted-foreground);
+      }
+      .rp-p {
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      .rp-cols2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .rp-kv {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+      }
+      .rp-kv-cell {
+        padding: 7px 11px;
+        border-left: 1px solid var(--border);
+        border-top: 1px solid var(--border);
+        min-width: 0;
+      }
+      .rp-kv-cell:nth-child(4n + 1) {
+        border-left: none;
+      }
+      .rp-kv-cell:nth-child(-n + 4) {
+        border-top: none;
+      }
+      .rp-kv-label {
+        font-size: 9.5px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-kv-value {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .rp-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11.5px;
+      }
+      .rp-table th {
+        text-align: left;
+        vertical-align: bottom;
+        border-bottom: 1.5px solid var(--foreground);
+        padding: 5px 8px;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-table td {
+        padding: 6px 8px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+      .rp-table tbody tr:nth-child(even) td {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .rp-table tr.row-exceed td {
+        background: color-mix(in oklab, var(--destructive) 7%, transparent);
+      }
+      .rp-table tr.row-smcl td {
+        background: color-mix(in oklab, var(--warning) 7%, transparent);
+      }
+      .rp-num {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .rp-callout {
+        border-left: 4px solid var(--destructive);
+        background: color-mix(in oklab, var(--destructive) 7%, transparent);
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        padding: 11px 14px;
+        font-size: 12px;
+      }
+      .rp-callout.ok {
+        border-left-color: var(--success);
+        background: color-mix(in oklab, var(--success) 8%, transparent);
+      }
+      .rp-callout.info {
+        border-left-color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .rp-callout-title {
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
+      .rp-callout ul {
+        margin: 6px 0 0 17px;
+      }
+      .rp-chart {
+        height: 118px;
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-md);
+        background: var(--wrapper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-style: italic;
+        color: var(--muted-foreground);
+      }
+      .rp-qr {
+        margin-left: auto;
+        flex-shrink: 0;
+        width: 118px;
+        text-align: center;
+      }
+      .rp-qr svg {
+        display: block;
+        width: 106px;
+        height: 106px;
+        margin: 0 auto;
+        padding: 4px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+      }
+      .rp-qr-cap {
+        font-size: 9.5px;
+        color: var(--muted-foreground);
+        line-height: 1.35;
+        margin-top: 4px;
+      }
+      .rp-priv {
+        font-size: 10.5px;
+        font-style: italic;
+        color: var(--muted-foreground);
+        margin-top: 7px;
+      }
+      .rp-glossary {
+        columns: 2;
+        column-gap: 22px;
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .rp-glossary p {
+        break-inside: avoid;
+        margin-bottom: 5px;
+      }
+      .rp-glossary strong {
+        color: var(--foreground);
+      }
+      .rp-foot {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-top: 24px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        font-size: 10.5px;
+        color: var(--muted-foreground);
+      }
+      .rp-foot svg {
+        width: 54px;
+        height: 54px;
+        flex-shrink: 0;
+      }
+      .rp-page-num {
+        margin-left: auto;
+        white-space: nowrap;
+      }
+
+      /* ── Mockup annotation ───────────────────────────────────────────────────────
+       * Mockup-only. Deliberately outside the token system so it never reads as
+       * product UI — a reviewer must be able to tell commentary from the design.
+       * Every mockup carries one, stating what is not real and what is unresolved.
+       * ------------------------------------------------------------------------- */
+      .mockup-note {
+        background: #fefce8;
+        border: 1px solid #fde047;
+        border-radius: var(--radius-lg);
+        padding: 10px 14px;
+        font-size: 12px;
+        color: #713f12;
+        margin-bottom: 16px;
+      }
+      .mockup-note strong {
+        font-weight: 600;
+      }
+      .mockup-note ul {
+        margin: 6px 0 0 18px;
+      }
+      .mockup-note li {
+        margin-bottom: 2px;
+      }
+      .dark .mockup-note {
+        background: #422006;
+        border-color: #854d0e;
+        color: #fef08a;
+      }
+    </style>
+    <!-- design-system:end -->
+    <style>
+      /* ── Page-specific ──
+         Only things genuinely unique to this mockup. Anything reusable
+         belongs in design-system/ocotillo.css instead. */
+
+      /* Composer mode switch — segmented control, not tabs, because both
+         modes edit the same query rather than showing different content. */
+      .seg {
+        display: inline-flex;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--paper);
+      }
+      .seg button {
+        font-family: var(--font-sans);
+        font-size: 12.5px;
+        font-weight: 500;
+        border: 0;
+        background: transparent;
+        color: var(--muted-foreground);
+        padding: 6px 12px;
+        cursor: pointer;
+        border-left: 1px solid var(--border);
+      }
+      .seg button:first-child {
+        border-left: 0;
+      }
+      .seg button.on {
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+      }
+
+      /* ── NLP mode ── */
+      .ask-box {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .ask-box textarea.input {
+        flex: 1;
+        min-height: 64px;
+        padding: 9px 11px;
+        font-size: 14px;
+        line-height: 1.5;
+        resize: vertical;
+      }
+      .examples {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 8px;
+      }
+      .interp {
+        margin-top: 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--wrapper);
+        padding: 12px 14px;
+      }
+      .interp-sentence {
+        font-size: 14px;
+        line-height: 2;
+      }
+      .span-hit {
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        border-bottom: 2px solid var(--primary);
+        border-radius: 3px;
+        padding: 1px 2px;
+      }
+      .span-miss {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        border-bottom: 2px dashed var(--warning);
+        border-radius: 3px;
+        padding: 1px 2px;
+      }
+      .span-tag {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--primary);
+        vertical-align: super;
+        margin-left: 1px;
+      }
+      .interp-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin: 10px 0 12px;
+      }
+      .interp-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 13px;
+      }
+      .interp-num {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        font-size: 10.5px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .thinking {
+        font-size: 12.5px;
+        color: var(--muted-foreground);
+        font-style: italic;
+        margin-top: 14px;
+      }
+
+      /* ── Builder mode ── */
+      .builder-head {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .builder-head .select {
+        min-width: 0;
+      }
+      .cond-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        border-left: 2px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        padding-left: 12px;
+        margin-left: 6px;
+      }
+      .cond {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 6px 8px;
+        position: relative;
+      }
+      .cond-join {
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        width: 34px;
+        flex-shrink: 0;
+      }
+      .cond .select {
+        min-width: 0;
+      }
+      .cond .sel-field {
+        width: 200px;
+      }
+      .cond .sel-op {
+        width: 130px;
+      }
+      .cond .input.num-in {
+        width: 96px;
+        min-width: 0;
+      }
+      .cond .input.date-in {
+        width: 150px;
+        min-width: 0;
+      }
+      .cond-vals {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        align-items: center;
+        flex: 1;
+        min-width: 160px;
+      }
+      .cond-x {
+        margin-left: auto;
+      }
+      .tok {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-radius: var(--radius-4xl);
+        padding: 1px 4px 1px 9px;
+      }
+      .tok-x {
+        cursor: pointer;
+        opacity: 0.7;
+        padding: 0 3px;
+      }
+      .tok-x:hover {
+        opacity: 1;
+      }
+      .add-sel {
+        font-family: var(--font-sans);
+        font-size: 12px;
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-4xl);
+        background: transparent;
+        color: var(--muted-foreground);
+        padding: 2px 6px;
+        height: 22px;
+      }
+      .builder-actions {
+        display: flex;
+        gap: 6px;
+        margin: 10px 0 0 20px;
+      }
+      .area-desc {
+        font-size: 12.5px;
+        color: var(--foreground);
+      }
+
+      /* Read-back — the same plain-English sentence under both modes. */
+      .readback {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        border-top: 1px solid var(--border);
+        padding-top: 12px;
+        font-size: 13.5px;
+        line-height: 1.6;
+      }
+      .readback strong {
+        font-weight: 600;
+        color: var(--primary);
+      }
+      .readback-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        padding-top: 3px;
+        white-space: nowrap;
+      }
+      .cql {
+        margin-top: 8px;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        background: var(--wrapper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 8px 10px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        color: var(--foreground);
+      }
+      details > summary {
+        cursor: pointer;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        margin-top: 8px;
+      }
+
+      /* ── Results ── */
+      .results-body {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        align-items: start;
+      }
+      .results-body.view-table {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .results-body.view-table .map-pane {
+        display: none;
+      }
+      .results-body.view-map {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .results-body.view-map .table-pane {
+        display: none;
+      }
+      .results-body.view-map .map-svg {
+        max-height: 640px;
+      }
+      .map-pane {
+        border: 1px solid var(--divider);
+        border-radius: 5px;
+        background: var(--paper);
+        overflow: hidden;
+        position: relative;
+      }
+      .map-tools {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        padding: 6px 8px;
+        border-bottom: 1px solid var(--divider);
+        flex-wrap: wrap;
+      }
+      .map-tools .toolbar-select {
+        padding: 2px 6px;
+      }
+      .map-svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 560px;
+        background: var(--wrapper);
+        user-select: none;
+      }
+      .map-svg.drawing {
+        cursor: crosshair;
+      }
+      .map-svg path,
+      .map-svg rect,
+      .map-svg circle {
+        vector-effect: non-scaling-stroke;
+      }
+      .map-state {
+        fill: var(--paper);
+        stroke: var(--muted-foreground);
+        stroke-width: 1.2;
+      }
+      .map-grat {
+        stroke: var(--border);
+        stroke-width: 0.6;
+      }
+      .map-river {
+        fill: none;
+        stroke: var(--brand-400);
+        stroke-width: 1.6;
+        opacity: 0.7;
+      }
+      .map-city {
+        fill: var(--muted-foreground);
+        font-family: var(--font-sans);
+      }
+      .map-city-dot {
+        fill: var(--muted-foreground);
+      }
+      .map-area {
+        fill: color-mix(in oklab, var(--primary) 10%, transparent);
+        stroke: var(--primary);
+        stroke-width: 1.4;
+        stroke-dasharray: 5 3;
+      }
+      .map-radius {
+        fill: color-mix(in oklab, var(--primary) 8%, transparent);
+        stroke: var(--primary);
+        stroke-width: 1.2;
+        stroke-dasharray: 4 3;
+      }
+      .pt {
+        stroke: var(--paper);
+        stroke-width: 1;
+        cursor: pointer;
+      }
+      .pt-ctx {
+        fill: var(--muted-foreground);
+        opacity: 0.25;
+      }
+      .pt.hl {
+        stroke: var(--foreground);
+        stroke-width: 2;
+      }
+      .map-tip {
+        position: absolute;
+        pointer-events: none;
+        background: var(--popover);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-popover);
+        padding: 6px 9px;
+        font-size: 12px;
+        line-height: 1.45;
+        display: none;
+        z-index: 10;
+        white-space: nowrap;
+      }
+      .map-legend {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 7px 10px;
+        border-top: 1px solid var(--divider);
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .swatch {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 4px;
+        vertical-align: -1px;
+      }
+      .table-pane .datagrid {
+        max-height: 560px;
+        overflow: auto;
+      }
+      .table-pane .datagrid td {
+        white-space: nowrap;
+      }
+      .table-pane .datagrid thead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        cursor: pointer;
+      }
+      .table-pane .datagrid tbody tr {
+        cursor: pointer;
+      }
+      .table-pane .datagrid tbody tr.hl td {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .menu-wrap {
+        position: relative;
+      }
+      .menu-wrap .popper {
+        left: auto;
+        right: 0;
+        max-height: 320px;
+      }
+      .popper-opt:hover {
+        background: var(--muted);
+      }
+      .popper-opt .helper {
+        display: block;
+      }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--foreground);
+        color: var(--background);
+        font-size: 12.5px;
+        padding: 8px 14px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-popover);
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+        z-index: 300;
+      }
+      .toast.show {
+        opacity: 1;
+      }
+      .stale {
+        font-size: 12px;
+        color: var(--muted-foreground);
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── App bar ── -->
+    <div class="appbar">
+      <div class="appbar-hamburger">☰</div>
+      <span class="appbar-title">Ocotillo</span>
+      <div class="appbar-right">
+        <div class="appbar-search">
+          <span>⌕</span>
+          <span>Search wells…</span>
+          <span class="appbar-search-kbd">⌘K</span>
+        </div>
+        <div class="appbar-icon-btn" id="darkToggle" title="Toggle dark mode (mockup only)">◐</div>
+        <div class="appbar-icon-btn" title="Report a bug">🐛</div>
+        <div class="avatar">LL</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- ── Sidebar ── -->
+      <div class="sidebar">
+        <div class="nav-item"><span class="nav-icon">⌂</span> Home</div>
+        <div class="nav-item"><span class="nav-icon">◉</span> Wells</div>
+        <div class="nav-item"><span class="nav-icon">◎</span> Springs</div>
+        <div class="nav-item"><span class="nav-icon">◈</span> Map</div>
+        <div class="nav-item active"><span class="nav-icon">⧉</span> Advanced Query</div>
+        <div class="nav-item"><span class="nav-icon">☎</span> Contacts</div>
+        <div class="nav-item"><span class="nav-icon">⊞</span> Projects</div>
+        <div class="nav-item"><span class="nav-icon">📎</span> Assets</div>
+        <hr class="nav-divider" />
+        <div class="nav-item"><span class="nav-icon">🔒</span> Admin</div>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-footer-link">About</div>
+          <div class="sidebar-footer-link">Connect Desktop GIS</div>
+          <div class="sidebar-footer-link">Report a Bug</div>
+        </div>
+      </div>
+
+      <!-- ── Main ── -->
+      <div class="main">
+        <div class="breadcrumb">
+          <a href="#">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Advanced Query</span>
+        </div>
+
+        <div class="page-header">
+          <div>
+            <div class="page-title">Advanced Query</div>
+            <div class="page-subtitle">
+              Find wells by location, construction, water levels, and chemistry
+              — describe it in plain English or build it condition by condition.
+            </div>
+          </div>
+          <div class="header-actions">
+            <div class="menu-wrap">
+              <button class="btn btn-outline" data-menu="savedMenu">☰ Saved queries ▾</button>
+              <div class="popper" id="savedMenu" hidden>
+                <div class="popper-group">Mine</div>
+                <div class="popper-opt" data-preset="0">
+                  Rio Grande arsenic over MCL
+                  <span class="helper">Edited Oct 14 · 3 conditions</span>
+                </div>
+                <div class="popper-opt" data-preset="1">
+                  Deep Ogallala wells
+                  <span class="helper">Edited Sep 2 · 3 conditions</span>
+                </div>
+                <div class="popper-group">Shared with Hydrogeology</div>
+                <div class="popper-opt" data-preset="2">
+                  Las Cruces nitrate screen
+                  <span class="helper">S. Gallegos · 2 conditions</span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-outline" data-toast="Link copied — encodes the query, not the results">⎘ Share link</button>
+            <button class="btn btn-default" data-toast="Saved to “My queries” (mockup)">Save query</button>
+          </div>
+        </div>
+
+        <div class="mockup-note">
+          <strong>Lo-fi mockup — not functional.</strong> No backend and no
+          language model: the “plain English” box runs a small keyword matcher
+          over ~120 fake wells, and the builder filters the same fake data
+          in the browser. Try the example prompts, edit conditions, drag a
+          rectangle on the map, and switch Table / Map / Split. Open questions
+          flagged for review:
+          <ul>
+            <li>
+              <strong>One query, two editors.</strong> The sentence is parsed
+              into builder conditions; after that the builder is the source of
+              truth and the sentence goes stale. Is that acceptable, or should
+              editing the builder rewrite the sentence?
+            </li>
+            <li>
+              <strong>“Above the MCL” is ambiguous</strong> — latest result,
+              any result ever, or the median? Who picks the default, and should
+              the parser always ask?
+            </li>
+            <li>
+              <strong>What happens to phrases the parser cannot map</strong>
+              (“has a pump test”)? Mockup drops them with a warning. Refusing to
+              run is safer but more annoying.
+            </li>
+            <li>
+              <strong>Scope of “Find”.</strong> Wells only, or also springs,
+              samples, and individual observations? Returning observations
+              changes the table (one row per result) and the map (many rows
+              per point).
+            </li>
+            <li>
+              Results update live while editing. Fine on fake data; against the
+              real API do we need an explicit <em>Run</em> and a row cap?
+            </li>
+            <li>
+              Should the CQL2 text be editable for power users, or read-only
+              so it stays a view of the builder?
+            </li>
+            <li>
+              Where does the NLP run, and what may it see? Sending a prompt to
+              a hosted model is fine; sending well-owner data is not.
+            </li>
+          </ul>
+        </div>
+
+        <!-- ── Query composer ── -->
+        <div class="card" style="margin-bottom: 16px">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="card-header-icon">⧉</span>
+              <span class="card-title">Query</span>
+            </div>
+            <div class="header-actions">
+              <div class="seg" id="modeSeg">
+                <button data-mode="ask" class="on">✦ Ask in plain English</button>
+                <button data-mode="build">☷ Query builder</button>
+              </div>
+              <button class="btn btn-ghost btn-sm" id="clearBtn">Clear</button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <!-- Ask mode -->
+            <div id="askPanel">
+              <div class="ask-box">
+                <textarea class="input" id="askText" placeholder="e.g. Domestic wells in Socorro county with arsenic above the MCL sampled since 2020"></textarea>
+                <button class="btn btn-default" id="interpretBtn">Interpret ↵</button>
+              </div>
+              <div class="examples">
+                <span class="toolbar-label">Try:</span>
+                <span class="toggle-chip" data-example="0">Rio Grande arsenic</span>
+                <span class="toggle-chip" data-example="1">Deep Ogallala wells</span>
+                <span class="toggle-chip" data-example="2">Nitrate near Las Cruces</span>
+              </div>
+              <div id="interpOut"></div>
+            </div>
+
+            <!-- Build mode -->
+            <div id="buildPanel" hidden>
+              <div class="builder-head">
+                <span>Find</span>
+                <select class="select" id="targetSel" style="width: 120px">
+                  <option>Wells</option>
+                  <option disabled>Springs</option>
+                  <option disabled>Samples</option>
+                  <option disabled>Observations</option>
+                </select>
+                <span>matching</span>
+                <select class="select" id="joinSel" style="width: 80px">
+                  <option value="all">all</option>
+                  <option value="any">any</option>
+                </select>
+                <span>of these conditions</span>
+              </div>
+              <div class="cond-list" id="condList"></div>
+              <div class="builder-actions">
+                <button class="btn btn-outline btn-sm" id="addCond">+ Condition</button>
+                <button class="btn btn-ghost btn-sm" data-toast="Nested groups are out of scope for this mockup">+ Group</button>
+                <button class="btn btn-ghost btn-sm" id="addArea">▭ Draw area on map</button>
+              </div>
+              <div class="stale" id="staleNote" hidden>
+                ⓘ Edited since the plain-English text was interpreted — the
+                builder is now the source of truth.
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="readback">
+              <span class="readback-label">Reads as</span>
+              <div style="flex: 1; min-width: 0">
+                <div id="readback"></div>
+                <details>
+                  <summary>Show as CQL2 filter (OGC API)</summary>
+                  <div class="cql" id="cql"></div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Results ── -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-left">
+              <span class="card-header-icon">◉</span>
+              <span class="card-title">Results</span>
+              <span class="badge badge-primary" id="countBadge">0 wells</span>
+            </div>
+            <div class="header-actions">
+              <div class="seg" id="viewSeg">
+                <button data-view="table">▤ Table</button>
+                <button data-view="map">◈ Map</button>
+                <button data-view="split" class="on">◫ Split</button>
+              </div>
+              <div class="menu-wrap">
+                <button class="btn btn-outline btn-sm" data-menu="colMenu">Columns ▾</button>
+                <div class="popper" id="colMenu" hidden></div>
+              </div>
+              <div class="menu-wrap">
+                <button class="btn btn-outline btn-sm" data-menu="exportMenu">⤓ Export ▾</button>
+                <div class="popper" id="exportMenu" hidden>
+                  <div class="popper-opt" data-toast="CSV export started (mockup)">CSV<span class="helper">One row per well, visible columns</span></div>
+                  <div class="popper-opt" data-toast="GeoJSON export started (mockup)">GeoJSON<span class="helper">Points, EPSG:4326, all columns</span></div>
+                  <div class="popper-opt" data-toast="Shapefile export started (mockup)">Shapefile (.zip)</div>
+                  <div class="popper-group">Live</div>
+                  <div class="popper-opt" data-toast="OGC API URL copied — paste into QGIS or ArcGIS Pro">Copy OGC API link<span class="helper">Desktop GIS layer that re-runs this query</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="stat-strip" style="margin-bottom: 12px">
+              <div class="stat-cell"><div class="stat-label">Matching wells</div><div class="stat-value" id="stCount">0</div><div class="stat-note" id="stCountNote">of 0 in Ocotillo</div></div>
+              <div class="stat-cell"><div class="stat-label">Counties</div><div class="stat-value" id="stCounties">0</div><div class="stat-note" id="stCountiesNote">—</div></div>
+              <div class="stat-cell"><div class="stat-label">Median arsenic</div><div class="stat-value" id="stAs">—</div><div class="stat-note">mg/L · latest result</div></div>
+              <div class="stat-cell"><div class="stat-label">Above arsenic MCL</div><div class="stat-value" id="stMcl" style="color: var(--destructive)">0</div><div class="stat-note">MCL 0.010 mg/L</div></div>
+            </div>
+
+            <div class="results-body" id="resultsBody">
+              <div class="map-pane">
+                <div class="map-tools">
+                  <span class="toolbar-label">Color by</span>
+                  <select class="toolbar-select" id="colorBy">
+                    <option value="arsenic">Arsenic</option>
+                    <option value="nitrate">Nitrate as N</option>
+                    <option value="tds">TDS</option>
+                    <option value="dtw">Depth to water</option>
+                  </select>
+                  <span class="toggle-chip on" id="ctxToggle">Non-matching</span>
+                  <span class="toggle-chip on" id="fitToggle" title="Zoom the map to the matching wells">Zoom to fit</span>
+                  <span class="toolbar-spacer"></span>
+                  <button class="btn btn-ghost btn-xs" id="drawBtn" title="Drag a rectangle to add a location condition">▭ Draw area</button>
+                  <button class="btn btn-ghost btn-xs" title="Open these results on the full Map page" data-toast="Opens these results on the full Map page (mockup)">⤢</button>
+                </div>
+                <svg class="map-svg" id="map" viewBox="0 0 540 565" xmlns="http://www.w3.org/2000/svg"></svg>
+                <div class="map-legend" id="mapLegend"></div>
+                <div class="map-tip" id="mapTip"></div>
+              </div>
+
+              <div class="table-pane">
+                <div class="datagrid dense">
+                  <table>
+                    <thead id="thead"></thead>
+                    <tbody id="tbody"></tbody>
+                  </table>
+                </div>
+                <div class="grid-footer" id="gridFoot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      // ── Fake data ────────────────────────────────────────────────────────
+      // Seeded so every reviewer sees the same wells.
+      let seed = 1187
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646
+      const pick = (a) => a[Math.floor(rnd() * a.length)]
+      const between = (lo, hi) => lo + rnd() * (hi - lo)
+
+      // County, centre, spread, aquifer, count, and chemistry ranges.
+      const COUNTY_DEFS = [
+        ['Socorro', -106.9, 34.05, 0.3, 'Santa Fe Group', 14, [0.004, 0.048], [0.3, 4], [350, 1400], [20, 180]],
+        ['Valencia', -106.75, 34.72, 0.22, 'Santa Fe Group', 12, [0.003, 0.028], [0.5, 6], [300, 900], [15, 160]],
+        ['Bernalillo', -106.62, 35.08, 0.2, 'Santa Fe Group', 12, [0.002, 0.022], [0.4, 5], [220, 700], [40, 420]],
+        ['Sandoval', -106.75, 35.42, 0.25, 'Santa Fe Group', 8, [0.002, 0.03], [0.2, 3], [250, 800], [60, 500]],
+        ['Sierra', -107.25, 33.1, 0.3, 'Santa Fe Group', 8, [0.003, 0.035], [0.2, 3], [400, 1600], [30, 260]],
+        ['Doña Ana', -106.78, 32.36, 0.22, 'Mesilla Bolsón', 16, [0.002, 0.02], [0.5, 14], [380, 1500], [8, 300]],
+        ['Luna', -107.72, 32.22, 0.25, 'Mimbres Basin fill', 7, [0.002, 0.016], [0.5, 8], [300, 900], [60, 280]],
+        ['Torrance', -106.05, 34.75, 0.22, 'Estancia Basin fill', 9, [0.001, 0.012], [0.5, 18], [600, 3200], [20, 250]],
+        ['Santa Fe', -105.98, 35.55, 0.2, 'Santa Fe Group', 9, [0.001, 0.012], [0.3, 6], [200, 600], [80, 600]],
+        ['Lea', -103.35, 32.8, 0.28, 'Ogallala (High Plains)', 10, [0.004, 0.022], [1, 12], [400, 1300], [40, 220]],
+        ['Curry', -103.35, 34.45, 0.24, 'Ogallala (High Plains)', 9, [0.003, 0.018], [2, 16], [300, 900], [60, 330]],
+        ['Chaves', -104.45, 33.35, 0.3, 'San Andres (Roswell Artesian)', 8, [0.001, 0.008], [1, 9], [900, 3800], [10, 200]],
+        ['San Juan', -108.25, 36.6, 0.3, 'Nacimiento Fm.', 6, [0.001, 0.014], [0.2, 3], [500, 2600], [30, 350]],
+      ]
+      const TYPES = ['Domestic', 'Domestic', 'Domestic', 'Livestock', 'Livestock', 'Irrigation', 'Monitoring', 'Public supply']
+      const SURNAMES = ['Vigil', 'Baca', 'Chávez', 'Lucero', 'Montoya', 'Sandoval', 'Romero', 'Gallegos', 'Padilla', 'Trujillo', 'Archuleta', 'Apodaca', 'Otero', 'Henderson', 'Kirkpatrick', 'Bell', 'Whitaker', 'Jaramillo', 'Salazar', 'Tafoya']
+      const SUFFIX = {
+        Domestic: ['Domestic', 'House Well', 'Residence'],
+        Livestock: ['Windmill', 'Stock Well', 'Ranch Well'],
+        Irrigation: ['Irrigation Well', 'Orchard Well', 'Pivot Well'],
+        Monitoring: ['MW-1', 'MW-2', 'Piezometer'],
+        'Public supply': ['MDWCA Well 2', 'Community Well', 'Mutual Domestic'],
+      }
+
+      const WELLS = []
+      let pid = 1040
+      for (const [county, lon, lat, sp, aquifer, n, as, no3, tds, dtw] of COUNTY_DEFS) {
+        for (let i = 0; i < n; i++) {
+          const type = pick(TYPES)
+          const d = between(dtw[0], dtw[1])
+          const yr = 2012 + Math.floor(rnd() * 15)
+          const mo = 1 + Math.floor(rnd() * 12)
+          const dy = 1 + Math.floor(rnd() * 27)
+          WELLS.push({
+            id: 'WL-' + (pid += 3 + Math.floor(rnd() * 37)),
+            name: pick(SURNAMES) + ' ' + pick(SUFFIX[type]),
+            county,
+            aquifer,
+            type,
+            lon: Math.min(-103.08, lon + between(-sp, sp)),
+            lat: lat + between(-sp, sp) * 0.85,
+            depth: Math.round(d + between(40, 380)),
+            dtw: Math.round(d),
+            arsenic: +between(as[0], as[1]).toFixed(3),
+            nitrate: +between(no3[0], no3[1]).toFixed(1),
+            tds: Math.round(between(tds[0], tds[1]) / 10) * 10,
+            sampled: `${yr}-${String(mo).padStart(2, '0')}-${String(dy).padStart(2, '0')}`,
+          })
+        }
+      }
+
+      const PLACES = {
+        'Las Cruces': [-106.76, 32.32],
+        Albuquerque: [-106.65, 35.08],
+        'Santa Fe': [-105.94, 35.69],
+        Socorro: [-106.89, 34.06],
+        Roswell: [-104.52, 33.39],
+        Clovis: [-103.2, 34.4],
+        Hobbs: [-103.14, 32.7],
+        Deming: [-107.76, 32.27],
+        Farmington: [-108.2, 36.73],
+        'Truth or Consequences': [-107.25, 33.13],
+      }
+
+      // ── Field catalog ────────────────────────────────────────────────────
+      const uniq = (k) => [...new Set(WELLS.map((w) => w[k]))].sort()
+      const FIELDS = {
+        county: { label: 'County', kind: 'enum', options: uniq('county'), group: 'Location' },
+        near: { label: 'Distance from place', kind: 'near', group: 'Location' },
+        area: { label: 'Inside drawn area', kind: 'area', group: 'Location' },
+        aquifer: { label: 'Aquifer', kind: 'enum', options: uniq('aquifer'), group: 'Well' },
+        type: { label: 'Well use', kind: 'enum', options: ['Domestic', 'Livestock', 'Irrigation', 'Monitoring', 'Public supply'], group: 'Well' },
+        depth: { label: 'Well depth', kind: 'num', unit: 'ft', group: 'Well' },
+        dtw: { label: 'Depth to water (latest)', kind: 'num', unit: 'ft bgs', group: 'Water levels' },
+        arsenic: { label: 'Arsenic (latest)', kind: 'num', unit: 'mg/L', std: 0.01, stdName: 'MCL', group: 'Water chemistry' },
+        nitrate: { label: 'Nitrate as N (latest)', kind: 'num', unit: 'mg/L', std: 10, stdName: 'MCL', group: 'Water chemistry' },
+        tds: { label: 'TDS (latest)', kind: 'num', unit: 'mg/L', std: 500, stdName: 'SMCL', group: 'Water chemistry' },
+        sampled: { label: 'Last sampled', kind: 'date', group: 'Water chemistry' },
+      }
+      const DP = { arsenic: 3, nitrate: 1, tds: 0, depth: 0, dtw: 0 }
+      const fmtNum = (k, v) => (k in DP ? (+v).toLocaleString('en-US', { minimumFractionDigits: DP[k], maximumFractionDigits: DP[k] }) : v)
+      const OPS = {
+        enum: [['in', 'is any of'], ['nin', 'is none of']],
+        num: [['gt', 'is above'], ['gte', 'is at least'], ['lt', 'is below'], ['lte', 'is at most']],
+        date: [['gte', 'on or after'], ['lt', 'before']],
+        near: [['within', 'within']],
+        area: [['inside', 'is inside']],
+      }
+
+      // ── State ────────────────────────────────────────────────────────────
+      const state = {
+        join: 'all',
+        conds: [],
+        view: 'split',
+        colorBy: 'arsenic',
+        showCtx: true,
+        fit: true,
+        hl: null,
+        sort: ['id', 1],
+        cols: ['id', 'name', 'county', 'aquifer', 'type', 'depth', 'dtw', 'arsenic', 'nitrate', 'tds', 'sampled'],
+        interpreted: false,
+        editedSinceInterp: false,
+      }
+      const COLS = {
+        id: 'Point ID', name: 'Name', county: 'County', aquifer: 'Aquifer', type: 'Use',
+        depth: 'Depth (ft)', dtw: 'DTW (ft)', arsenic: 'As (mg/L)', nitrate: 'NO₃-N (mg/L)',
+        tds: 'TDS (mg/L)', sampled: 'Last sampled',
+      }
+
+      const newCond = (field) => {
+        const f = FIELDS[field]
+        const c = { field, op: OPS[f.kind][0][0] }
+        if (f.kind === 'enum') c.value = []
+        if (f.kind === 'num') c.value = f.std ?? 100
+        if (f.kind === 'date') c.value = '2020-01-01'
+        if (f.kind === 'near') c.value = { km: 10, place: 'Las Cruces' }
+        if (f.kind === 'area') c.value = { w: -107.3, e: -106.3, s: 33.7, n: 35.0 }
+        return c
+      }
+
+      // ── Evaluation ───────────────────────────────────────────────────────
+      const km = (a, b) => {
+        const R = 6371, r = Math.PI / 180
+        const dLat = (b[1] - a[1]) * r, dLon = (b[0] - a[0]) * r
+        const h = Math.sin(dLat / 2) ** 2 + Math.cos(a[1] * r) * Math.cos(b[1] * r) * Math.sin(dLon / 2) ** 2
+        return 2 * R * Math.asin(Math.sqrt(h))
+      }
+      const test = (w, c) => {
+        const v = w[c.field]
+        switch (c.op) {
+          case 'in': return !c.value.length || c.value.includes(v)
+          case 'nin': return !c.value.includes(v)
+          case 'gt': return v > +c.value
+          case 'gte': return c.field === 'sampled' ? v >= c.value : v >= +c.value
+          case 'lt': return c.field === 'sampled' ? v < c.value : v < +c.value
+          case 'lte': return v <= +c.value
+          case 'within': return km([w.lon, w.lat], PLACES[c.value.place]) <= +c.value.km
+          case 'inside': {
+            const a = c.value
+            return w.lon >= a.w && w.lon <= a.e && w.lat >= a.s && w.lat <= a.n
+          }
+        }
+        return true
+      }
+      const matches = (w) => {
+        if (!state.conds.length) return true
+        return state.join === 'all' ? state.conds.every((c) => test(w, c)) : state.conds.some((c) => test(w, c))
+      }
+
+      // ── Plain-English read-back and CQL2 ─────────────────────────────────
+      const esc = (s) => String(s).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch])
+      const orList = (a, word = 'or') => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ` ${word} ` + a[a.length - 1]
+      const fmtDate = (d) => new Date(d + 'T00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      const fmtArea = (a) => `${(-a.w).toFixed(2)}°W–${(-a.e).toFixed(2)}°W, ${a.s.toFixed(2)}°N–${a.n.toFixed(2)}°N`
+
+      const phrase = (c) => {
+        const f = FIELDS[c.field]
+        const b = (s) => `<strong>${esc(s)}</strong>`
+        const name = /^[A-Z][A-Z]/.test(f.label) ? f.label : f.label[0].toLowerCase() + f.label.slice(1)
+        const opLabel = OPS[f.kind].find((o) => o[0] === c.op)[1]
+        if (f.kind === 'enum') {
+          if (!c.value.length) return `${name} is anything`
+          return `${name} ${c.op === 'in' ? 'is' : 'is not'} ${orList(c.value.map(b))}`
+        }
+        if (f.kind === 'num') {
+          const std = f.std === +c.value ? ` (the ${f.stdName})` : ''
+          return `${name} ${opLabel} ${b(fmtNum(c.field, c.value) + ' ' + f.unit)}${std}`
+        }
+        if (f.kind === 'date') return `last sampled ${opLabel} ${b(fmtDate(c.value))}`
+        if (f.kind === 'near') return `location is within ${b(c.value.km + ' km')} of ${b(c.value.place)}`
+        if (f.kind === 'area') return `location is inside ${b('the drawn area')}`
+      }
+      const renderReadback = () => {
+        const el = document.getElementById('readback')
+        if (!state.conds.length) {
+          el.innerHTML = '<span class="muted">All wells — no conditions yet.</span>'
+        } else {
+          const parts = state.conds.map(phrase)
+          el.innerHTML = `Wells where ${state.join === 'all' ? orList(parts, 'and') : (state.conds.length > 1 ? '<em>any</em> of: ' : '') + orList(parts, 'or')}.`
+        }
+        const q = (s) => `'${s.replace(/'/g, "''")}'`
+        const cql = state.conds.map((c) => {
+          const f = FIELDS[c.field]
+          const col = { arsenic: 'arsenic_latest_mgl', nitrate: 'nitrate_n_latest_mgl', tds: 'tds_latest_mgl', dtw: 'depth_to_water_ft', depth: 'well_depth_ft', type: 'well_use', sampled: 'last_sampled' }[c.field] || c.field
+          const sym = { gt: '>', gte: '>=', lt: '<', lte: '<=' }[c.op]
+          if (f.kind === 'enum') return c.value.length ? `${col} ${c.op === 'in' ? 'IN' : 'NOT IN'} (${c.value.map(q).join(', ')})` : null
+          if (f.kind === 'num') return `${col} ${sym} ${c.value}`
+          if (f.kind === 'date') return `${col} ${sym} DATE('${c.value}')`
+          if (f.kind === 'near') return `S_DWITHIN(geometry, POINT(${PLACES[c.value.place].join(' ')}), ${c.value.km}, kilometers)`
+          if (f.kind === 'area') { const a = c.value; return `S_INTERSECTS(geometry, BBOX(${a.w.toFixed(2)}, ${a.s.toFixed(2)}, ${a.e.toFixed(2)}, ${a.n.toFixed(2)}))` }
+        }).filter(Boolean)
+        document.getElementById('cql').textContent = cql.length ? cql.join(state.join === 'all' ? '\n  AND ' : '\n   OR ') : '(no filter)'
+      }
+
+      // ── Builder ──────────────────────────────────────────────────────────
+      const condList = document.getElementById('condList')
+      const fieldOptions = (sel) => {
+        let html = '', grp = null
+        for (const [k, f] of Object.entries(FIELDS)) {
+          if (f.group !== grp) { if (grp) html += '</optgroup>'; html += `<optgroup label="${f.group}">`; grp = f.group }
+          html += `<option value="${k}" ${k === sel ? 'selected' : ''}>${f.label}</option>`
+        }
+        return html + '</optgroup>'
+      }
+      const renderBuilder = () => {
+        document.getElementById('joinSel').value = state.join
+        condList.innerHTML = state.conds.length ? '' : '<div class="state-box">No conditions — every well matches. Add one, or describe what you want in plain English.</div>'
+        state.conds.forEach((c, i) => {
+          const f = FIELDS[c.field]
+          const row = document.createElement('div')
+          row.className = 'cond'
+          let val = ''
+          if (f.kind === 'enum') {
+            val = `<div class="cond-vals">${c.value.map((v) => `<span class="tok">${esc(v)}<span class="tok-x" data-rm="${esc(v)}">×</span></span>`).join('')}
+              <select class="add-sel" data-add><option value="">+ add</option>${f.options.filter((o) => !c.value.includes(o)).map((o) => `<option>${esc(o)}</option>`).join('')}</select></div>`
+          } else if (f.kind === 'num') {
+            val = `<input class="input num-in num" type="number" step="any" value="${c.value}" data-v /> <span class="unit-label muted">${f.unit}</span>
+              ${f.std ? `<button class="btn btn-ghost btn-xs" data-std title="Use the ${f.stdName}">= ${f.stdName} (${f.std})</button>` : ''}`
+          } else if (f.kind === 'date') {
+            val = `<input class="input date-in" type="date" value="${c.value}" data-v />`
+          } else if (f.kind === 'near') {
+            val = `<input class="input num-in num" type="number" value="${c.value.km}" data-km /> <span class="muted">km of</span>
+              <select class="select" data-place style="width: 170px">${Object.keys(PLACES).map((p) => `<option ${p === c.value.place ? 'selected' : ''}>${p}</option>`).join('')}</select>`
+          } else if (f.kind === 'area') {
+            val = `<span class="area-desc mono">${fmtArea(c.value)}</span> <button class="btn btn-link btn-xs" data-redraw>Redraw on map</button>`
+          }
+          row.innerHTML = `<span class="cond-join">${i === 0 ? 'Where' : state.join === 'all' ? 'and' : 'or'}</span>
+            <select class="select sel-field" data-field>${fieldOptions(c.field)}</select>
+            <select class="select sel-op" data-op>${OPS[f.kind].map(([k, l]) => `<option value="${k}" ${k === c.op ? 'selected' : ''}>${l}</option>`).join('')}</select>
+            ${val}
+            <button class="btn btn-ghost btn-icon btn-sm cond-x" data-del title="Remove condition">✕</button>`
+          row.dataset.i = i
+          condList.appendChild(row)
+        })
+        document.getElementById('staleNote').hidden = !(state.interpreted && state.editedSinceInterp)
+      }
+      const edited = (rebuild) => {
+        state.editedSinceInterp = true
+        if (rebuild) renderBuilder()
+        else document.getElementById('staleNote').hidden = !state.interpreted
+        update()
+      }
+      condList.addEventListener('change', (e) => {
+        const row = e.target.closest('.cond'); if (!row) return
+        const c = state.conds[+row.dataset.i], t = e.target
+        if (t.matches('[data-field]')) { state.conds[+row.dataset.i] = newCond(t.value); return edited(true) }
+        if (t.matches('[data-op]')) c.op = t.value
+        if (t.matches('[data-add]') && t.value) { c.value.push(t.value); return edited(true) }
+        if (t.matches('[data-place]')) c.value.place = t.value
+        edited(false)
+      })
+      condList.addEventListener('input', (e) => {
+        const row = e.target.closest('.cond'); if (!row) return
+        const c = state.conds[+row.dataset.i], t = e.target
+        if (t.matches('[data-v]')) c.value = t.value
+        if (t.matches('[data-km]')) c.value.km = t.value
+        edited(false)
+      })
+      condList.addEventListener('click', (e) => {
+        const row = e.target.closest('.cond'); if (!row) return
+        const i = +row.dataset.i, c = state.conds[i]
+        if (e.target.closest('[data-del]')) { state.conds.splice(i, 1); return edited(true) }
+        if (e.target.matches('[data-rm]')) { c.value = c.value.filter((v) => v !== e.target.dataset.rm); return edited(true) }
+        if (e.target.matches('[data-std]')) { c.value = FIELDS[c.field].std; return edited(true) }
+        if (e.target.matches('[data-redraw]')) startDraw()
+      })
+      document.getElementById('joinSel').addEventListener('change', (e) => { state.join = e.target.value; edited(true) })
+      document.getElementById('addCond').addEventListener('click', () => { state.conds.push(newCond('county')); edited(true) })
+      document.getElementById('addArea').addEventListener('click', startDraw)
+
+      // ── Plain-English interpreter ────────────────────────────────────────
+      // A stand-in for the real thing: keyword rules that emit builder
+      // conditions plus the text spans they consumed, so the UI can show
+      // which words became which condition.
+      const EXAMPLES = [
+        'Domestic and livestock wells in Socorro, Valencia, or Sierra county with arsenic above the MCL, sampled since 2020',
+        'Ogallala wells deeper than 150 ft with depth to water over 100 ft that have a pump test',
+        'Wells within 15 km of Las Cruces with nitrate above 5 mg/L',
+      ]
+      const PARAM_WORDS = { arsenic: 'arsenic', nitrate: 'nitrate', tds: 'tds', 'total dissolved solids': 'tds', 'depth to water': 'dtw', 'water level': 'dtw' }
+      const AQUIFER_WORDS = { ogallala: 'Ogallala (High Plains)', 'high plains': 'Ogallala (High Plains)', 'santa fe group': 'Santa Fe Group', mesilla: 'Mesilla Bolsón', estancia: 'Estancia Basin fill', 'san andres': 'San Andres (Roswell Artesian)', mimbres: 'Mimbres Basin fill', nacimiento: 'Nacimiento Fm.' }
+      const TYPE_WORDS = { domestic: 'Domestic', livestock: 'Livestock', stock: 'Livestock', irrigation: 'Irrigation', monitoring: 'Monitoring', 'public supply': 'Public supply' }
+      const UNSUPPORTED = ['pump test', 'permit', 'owner', 'photo', 'driller']
+
+      const interpret = (text) => {
+        const low = text.toLowerCase()
+        const spans = [], conds = [], notes = []
+        const taken = (s, e) => spans.some((p) => s < p.e && e > p.s)
+        const hit = (s, e, n) => { if (!taken(s, e)) spans.push({ s, e, n, miss: false }) }
+        const find = (words, onHit) => {
+          for (const [w, v] of Object.entries(words)) {
+            const re = new RegExp(`\\b${w.replace(/ /g, '\\s+')}\\b`, 'g')
+            let m
+            while ((m = re.exec(low))) if (!taken(m.index, m.index + m[0].length)) onHit(m, v)
+          }
+        }
+
+        // Numeric comparisons: "<param> above|over|below ... <n|MCL>"
+        const cmpRe = /(arsenic|nitrate|tds|total dissolved solids|depth to water|water level)\s+(?:is\s+|levels?\s+)?(above|over|greater than|exceeding|exceeds|more than|below|under|less than)\s+(?:the\s+)?(s?mcl|\d+(?:\.\d+)?)\s*(mg\/l|ft|feet)?/g
+        let m
+        while ((m = cmpRe.exec(low))) {
+          const field = PARAM_WORDS[m[1]], f = FIELDS[field]
+          const up = /above|over|greater|exceed|more/.test(m[2])
+          const isStd = /mcl/.test(m[3])
+          conds.push({ field, op: up ? 'gt' : 'lt', value: isStd ? f.std : +m[3] })
+          hit(m.index, m.index + m[0].length, conds.length)
+          if (isStd && field === 'arsenic') notes.push({ kind: 'ask', text: '“Above the MCL” could mean the <strong>latest</strong> result, <strong>any</strong> result ever, or the <strong>median</strong>. Using the latest result.', opts: ['Latest result', 'Any result', 'Median'] })
+        }
+        // Well depth: "deeper|shallower than N ft"
+        const depRe = /(deeper|shallower) than (\d+)\s*(ft|feet)?/g
+        while ((m = depRe.exec(low))) {
+          conds.push({ field: 'depth', op: m[1] === 'deeper' ? 'gt' : 'lt', value: +m[2] })
+          hit(m.index, m.index + m[0].length, conds.length)
+        }
+        // Proximity: "within N km|mi of <place>"
+        const nearRe = /within (\d+(?:\.\d+)?)\s*(km|kilometers|mi|miles) of ([a-zñ .]+?)(?=\s+(?:with|and|that|where|sampled)\b|[,.]|$)/g
+        while ((m = nearRe.exec(low))) {
+          const place = Object.keys(PLACES).find((p) => p.toLowerCase() === m[3].trim())
+          if (!place) { spans.push({ s: m.index, e: m.index + m[0].length, miss: true }); notes.push({ kind: 'miss', text: `Don’t know the place “${esc(m[3].trim())}”. Known places: ${Object.keys(PLACES).join(', ')}.` }); continue }
+          const kmv = /mi/.test(m[2]) ? Math.round(+m[1] * 1.609) : +m[1]
+          conds.push({ field: 'near', op: 'within', value: { km: kmv, place } })
+          hit(m.index, m.index + m[0].length, conds.length)
+        }
+        // Date: "since|after|before YYYY"
+        const dateRe = /(?:sampled\s+|measured\s+)?(since|after|before)\s+((?:19|20)\d\d)/g
+        while ((m = dateRe.exec(low))) {
+          conds.push({ field: 'sampled', op: m[1] === 'before' ? 'lt' : 'gte', value: `${m[2]}-01-01` })
+          hit(m.index, m.index + m[0].length, conds.length)
+        }
+        // Enumerations: counties, aquifers, well use.
+        const enumHits = (words, field) => {
+          const vals = []
+          let n = null
+          find(words, (mm, v) => {
+            if (!vals.includes(v)) vals.push(v)
+            if (n === null) n = conds.length + 1
+            hit(mm.index, mm.index + mm[0].length, n)
+          })
+          if (vals.length) conds.push({ field, op: 'in', value: vals })
+        }
+        const countyWords = {}
+        FIELDS.county.options.forEach((c) => { countyWords[c.toLowerCase()] = c; if (c === 'Doña Ana') countyWords['dona ana'] = c })
+        enumHits(TYPE_WORDS, 'type')
+        enumHits(AQUIFER_WORDS, 'aquifer') // before county: "Santa Fe Group" ≠ Santa Fe County
+        enumHits(countyWords, 'county')
+
+        for (const u of UNSUPPORTED) {
+          const i = low.indexOf(u)
+          if (i >= 0) {
+            const s = Math.max(0, low.lastIndexOf(' ', Math.max(0, low.lastIndexOf(' ', i - 1) - 1)) + 1)
+            spans.push({ s, e: i + u.length, miss: true })
+            notes.push({ kind: 'miss', text: `Couldn’t map “${esc(text.slice(s, i + u.length))}” to any field — Ocotillo has no searchable ${u} attribute yet. <strong>Ignored</strong>; results are broader than you asked.` })
+          }
+        }
+        // Renumber so condition order follows the sentence.
+        const order = [...new Set(spans.filter((s) => !s.miss).sort((a, b) => a.s - b.s).map((s) => s.n))]
+        const remap = Object.fromEntries(order.map((n, i) => [n, i + 1]))
+        spans.forEach((s) => { if (!s.miss) s.n = remap[s.n] })
+        const sorted = order.map((n) => conds[n - 1])
+        return { spans: spans.sort((a, b) => a.s - b.s), conds: sorted, notes }
+      }
+
+      const interpOut = document.getElementById('interpOut')
+      const runInterpret = () => {
+        const text = document.getElementById('askText').value.trim()
+        if (!text) return
+        interpOut.innerHTML = '<div class="thinking">Interpreting…</div>'
+        setTimeout(() => {
+          const r = interpret(text)
+          let html = '', at = 0
+          for (const s of r.spans) {
+            html += esc(text.slice(at, s.s))
+            html += s.miss
+              ? `<span class="span-miss">${esc(text.slice(s.s, s.e))}</span>`
+              : `<span class="span-hit">${esc(text.slice(s.s, s.e))}</span><span class="span-tag">${s.n}</span>`
+            at = s.e
+          }
+          html += esc(text.slice(at))
+          state.conds = r.conds
+          state.join = 'all'
+          state.interpreted = true
+          state.editedSinceInterp = false
+          const notes = r.notes.map((n) => n.kind === 'ask'
+            ? `<div class="alert alert-info"><span>?</span><div>${n.text}<div style="display:flex;gap:6px;margin-top:6px">${n.opts.map((o, i) => `<span class="toggle-chip ${i === 0 ? 'on' : ''}" data-amb>${o}</span>`).join('')}</div></div></div>`
+            : `<div class="alert alert-warn"><span>⚠</span><div>${n.text}</div></div>`).join('')
+          interpOut.innerHTML = r.conds.length
+            ? `<div class="interp">
+                <div class="field-label-sm" style="margin-bottom:4px">Understood as</div>
+                <div class="interp-sentence">${html}</div>
+                <div class="interp-list">${r.conds.map((c, i) => `<div class="interp-row"><span class="interp-num">${i + 1}</span><span>${phrase(c)}</span></div>`).join('')}</div>
+                ${notes}
+                <div style="display:flex;gap:8px;align-items:center">
+                  <button class="btn btn-outline btn-sm" id="toBuilder">Refine in builder →</button>
+                  <span class="helper">Each numbered phrase is now a builder condition.</span>
+                </div>
+              </div>`
+            : `<div class="interp"><div class="alert alert-warn" style="margin:0"><span>⚠</span><div>Couldn’t find anything to filter on. Try naming a county, aquifer, well use, or a chemistry value — or use the builder.</div></div></div>`
+          renderBuilder()
+          update()
+        }, 450)
+      }
+      document.getElementById('interpretBtn').addEventListener('click', runInterpret)
+      document.getElementById('askText').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runInterpret() }
+      })
+      document.querySelectorAll('[data-example]').forEach((el) => el.addEventListener('click', () => {
+        document.getElementById('askText').value = EXAMPLES[+el.dataset.example]
+        runInterpret()
+      }))
+      interpOut.addEventListener('click', (e) => {
+        if (e.target.id === 'toBuilder') setMode('build')
+        if (e.target.matches('[data-amb]')) {
+          e.target.parentElement.querySelectorAll('[data-amb]').forEach((x) => x.classList.toggle('on', x === e.target))
+          if (e.target.textContent !== 'Latest result') toast('Only “latest” is wired up in this mockup')
+        }
+      })
+
+      // ── Mode switch ──────────────────────────────────────────────────────
+      const setMode = (mode) => {
+        document.querySelectorAll('#modeSeg button').forEach((b) => b.classList.toggle('on', b.dataset.mode === mode))
+        document.getElementById('askPanel').hidden = mode !== 'ask'
+        document.getElementById('buildPanel').hidden = mode !== 'build'
+        if (mode === 'build') renderBuilder()
+      }
+      document.querySelectorAll('#modeSeg button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)))
+      document.getElementById('clearBtn').addEventListener('click', () => {
+        state.conds = []; state.interpreted = false; state.editedSinceInterp = false
+        document.getElementById('askText').value = ''
+        interpOut.innerHTML = ''
+        renderBuilder(); update()
+      })
+
+      // ── Map ──────────────────────────────────────────────────────────────
+      const svg = document.getElementById('map')
+      const NS = 'http://www.w3.org/2000/svg'
+      const K = 92, COSL = Math.cos((34 * Math.PI) / 180), X0 = -109.25, Y0 = 37.2
+      const proj = ([lon, lat]) => [(lon - X0) * K * COSL + 10, (Y0 - lat) * K + 10]
+      const unproj = (x, y) => [(x - 10) / (K * COSL) + X0, Y0 - (y - 10) / K]
+      const path = (pts, close) => pts.map((p, i) => (i ? 'L' : 'M') + proj(p).map((v) => v.toFixed(1)).join(',')).join('') + (close ? 'Z' : '')
+
+      const NM = [[-109.05, 37], [-103.0, 37], [-103.0, 32.0], [-106.62, 32.0], [-106.53, 31.78], [-108.21, 31.78], [-108.21, 31.33], [-109.05, 31.33]]
+      const RIO = [[-106.05, 37], [-106.1, 36.4], [-106.08, 36.0], [-106.4, 35.5], [-106.62, 35.1], [-106.75, 34.6], [-106.85, 34.1], [-106.95, 33.75], [-107.2, 33.2], [-107.3, 32.9], [-107.0, 32.6], [-106.8, 32.3], [-106.6, 31.85]]
+      const PECOS = [[-105.6, 35.8], [-105.2, 35.2], [-104.7, 34.6], [-104.4, 33.8], [-104.35, 33.2], [-104.2, 32.6], [-104.0, 32.0]]
+      const LABELS = ['Albuquerque', 'Santa Fe', 'Las Cruces', 'Socorro', 'Roswell', 'Clovis', 'Hobbs', 'Deming', 'Farmington']
+
+      const el = (tag, attrs, parent = svg) => {
+        const n = document.createElementNS(NS, tag)
+        for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v)
+        parent.appendChild(n)
+        return n
+      }
+      const drawBase = () => {
+        svg.innerHTML = ''
+        const clip = el('clipPath', { id: 'nmClip' }, el('defs', {}))
+        el('path', { d: path(NM, true) }, clip)
+        el('path', { d: path(NM, true), class: 'map-state' })
+        const grat = el('g', { 'clip-path': 'url(#nmClip)' })
+        for (let lon = -109; lon <= -103; lon++) el('path', { d: path([[lon, 37], [lon, 31.33]]), class: 'map-grat' }, grat)
+        for (let lat = 32; lat <= 37; lat++) el('path', { d: path([[-109.05, lat], [-103, lat]]), class: 'map-grat' }, grat)
+        el('path', { d: path(RIO), class: 'map-river' })
+        el('path', { d: path(PECOS), class: 'map-river' })
+        for (const name of LABELS) {
+          const [x, y] = proj(PLACES[name])
+          el('circle', { cx: x, cy: y, r: 2 * Z, class: 'map-city-dot' })
+          el('text', { x: x + 4 * Z, y: y - 4 * Z, class: 'map-city', 'font-size': 10 * Z }).textContent = name
+        }
+      }
+
+      const SCALES = {
+        arsenic: { unit: 'mg/L', bins: [[0.005, '< 0.005', 'var(--brand-300)'], [0.01, '0.005–0.010', 'var(--brand-600)'], [Infinity, '≥ 0.010 (MCL)', 'var(--destructive)']] },
+        nitrate: { unit: 'mg/L', bins: [[5, '< 5', 'var(--brand-300)'], [10, '5–10', 'var(--brand-600)'], [Infinity, '≥ 10 (MCL)', 'var(--destructive)']] },
+        tds: { unit: 'mg/L', bins: [[500, '< 500', 'var(--brand-300)'], [1000, '500–1,000 (> SMCL)', 'var(--warning)'], [Infinity, '≥ 1,000', 'var(--destructive)']] },
+        dtw: { unit: 'ft bgs', bins: [[50, '< 50 ft', 'var(--brand-300)'], [150, '50–150 ft', 'var(--brand-600)'], [Infinity, '≥ 150 ft', 'var(--brand-900)']] },
+      }
+      const colorFor = (w) => SCALES[state.colorBy].bins.find((b) => w[state.colorBy] < b[0])[2]
+
+      // Zoom to results: fit the viewBox to the matching wells (and any
+      // drawn area / radius), keeping the full-state aspect ratio.
+      const FULL = [0, 0, 540, 565]
+      let Z = 1 // map units per screen unit, relative to the full view
+      const fitBox = (hits) => {
+        if (!state.fit || drawing || !hits.length) return FULL
+        const pts = hits.map((w) => proj([w.lon, w.lat]))
+        for (const c of state.conds) {
+          if (c.field === 'area') pts.push(proj([c.value.w, c.value.n]), proj([c.value.e, c.value.s]))
+          if (c.field === 'near' && PLACES[c.value.place]) {
+            const [x, y] = proj(PLACES[c.value.place]), rr = (+c.value.km / 111) * K
+            pts.push([x - rr, y - rr], [x + rr, y + rr])
+          }
+        }
+        let x0 = Math.min(...pts.map((p) => p[0])), x1 = Math.max(...pts.map((p) => p[0]))
+        let y0 = Math.min(...pts.map((p) => p[1])), y1 = Math.max(...pts.map((p) => p[1]))
+        let w = Math.max(x1 - x0, 170) * 1.3, h = Math.max(y1 - y0, 170) * 1.3
+        const ar = FULL[2] / FULL[3]
+        if (w / h > ar) h = w / ar; else w = h * ar
+        if (w >= FULL[2]) return FULL
+        return [(x0 + x1) / 2 - w / 2, (y0 + y1) / 2 - h / 2, w, h]
+      }
+
+      let ptLayer, overlayLayer
+      const renderMap = (hits) => {
+        const vb = fitBox(hits)
+        Z = vb[2] / FULL[2]
+        svg.setAttribute('viewBox', vb.map((v) => v.toFixed(1)).join(' '))
+        drawBase()
+        overlayLayer = el('g', {})
+        for (const c of state.conds) {
+          if (c.field === 'area') {
+            const a = c.value, [x1, y1] = proj([a.w, a.n]), [x2, y2] = proj([a.e, a.s])
+            el('rect', { x: x1, y: y1, width: x2 - x1, height: y2 - y1, class: 'map-area' }, overlayLayer)
+          }
+          if (c.field === 'near' && PLACES[c.value.place]) {
+            const [x, y] = proj(PLACES[c.value.place])
+            el('circle', { cx: x, cy: y, r: (+c.value.km / 111) * K, class: 'map-radius' }, overlayLayer)
+          }
+        }
+        ptLayer = el('g', {})
+        const ids = new Set(hits.map((w) => w.id))
+        if (state.showCtx) {
+          for (const w of WELLS) if (!ids.has(w.id)) {
+            const [x, y] = proj([w.lon, w.lat])
+            el('circle', { cx: x, cy: y, r: 2 * Z, class: 'pt-ctx' }, ptLayer)
+          }
+        }
+        for (const w of hits) {
+          const [x, y] = proj([w.lon, w.lat])
+          const c = el('circle', { cx: x, cy: y, r: (state.hl === w.id ? 7 : 4.5) * Z, class: 'pt' + (state.hl === w.id ? ' hl' : ''), fill: colorFor(w) }, ptLayer)
+          c.dataset.id = w.id
+        }
+        const s = SCALES[state.colorBy]
+        document.getElementById('mapLegend').innerHTML =
+          s.bins.map((b) => `<span><span class="swatch" style="background:${b[2]}"></span>${b[1]}</span>`).join('') +
+          (state.showCtx ? '<span><span class="swatch" style="background:var(--muted-foreground);opacity:.35"></span>Not matching</span>' : '') +
+          `<span style="margin-left:auto">${s.unit === 'ft bgs' ? 'Latest depth to water' : 'Latest result, ' + s.unit}</span>`
+      }
+
+      const tip = document.getElementById('mapTip')
+      svg.addEventListener('mousemove', (e) => {
+        if (drawing) return
+        const id = e.target.dataset && e.target.dataset.id
+        if (!id) { tip.style.display = 'none'; return }
+        const w = WELLS.find((x) => x.id === id)
+        const pane = svg.parentElement.getBoundingClientRect()
+        const f = FIELDS[state.colorBy]
+        tip.innerHTML = `<strong class="mono">${w.id}</strong> · ${esc(w.name)}<br><span class="muted">${w.county} Co. · ${w.aquifer}</span><br>${f.label}: <strong class="num">${fmtNum(state.colorBy, w[state.colorBy])} ${f.unit}</strong>`
+        tip.style.display = 'block'
+        tip.style.left = Math.min(e.clientX - pane.left + 12, pane.width - tip.offsetWidth - 6) + 'px'
+        tip.style.top = e.clientY - pane.top + 12 + 'px'
+      })
+      svg.addEventListener('mouseleave', () => { tip.style.display = 'none' })
+      svg.addEventListener('click', (e) => {
+        const id = e.target.dataset && e.target.dataset.id
+        if (id) highlight(id, true)
+      })
+
+      // Rectangle drawing → adds or replaces an "Inside drawn area" condition.
+      let drawing = false, drawStart = null, drawRect = null
+      const svgPt = (e) => {
+        const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY
+        return p.matrixTransform(svg.getScreenCTM().inverse())
+      }
+      function startDraw() {
+        drawing = true
+        update() // fitBox() shows the whole state while drawing
+        svg.classList.add('drawing')
+        document.getElementById('drawBtn').classList.add('btn-outline')
+        if (state.view === 'table') setView('split')
+        svg.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        toast('Drag a rectangle on the map')
+      }
+      svg.addEventListener('mousedown', (e) => {
+        if (!drawing) return
+        drawStart = svgPt(e)
+        drawRect = el('rect', { x: drawStart.x, y: drawStart.y, width: 0, height: 0, class: 'map-area' })
+      })
+      svg.addEventListener('mousemove', (e) => {
+        if (!drawing || !drawStart) return
+        const p = svgPt(e)
+        drawRect.setAttribute('x', Math.min(p.x, drawStart.x)); drawRect.setAttribute('y', Math.min(p.y, drawStart.y))
+        drawRect.setAttribute('width', Math.abs(p.x - drawStart.x)); drawRect.setAttribute('height', Math.abs(p.y - drawStart.y))
+      })
+      window.addEventListener('mouseup', (e) => {
+        if (!drawing || !drawStart) return
+        const p = svgPt(e)
+        const [lonA, latA] = unproj(drawStart.x, drawStart.y), [lonB, latB] = unproj(p.x, p.y)
+        drawing = false; drawStart = null
+        svg.classList.remove('drawing')
+        document.getElementById('drawBtn').classList.remove('btn-outline')
+        if (Math.abs(lonA - lonB) < 0.05 || Math.abs(latA - latB) < 0.05) { update(); return }
+        const area = { w: Math.min(lonA, lonB), e: Math.max(lonA, lonB), s: Math.min(latA, latB), n: Math.max(latA, latB) }
+        const existing = state.conds.find((c) => c.field === 'area')
+        if (existing) existing.value = area
+        else state.conds.push({ field: 'area', op: 'inside', value: area })
+        toast(existing ? 'Drawn area updated' : 'Added condition: inside drawn area')
+        edited(true)
+      })
+      document.getElementById('drawBtn').addEventListener('click', startDraw)
+      document.getElementById('fitToggle').addEventListener('click', (e) => {
+        state.fit = !state.fit; e.target.classList.toggle('on', state.fit); update()
+      })
+      document.getElementById('colorBy').addEventListener('change', (e) => { state.colorBy = e.target.value; update() })
+      document.getElementById('ctxToggle').addEventListener('click', (e) => {
+        state.showCtx = !state.showCtx; e.target.classList.toggle('on', state.showCtx); update()
+      })
+
+      // ── Table ────────────────────────────────────────────────────────────
+      const cell = (w, k) => {
+        const v = w[k], f = FIELDS[k]
+        if (k === 'id') return `<td class="mono">${v}</td>`
+        if (k === 'name') return `<td>${esc(v)}</td>`
+        if (k === 'sampled') return `<td class="num">${fmtDate(v)}</td>`
+        if (f && f.std) {
+          const over = v >= f.std
+          const chip = over ? ` <span class="chip ${f.stdName === 'MCL' ? 'chip-mcl' : 'chip-smcl'}">${f.stdName}</span>` : ''
+          return `<td class="num">${fmtNum(k, v)}${chip}</td>`
+        }
+        return `<td class="${typeof v === 'number' ? 'num' : ''}">${esc(v)}</td>`
+      }
+      const renderTable = (hits) => {
+        const [sk, sd] = state.sort
+        const rows = [...hits].sort((a, b) => (a[sk] > b[sk] ? 1 : a[sk] < b[sk] ? -1 : 0) * sd)
+        document.getElementById('thead').innerHTML = '<tr>' + state.cols.map((k) =>
+          `<th data-sort="${k}">${COLS[k]} ${sk === k ? `<span class="sort-caret">${sd > 0 ? '▲' : '▼'}</span>` : ''}</th>`).join('') + '</tr>'
+        document.getElementById('tbody').innerHTML = rows.length
+          ? rows.map((w) => `<tr data-id="${w.id}" class="${state.hl === w.id ? 'hl' : ''}">${state.cols.map((k) => cell(w, k)).join('')}</tr>`).join('')
+          : `<tr><td colspan="${state.cols.length}" style="height:auto;padding:16px"><div class="state-box">No wells match. Loosen a condition, or switch “all” to “any”.</div></td></tr>`
+        document.getElementById('gridFoot').innerHTML = `<span>${rows.length ? '1' : '0'}–${rows.length} of ${rows.length}</span><span>Rows per page: 100 ▾</span><span>‹ ›</span>`
+      }
+      document.getElementById('thead').addEventListener('click', (e) => {
+        const th = e.target.closest('th'); if (!th) return
+        const k = th.dataset.sort
+        state.sort = state.sort[0] === k ? [k, -state.sort[1]] : [k, 1]
+        update()
+      })
+      const tbody = document.getElementById('tbody')
+      tbody.addEventListener('click', (e) => { const tr = e.target.closest('tr[data-id]'); if (tr) highlight(tr.dataset.id, false) })
+      tbody.addEventListener('mouseover', (e) => {
+        const tr = e.target.closest('tr[data-id]'); if (!tr || !ptLayer) return
+        ptLayer.querySelectorAll('.pt').forEach((c) => {
+          const on = c.dataset.id === tr.dataset.id || c.dataset.id === state.hl
+          c.classList.toggle('hl', on); c.setAttribute('r', (on ? 7 : 4.5) * Z)
+          if (on) ptLayer.appendChild(c)
+        })
+      })
+      const highlight = (id, scroll) => {
+        state.hl = state.hl === id ? null : id
+        update()
+        if (scroll && state.hl) {
+          const tr = tbody.querySelector(`tr[data-id="${id}"]`)
+          if (tr) tr.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+        }
+      }
+
+      // Columns menu
+      const colMenu = document.getElementById('colMenu')
+      const renderColMenu = () => {
+        colMenu.innerHTML = '<div class="popper-group">Visible columns</div>' + Object.entries(COLS).map(([k, l]) =>
+          `<div class="check-item ${state.cols.includes(k) ? 'on' : ''}" data-col="${k}"><span class="box">✓</span><span class="check-text">${l}</span></div>`).join('')
+      }
+      colMenu.addEventListener('click', (e) => {
+        e.stopPropagation()
+        const it = e.target.closest('[data-col]'); if (!it) return
+        const k = it.dataset.col
+        state.cols = state.cols.includes(k) ? state.cols.filter((c) => c !== k) : Object.keys(COLS).filter((c) => c === k || state.cols.includes(c))
+        renderColMenu(); update()
+      })
+
+      // ── Views, menus, toast ──────────────────────────────────────────────
+      const setView = (v) => {
+        state.view = v
+        document.querySelectorAll('#viewSeg button').forEach((b) => b.classList.toggle('on', b.dataset.view === v))
+        document.getElementById('resultsBody').className = 'results-body view-' + v
+      }
+      document.querySelectorAll('#viewSeg button').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)))
+
+      document.querySelectorAll('[data-menu]').forEach((btn) => btn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        const m = document.getElementById(btn.dataset.menu)
+        const open = m.hidden
+        document.querySelectorAll('.menu-wrap .popper').forEach((p) => (p.hidden = true))
+        if (btn.dataset.menu === 'colMenu') renderColMenu()
+        m.hidden = !open
+      }))
+      document.addEventListener('click', () => document.querySelectorAll('.menu-wrap .popper').forEach((p) => (p.hidden = true)))
+      document.querySelectorAll('[data-preset]').forEach((o) => o.addEventListener('click', () => {
+        setMode('ask')
+        document.getElementById('askText').value = EXAMPLES[+o.dataset.preset]
+        runInterpret()
+      }))
+
+      let toastTimer
+      const toast = (msg) => {
+        const t = document.getElementById('toast')
+        t.textContent = msg; t.classList.add('show')
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2200)
+      }
+      document.addEventListener('click', (e) => { const t = e.target.closest('[data-toast]'); if (t) toast(t.dataset.toast) })
+      document.getElementById('darkToggle').addEventListener('click', () => { document.documentElement.classList.toggle('dark'); update() })
+
+      // ── Update everything ────────────────────────────────────────────────
+      const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)] }
+      function update() {
+        const hits = WELLS.filter(matches)
+        if (state.hl && !hits.some((w) => w.id === state.hl)) state.hl = null
+        document.getElementById('countBadge').textContent = `${hits.length} well${hits.length === 1 ? '' : 's'}`
+        document.getElementById('stCount').textContent = hits.length
+        document.getElementById('stCountNote').textContent = `of ${WELLS.length} in Ocotillo`
+        const counties = [...new Set(hits.map((w) => w.county))]
+        document.getElementById('stCounties').textContent = counties.length
+        document.getElementById('stCountiesNote').textContent = counties.length ? (counties.length > 3 ? counties.slice(0, 3).join(', ') + ` +${counties.length - 3}` : counties.join(', ')) : '—'
+        const med = median(hits.map((w) => w.arsenic))
+        document.getElementById('stAs').textContent = med === null ? '—' : med.toFixed(3)
+        document.getElementById('stMcl').textContent = hits.filter((w) => w.arsenic >= 0.01).length
+        renderReadback()
+        renderMap(hits)
+        renderTable(hits)
+      }
+
+      // Start on the first example so the page opens populated.
+      document.getElementById('askText').value = EXAMPLES[0]
+      runInterpret()
+      update()
+    </script>
+  </body>
+</html>
