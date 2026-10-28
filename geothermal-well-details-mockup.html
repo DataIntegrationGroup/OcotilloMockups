@@ -2005,6 +2005,94 @@
       .edit-panel-head .btn {
         color: var(--foreground);
       }
+      /* Temperature–depth: plot beside the table that backs it. */
+      .td-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+        gap: 16px;
+        align-items: start;
+      }
+      .td-plot {
+        position: relative;
+      }
+      .td-plot svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        font-family: var(--font-sans);
+      }
+      /* Not --border: in dark mode it equals the card fill and vanishes. */
+      .td-plot .grid-line {
+        stroke: color-mix(in oklab, var(--foreground) 12%, transparent);
+        stroke-width: 1;
+      }
+      .td-plot .axis-text {
+        fill: var(--muted-foreground);
+        font-size: 11px;
+      }
+      .td-plot .axis-title {
+        fill: var(--muted-foreground);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .td-plot .series {
+        fill: none;
+        stroke: var(--primary);
+        stroke-width: 2;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+      }
+      .td-plot .pt {
+        fill: var(--primary);
+        stroke: var(--card);
+        stroke-width: 2;
+      }
+      .td-plot .pt.hot {
+        r: 6;
+      }
+      .td-plot .crosshair {
+        stroke: var(--muted-foreground);
+        stroke-width: 1;
+        stroke-dasharray: 3 3;
+      }
+      .td-tip {
+        position: absolute;
+        pointer-events: none;
+        background: var(--popover);
+        color: var(--foreground);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-popover);
+        padding: 6px 8px;
+        font-size: 12px;
+        white-space: nowrap;
+        transform: translate(12px, -50%);
+      }
+      .td-tip .muted {
+        color: var(--muted-foreground);
+      }
+      .td-table {
+        font-size: 12px;
+      }
+      .td-table thead th,
+      .td-table tbody td {
+        height: 30px;
+      }
+      .td-card-body {
+        container-type: inline-size;
+      }
+      /* Edit panel open → card narrows → stack plot over table. */
+      @container (max-width: 760px) {
+        .td-layout {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .td-plot {
+          max-width: 480px;
+        }
+      }
       .is-dirty {
         border-color: var(--secondary) !important;
       }
@@ -2203,22 +2291,27 @@
                   <span class="card-title">Temperature–depth</span>
                 </div>
                 <div class="header-actions">
-                  <button class="btn btn-ghost btn-sm">View all 42 →</button>
+                  <button class="btn btn-ghost btn-sm">View all 13 →</button>
                 </div>
               </div>
-              <div class="card-body">
-                <div class="datagrid">
-                  <table>
-                    <thead>
-                      <tr><th>Depth (ft)</th><th>Temp (°C)</th><th>Source</th><th>Logged</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr><td class="num">500</td><td class="num">98.4</td><td>Static temp log</td><td class="mono">2012-05-20</td></tr>
-                      <tr><td class="num">1,000</td><td class="num">121.7</td><td>Static temp log</td><td class="mono">2012-05-20</td></tr>
-                      <tr><td class="num">2,000</td><td class="num">139.2</td><td>Static temp log</td><td class="mono">2012-05-20</td></tr>
-                      <tr><td class="num">3,000</td><td class="num">146.8</td><td>Static temp log</td><td class="mono">2012-05-20</td></tr>
-                    </tbody>
-                  </table>
+              <div class="card-body td-card-body">
+                <div class="td-layout">
+                  <div class="td-plot" id="td-plot">
+                    <svg id="td-svg" viewBox="0 0 520 400" role="img"
+                         aria-label="Temperature versus depth, static temperature log 2012-05-20. Temperature rises from 22 °C at the surface to 146.8 °C at 3,000 ft."></svg>
+                    <div class="td-tip" id="td-tip" hidden></div>
+                  </div>
+                  <div class="datagrid td-table">
+                    <table>
+                      <thead>
+                        <tr><th>Depth (ft)</th><th>Temp (°C)</th></tr>
+                      </thead>
+                      <tbody id="td-rows"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="caption" style="margin-top: 8px">
+                  Static temperature log, 2012-05-20 · 13 readings
                 </div>
               </div>
             </div>
@@ -2437,6 +2530,67 @@
         if (e.key === 'Escape') closePanel()
       })
 
+      // ── Temperature–depth plot ──
+      // Depth increases downward, temperature along the top: the usual
+      // orientation for a well temperature log.
+      const td = [
+        [0, 22.0], [250, 71.3], [500, 98.4], [750, 112.0], [1000, 121.7],
+        [1250, 128.1], [1500, 133.5], [1750, 136.8], [2000, 139.2],
+        [2250, 141.5], [2500, 143.6], [2750, 145.4], [3000, 146.8],
+      ]
+      function drawTempDepth() {
+        const svg = document.getElementById('td-svg')
+        const tip = document.getElementById('td-tip')
+        const W = 520, H = 400
+        const m = { top: 44, right: 16, bottom: 12, left: 56 }
+        const x = (t) => m.left + (t / 160) * (W - m.left - m.right)
+        const y = (d) => m.top + (d / 3000) * (H - m.top - m.bottom)
+        let out = ''
+        for (let t = 0; t <= 160; t += 40) {
+          out += `<line class="grid-line" x1="${x(t)}" x2="${x(t)}" y1="${m.top}" y2="${H - m.bottom}"/>`
+          out += `<text class="axis-text" x="${x(t)}" y="${m.top - 8}" text-anchor="middle">${t}</text>`
+        }
+        for (let d = 0; d <= 3000; d += 500) {
+          out += `<line class="grid-line" x1="${m.left}" x2="${W - m.right}" y1="${y(d)}" y2="${y(d)}"/>`
+          out += `<text class="axis-text" x="${m.left - 8}" y="${y(d) + 4}" text-anchor="end">${d.toLocaleString()}</text>`
+        }
+        out += `<text class="axis-title" x="${(m.left + W - m.right) / 2}" y="14" text-anchor="middle">Temperature (°C)</text>`
+        out += `<text class="axis-title" transform="translate(12 ${(m.top + H - m.bottom) / 2}) rotate(-90)" text-anchor="middle">Depth (ft)</text>`
+        out += `<line class="crosshair" id="td-cross" x1="${m.left}" x2="${W - m.right}" visibility="hidden"/>`
+        out += `<path class="series" d="${td.map(([d, t], i) => (i ? 'L' : 'M') + x(t) + ' ' + y(d)).join(' ')}"/>`
+        out += td.map(([d, t], i) => `<circle class="pt" data-i="${i}" cx="${x(t)}" cy="${y(d)}" r="4"/>`).join('')
+        out += `<rect id="td-hit" x="${m.left}" y="${m.top - 6}" width="${W - m.left - m.right}" height="${H - m.top - m.bottom + 12}" fill="transparent"/>`
+        svg.innerHTML = out
+
+        const cross = svg.querySelector('#td-cross')
+        const hit = svg.querySelector('#td-hit')
+        hit.addEventListener('mousemove', (e) => {
+          const r = svg.getBoundingClientRect()
+          const scale = r.width / W
+          const depth = ((e.clientY - r.top) / scale - m.top) / (H - m.top - m.bottom) * 3000
+          let i = 0
+          td.forEach(([d], j) => { if (Math.abs(d - depth) < Math.abs(td[i][0] - depth)) i = j })
+          const [d, t] = td[i]
+          cross.setAttribute('y1', y(d)); cross.setAttribute('y2', y(d))
+          cross.setAttribute('visibility', 'visible')
+          svg.querySelectorAll('.pt').forEach((c) => c.classList.toggle('hot', +c.dataset.i === i))
+          tip.hidden = false
+          tip.style.left = x(t) * scale + 'px'
+          tip.style.top = y(d) * scale + 'px'
+          tip.innerHTML = `<strong>${t.toFixed(1)} °C</strong> <span class="muted">at ${d.toLocaleString()} ft</span>`
+        })
+        hit.addEventListener('mouseleave', () => {
+          tip.hidden = true
+          cross.setAttribute('visibility', 'hidden')
+          svg.querySelectorAll('.pt').forEach((c) => c.classList.remove('hot'))
+        })
+
+        document.getElementById('td-rows').innerHTML = td
+          .map(([d, t]) => `<tr><td class="num">${d.toLocaleString()}</td><td class="num">${t.toFixed(1)}</td></tr>`)
+          .join('')
+      }
+
+      drawTempDepth()
       render()
     </script>
   </body>
