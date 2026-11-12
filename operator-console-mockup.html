@@ -122,7 +122,8 @@
         --radius-4xl: 22px; /* badges           (rounded-4xl) */
 
         /* Type */
-        --font-sans: "Public Sans Variable", "Public Sans", system-ui, sans-serif;
+        --font-sans:
+          "Public Sans Variable", "Public Sans", system-ui, sans-serif;
         --font-heading: "Outfit Variable", "Outfit", system-ui, sans-serif;
         --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
@@ -133,7 +134,8 @@
         /* Elevation. The app is a flat, ring-outlined UI: cards carry a ring, not
            a shadow. Shadows are reserved for things that genuinely float. */
         --shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.14);
-        --shadow-paper: 0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
+        --shadow-paper:
+          0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
       }
 
       /* Dark mode — add class="dark" to <html>, same switch the app uses. */
@@ -390,18 +392,6 @@
         color: var(--primary);
         background: color-mix(in oklab, var(--primary) 8%, transparent);
         font-weight: 600;
-      }
-      .nav-item.is-new::after {
-        content: "NEW";
-        margin-left: auto;
-        font-size: 9px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        color: var(--primary);
-        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
-        background: color-mix(in oklab, var(--primary) 10%, transparent);
-        border-radius: var(--radius-sm);
-        padding: 0 4px;
       }
       .nav-icon {
         font-size: 16px;
@@ -1123,7 +1113,8 @@
 
       /* Dropzone. */
       .dropzone {
-        border: 1.5px dashed color-mix(in oklab, var(--primary) 40%, transparent);
+        border: 1.5px dashed
+          color-mix(in oklab, var(--primary) 40%, transparent);
         border-radius: var(--radius-lg);
         background: color-mix(in oklab, var(--primary) 6%, transparent);
         padding: 22px 16px;
@@ -1417,7 +1408,11 @@
         top: 0;
         bottom: 0;
         border-radius: 4px;
-        background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+        background: color-mix(
+          in oklab,
+          var(--muted-foreground) 35%,
+          transparent
+        );
       }
       .meter-median {
         position: absolute;
@@ -1863,46 +1858,240 @@
     <!-- design-system:end -->
     <style>
       /* ── Page-specific ── */
-      .console-kicker { display: flex; align-items: center; gap: 7px; margin-top: 3px; font-size: 12px; color: var(--muted-foreground); }
-      .console-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(290px, .85fr); gap: 16px; }
-      .summary-strip { margin-bottom: 16px; }
-      .notice-count { color: var(--warning-text); }
-      .activity-list { display: grid; gap: 0; }
-      .activity-row { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 9px; align-items: start; padding: 11px 0; border-bottom: 1px solid var(--border); }
-      .activity-row:last-child { border-bottom: 0; }
-      .activity-mark { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; font-size: 12px; background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--primary); }
-      .activity-title { font-size: 13px; font-weight: 600; line-height: 1.4; }
-      .activity-detail, .activity-time { color: var(--muted-foreground); font-size: 11.5px; line-height: 1.45; }
-      .activity-time { white-space: nowrap; }
-      .attention-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
-      .attention-item:last-child { border-bottom: 0; }
-      .attention-name { font-size: 13px; font-weight: 600; }
-      .attention-detail { font-size: 11.5px; color: var(--muted-foreground); }
-      .click-row { cursor: pointer; }
-      .click-row td:first-child { font-weight: 600; }
-      .split-view { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(270px, .75fr); gap: 16px; align-items: start; }
-      .detail-card { position: sticky; top: 16px; }
-      .identity { display: flex; gap: 10px; align-items: center; }
-      .identity-avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; background: color-mix(in oklab, var(--primary) 12%, transparent); color: var(--primary); font-size: 12px; font-weight: 600; }
-      .identity-name { font-weight: 600; font-size: 14px; }
-      .identity-meta { font-size: 11.5px; color: var(--muted-foreground); }
-      .grant-list { display: grid; gap: 8px; }
-      .grant-item { padding: 9px 10px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--wrapper); }
-      .grant-main { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; font-size: 12px; font-weight: 600; }
-      .grant-sub { margin-top: 3px; font-size: 11px; color: var(--muted-foreground); }
-      .section-action { display: flex; align-items: center; gap: 8px; }
-      .status-line { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; line-height: 1.45; }
-      .status-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; background: var(--success); flex: 0 0 auto; }
-      .empty-selection { padding: 22px 0 4px; text-align: center; font-size: 12px; color: var(--muted-foreground); }
-      .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 20; background: rgba(15, 23, 42, .42); align-items: center; justify-content: center; padding: 16px; }
-      .modal-backdrop.show { display: flex; }
-      .modal { width: min(470px, 100%); border-radius: var(--radius-xl); background: var(--paper); box-shadow: var(--shadow-popover); padding: 20px; }
-      .modal h2 { font-family: var(--font-heading); font-size: 19px; line-height: 1.4; }
-      .modal p { margin: 7px 0 16px; font-size: 13px; color: var(--muted-foreground); }
-      .modal-actions { display: flex; justify-content: flex-end; gap: 8px; }
-      .mockup-note code { font-size: 11px; }
-      @media (max-width: 1040px) { .console-grid, .split-view { grid-template-columns: 1fr; } .detail-card { position: static; } }
-      @media (max-width: 700px) { .stat-strip { flex-wrap: wrap; } .stat-cell { flex-basis: 50%; } .tabs-bar { overflow-x: auto; } .tab { padding-inline: 12px; } .activity-row { grid-template-columns: 26px minmax(0, 1fr); } .activity-time { grid-column: 2; } }
+      .console-kicker {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 3px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .console-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.65fr) minmax(290px, 0.85fr);
+        gap: 16px;
+      }
+      .summary-strip {
+        margin-bottom: 16px;
+      }
+      .notice-count {
+        color: var(--warning-text);
+      }
+      .activity-list {
+        display: grid;
+        gap: 0;
+      }
+      .activity-row {
+        display: grid;
+        grid-template-columns: 30px minmax(0, 1fr) auto;
+        gap: 9px;
+        align-items: start;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .activity-row:last-child {
+        border-bottom: 0;
+      }
+      .activity-mark {
+        width: 26px;
+        height: 26px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        font-size: 12px;
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+      }
+      .activity-title {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+      .activity-detail,
+      .activity-time {
+        color: var(--muted-foreground);
+        font-size: 11.5px;
+        line-height: 1.45;
+      }
+      .activity-time {
+        white-space: nowrap;
+      }
+      .attention-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .attention-item:last-child {
+        border-bottom: 0;
+      }
+      .attention-name {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .attention-detail {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+      }
+      .click-row {
+        cursor: pointer;
+      }
+      .click-row td:first-child {
+        font-weight: 600;
+      }
+      .split-view {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(270px, 0.75fr);
+        gap: 16px;
+        align-items: start;
+      }
+      .detail-card {
+        position: sticky;
+        top: 16px;
+      }
+      .identity {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .identity-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        background: color-mix(in oklab, var(--primary) 12%, transparent);
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .identity-name {
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .identity-meta {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+      }
+      .grant-list {
+        display: grid;
+        gap: 8px;
+      }
+      .grant-item {
+        padding: 9px 10px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--wrapper);
+      }
+      .grant-main {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .grant-sub {
+        margin-top: 3px;
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .section-action {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .status-line {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-top: 5px;
+        background: var(--success);
+        flex: 0 0 auto;
+      }
+      .empty-selection {
+        padding: 22px 0 4px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .modal-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        background: rgba(15, 23, 42, 0.42);
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      .modal-backdrop.show {
+        display: flex;
+      }
+      .modal {
+        width: min(470px, 100%);
+        border-radius: var(--radius-xl);
+        background: var(--paper);
+        box-shadow: var(--shadow-popover);
+        padding: 20px;
+      }
+      .modal h2 {
+        font-family: var(--font-heading);
+        font-size: 19px;
+        line-height: 1.4;
+      }
+      .modal p {
+        margin: 7px 0 16px;
+        font-size: 13px;
+        color: var(--muted-foreground);
+      }
+      .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .mockup-note code {
+        font-size: 11px;
+      }
+      @media (max-width: 1040px) {
+        .console-grid,
+        .split-view {
+          grid-template-columns: 1fr;
+        }
+        .detail-card {
+          position: static;
+        }
+      }
+      @media (max-width: 700px) {
+        .stat-strip {
+          flex-wrap: wrap;
+        }
+        .stat-cell {
+          flex-basis: 50%;
+        }
+        .tabs-bar {
+          overflow-x: auto;
+        }
+        .tab {
+          padding-inline: 12px;
+        }
+        .activity-row {
+          grid-template-columns: 26px minmax(0, 1fr);
+        }
+        .activity-time {
+          grid-column: 2;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1910,7 +2099,10 @@
       <div class="appbar-hamburger">☰</div>
       <span class="appbar-title">Ocotillo</span>
       <div class="appbar-right">
-        <div class="appbar-search"><span>⌕</span><span>Search wells…</span><span class="appbar-search-kbd">⌘K</span></div>
+        <div class="appbar-search">
+          <span>⌕</span><span>Search wells…</span
+          ><span class="appbar-search-kbd">⌘K</span>
+        </div>
         <div class="appbar-icon-btn" title="Notifications">◌</div>
         <div class="appbar-icon-btn" title="Report a bug">🐛</div>
         <div class="avatar">DS</div>
@@ -1929,7 +2121,9 @@
         <hr class="nav-divider" />
         <div class="nav-item"><span class="nav-icon">↧</span> Exports</div>
         <hr class="nav-divider" />
-        <div class="nav-item active is-new"><span class="nav-icon">🔒</span> Admin</div>
+        <div class="nav-item active is-new">
+          <span class="nav-icon">🔒</span> Operator Console
+        </div>
         <div class="sidebar-footer">
           <div class="sidebar-footer-link">About</div>
           <div class="sidebar-footer-link">Connect Desktop GIS</div>
@@ -1938,161 +2132,782 @@
       </aside>
 
       <main class="main">
-        <div class="breadcrumb"><a href="#">Home</a><span class="breadcrumb-sep">/</span><span>Operator Console</span></div>
+        <div class="mockup-note">
+          <strong>Lo-fi mockup — not functional.</strong> Demonstrates an
+          authorization-gated console for internal permissions, principal
+          groups, API-key lifecycle, and operational history.
+        </div>
+
+        <div class="breadcrumb">
+          <a href="#">Home</a><span class="breadcrumb-sep">/</span
+          ><span>Operator Console</span>
+        </div>
         <div class="page-header">
           <div>
             <div class="page-title">Operator Console</div>
-            <div class="page-subtitle">Manage internal access, database-backed API keys, and operational history.</div>
-            <div class="console-kicker"><span class="badge badge-primary">Central administration</span><span>Data Services · all programs</span></div>
+            <div class="page-subtitle">
+              Manage internal access, database-backed API keys, and operational
+              history.
+            </div>
           </div>
-          <div class="header-actions"><button class="btn btn-outline" onclick="showPanel('activity')">⌕ Search activity</button><button class="btn btn-default" onclick="showPanel('groups')">+ Create group</button></div>
-        </div>
-
-        <div class="mockup-note">
-          <strong>Lo-fi mockup — not functional.</strong> Demonstrates an authorization-gated console for internal permissions, principal groups, API-key lifecycle, and operational history. Open questions for review:
-          <ul>
-            <li>Which delegated operators may create groups, change group grants, and manage memberships within their program scope?</li>
-            <li>When is a direct individual grant justified instead of a reusable group?</li>
-            <li>May an administrator issue, rotate, or revoke a key on another principal’s behalf, and what remains self-service?</li>
-            <li>Who verifies the activity-log hash chain, where are trusted checkpoints held, and which operators may view cross-program history?</li>
-          </ul>
+          <div class="header-actions">
+            <button class="btn btn-outline" onclick="showPanel('activity')">
+              ⌕ Search activity</button
+            ><button class="btn btn-default" onclick="showPanel('groups')">
+              + Create group
+            </button>
+          </div>
         </div>
 
         <nav class="tabs-bar" aria-label="Operator Console sections">
-          <button class="tab active" data-panel="overview" onclick="showPanel('overview')">Overview</button>
-          <button class="tab" data-panel="principals" onclick="showPanel('principals')">Principals</button>
-          <button class="tab" data-panel="groups" onclick="showPanel('groups')">Groups &amp; Grants</button>
-          <button class="tab" data-panel="keys" onclick="showPanel('keys')">API Keys</button>
-          <button class="tab" data-panel="activity" onclick="showPanel('activity')">Activity Log</button>
+          <button
+            class="tab active"
+            data-panel="overview"
+            onclick="showPanel('overview')"
+          >
+            Overview
+          </button>
+          <button
+            class="tab"
+            data-panel="principals"
+            onclick="showPanel('principals')"
+          >
+            Principals
+          </button>
+          <button class="tab" data-panel="groups" onclick="showPanel('groups')">
+            Groups &amp; Grants
+          </button>
+          <button class="tab" data-panel="keys" onclick="showPanel('keys')">
+            API Keys
+          </button>
+          <button
+            class="tab"
+            data-panel="activity"
+            onclick="showPanel('activity')"
+          >
+            Activity Log
+          </button>
         </nav>
 
         <section class="tab-panel active" id="panel-overview">
           <div class="stat-strip summary-strip">
-            <div class="stat-cell"><div class="stat-label">Active principals</div><div class="stat-value">148</div><div class="stat-note">126 users · 14 groups · 8 API keys</div></div>
-            <div class="stat-cell"><div class="stat-label">Access changes</div><div class="stat-value">12</div><div class="stat-note">Recorded in the last 7 days</div></div>
-            <div class="stat-cell"><div class="stat-label">Needs attention</div><div class="stat-value notice-count">4</div><div class="stat-note">3 expiring keys · 1 expiring grant</div></div>
-            <div class="stat-cell"><div class="stat-label">Activity integrity</div><div class="stat-value" style="color: var(--success)">Verified</div><div class="stat-note">Checkpoint verified 09:00 MST</div></div>
+            <div class="stat-cell">
+              <div class="stat-label">Active principals</div>
+              <div class="stat-value">148</div>
+              <div class="stat-note">126 users · 14 groups · 8 API keys</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-label">Access changes</div>
+              <div class="stat-value">12</div>
+              <div class="stat-note">Recorded in the last 7 days</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-label">Needs attention</div>
+              <div class="stat-value notice-count">4</div>
+              <div class="stat-note">3 expiring keys · 1 expiring grant</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-label">Activity integrity</div>
+              <div class="stat-value" style="color: var(--success)">
+                Verified
+              </div>
+              <div class="stat-note">Checkpoint verified 09:00 MST</div>
+            </div>
           </div>
           <div class="console-grid">
             <div class="card">
-              <div class="card-header"><div><div class="card-title">Recent access changes</div><div class="card-description">Authorization changes recorded in the unified activity log.</div></div><button class="btn btn-link btn-sm" onclick="showPanel('activity')">View activity →</button></div>
-              <div class="card-content"><div class="activity-list">
-                <div class="activity-row"><div class="activity-mark">+</div><div><div class="activity-title">Added Marisol Vega to AMP Field Team</div><div class="activity-detail">N. Patel · group membership · AMP</div></div><div class="activity-time">Today, 10:42</div></div>
-                <div class="activity-row"><div class="activity-mark">↻</div><div><div class="activity-title">Rotated API key “NM Tech GIS lab”</div><div class="activity-detail">T. Martinez · key remains valid until 12 Dec 2026</div></div><div class="activity-time">Yesterday</div></div>
-                <div class="activity-row"><div class="activity-mark">✓</div><div><div class="activity-title">Updated Geothermal Viewer grants</div><div class="activity-detail">K. Sanchez · added groundwater-level read scope</div></div><div class="activity-time">06 Nov</div></div>
-                <div class="activity-row"><div class="activity-mark">−</div><div><div class="activity-title">Revoked direct grant from Evan Brooks</div><div class="activity-detail">N. Patel · project: Jornada Basin monitoring</div></div><div class="activity-time">04 Nov</div></div>
-              </div></div>
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Recent access changes</div>
+                  <div class="card-description">
+                    Authorization changes recorded in the unified activity log.
+                  </div>
+                </div>
+                <button
+                  class="btn btn-link btn-sm"
+                  onclick="showPanel('activity')"
+                >
+                  View activity →
+                </button>
+              </div>
+              <div class="card-content">
+                <div class="activity-list">
+                  <div class="activity-row">
+                    <div class="activity-mark">+</div>
+                    <div>
+                      <div class="activity-title">
+                        Added Marisol Vega to AMP Field Team
+                      </div>
+                      <div class="activity-detail">
+                        N. Patel · group membership · AMP
+                      </div>
+                    </div>
+                    <div class="activity-time">Today, 10:42</div>
+                  </div>
+                  <div class="activity-row">
+                    <div class="activity-mark">↻</div>
+                    <div>
+                      <div class="activity-title">
+                        Rotated API key “NM Tech GIS lab”
+                      </div>
+                      <div class="activity-detail">
+                        T. Martinez · key remains valid until 12 Dec 2026
+                      </div>
+                    </div>
+                    <div class="activity-time">Yesterday</div>
+                  </div>
+                  <div class="activity-row">
+                    <div class="activity-mark">✓</div>
+                    <div>
+                      <div class="activity-title">
+                        Updated Geothermal Viewer grants
+                      </div>
+                      <div class="activity-detail">
+                        K. Sanchez · added groundwater-level read scope
+                      </div>
+                    </div>
+                    <div class="activity-time">06 Nov</div>
+                  </div>
+                  <div class="activity-row">
+                    <div class="activity-mark">−</div>
+                    <div>
+                      <div class="activity-title">
+                        Revoked direct grant from Evan Brooks
+                      </div>
+                      <div class="activity-detail">
+                        N. Patel · project: Jornada Basin monitoring
+                      </div>
+                    </div>
+                    <div class="activity-time">04 Nov</div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="card">
-              <div class="card-header"><div><div class="card-title">Needs attention</div><div class="card-description">Upcoming expiry and review items.</div></div></div>
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Needs attention</div>
+                  <div class="card-description">
+                    Upcoming expiry and review items.
+                  </div>
+                </div>
+              </div>
               <div class="card-content">
-                <div class="attention-item"><div><div class="attention-name">NM Tech GIS lab</div><div class="attention-detail">API key expires in 19 days</div></div><button class="btn btn-outline btn-xs" onclick="showPanel('keys')">Review</button></div>
-                <div class="attention-item"><div><div class="attention-name">AMP field laptop</div><div class="attention-detail">API key expires in 28 days</div></div><button class="btn btn-outline btn-xs" onclick="showPanel('keys')">Review</button></div>
-                <div class="attention-item"><div><div class="attention-name">Elena Ortiz</div><div class="attention-detail">Direct update grant expires 30 Nov</div></div><button class="btn btn-outline btn-xs" onclick="showPanel('principals')">Inspect</button></div>
-                <div class="attention-item"><div><div class="attention-name">API-key notices</div><div class="attention-detail">Email delivery is planned, not available</div></div><span class="badge badge-warning">Planned</span></div>
+                <div class="attention-item">
+                  <div>
+                    <div class="attention-name">NM Tech GIS lab</div>
+                    <div class="attention-detail">
+                      API key expires in 19 days
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-outline btn-xs"
+                    onclick="showPanel('keys')"
+                  >
+                    Review
+                  </button>
+                </div>
+                <div class="attention-item">
+                  <div>
+                    <div class="attention-name">AMP field laptop</div>
+                    <div class="attention-detail">
+                      API key expires in 28 days
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-outline btn-xs"
+                    onclick="showPanel('keys')"
+                  >
+                    Review
+                  </button>
+                </div>
+                <div class="attention-item">
+                  <div>
+                    <div class="attention-name">Elena Ortiz</div>
+                    <div class="attention-detail">
+                      Direct update grant expires 30 Nov
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-outline btn-xs"
+                    onclick="showPanel('principals')"
+                  >
+                    Inspect
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <section class="tab-panel" id="panel-principals">
-          <div class="toolbar"><input class="toolbar-search" value="" placeholder="Search people, groups, keys…" /><span class="toolbar-label">Showing 148 principals</span><span class="toolbar-spacer"></span><button class="btn btn-outline btn-sm">Export list</button></div>
+          <div class="toolbar">
+            <input
+              class="toolbar-search"
+              value=""
+              placeholder="Search people, groups, keys…"
+            /><span class="toolbar-label">Showing 148 principals</span
+            ><span class="toolbar-spacer"></span
+            ><button class="btn btn-outline btn-sm">Export list</button>
+          </div>
           <div class="split-view">
-            <div class="datagrid"><table><thead><tr><th>Principal <span class="sort-caret">▾</span></th><th>Type</th><th>Effective access</th><th>Last change</th></tr></thead><tbody>
-              <tr class="click-row selected" onclick="selectPrincipal('marisol', this)"><td>Marisol Vega<span class="cell-note">marisol.vega@nmtech.edu</span></td><td><span class="badge badge-neutral">User</span></td><td>AMP · read, create</td><td>Today</td></tr>
-              <tr class="click-row" onclick="selectPrincipal('elena', this)"><td>Elena Ortiz<span class="cell-note">elena.ortiz@state.nm.us</span></td><td><span class="badge badge-neutral">User</span></td><td>Global read · direct update</td><td>02 Nov</td></tr>
-              <tr class="click-row" onclick="selectPrincipal('amp', this)"><td>AMP Field Team<span class="cell-note">9 members</span></td><td><span class="badge badge-primary">Group</span></td><td>AMP · read, create</td><td>Today</td></tr>
-              <tr class="click-row" onclick="selectPrincipal('key', this)"><td>NM Tech GIS lab<span class="cell-note mono">ocot_7m2f…p9xq</span></td><td><span class="badge badge-info">API key</span></td><td>OGC.Internal · read</td><td>31 Oct</td></tr>
-              <tr class="click-row" onclick="selectPrincipal('geo', this)"><td>Geothermal Viewer<span class="cell-note">16 members</span></td><td><span class="badge badge-primary">Group</span></td><td>Geothermal · read</td><td>06 Nov</td></tr>
-            </tbody></table><div class="grid-footer">1–5 of 148 <span>‹</span><span>›</span></div></div>
+            <div class="datagrid">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Principal <span class="sort-caret">▾</span></th>
+                    <th>Type</th>
+                    <th>Effective access</th>
+                    <th>Last change</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    class="click-row selected"
+                    onclick="selectPrincipal('marisol', this)"
+                  >
+                    <td>
+                      Marisol Vega<span class="cell-note"
+                        >marisol.vega@nmtech.edu</span
+                      >
+                    </td>
+                    <td><span class="badge badge-neutral">User</span></td>
+                    <td>AMP · read, create</td>
+                    <td>Today</td>
+                  </tr>
+                  <tr
+                    class="click-row"
+                    onclick="selectPrincipal('elena', this)"
+                  >
+                    <td>
+                      Elena Ortiz<span class="cell-note"
+                        >elena.ortiz@state.nm.us</span
+                      >
+                    </td>
+                    <td><span class="badge badge-neutral">User</span></td>
+                    <td>Global read · direct update</td>
+                    <td>02 Nov</td>
+                  </tr>
+                  <tr class="click-row" onclick="selectPrincipal('amp', this)">
+                    <td>
+                      AMP Field Team<span class="cell-note">9 members</span>
+                    </td>
+                    <td><span class="badge badge-primary">Group</span></td>
+                    <td>AMP · read, create</td>
+                    <td>Today</td>
+                  </tr>
+                  <tr class="click-row" onclick="selectPrincipal('key', this)">
+                    <td>
+                      NM Tech GIS lab<span class="cell-note mono"
+                        >ocot_7m2f…p9xq</span
+                      >
+                    </td>
+                    <td><span class="badge badge-info">API key</span></td>
+                    <td>OGC.Internal · read</td>
+                    <td>31 Oct</td>
+                  </tr>
+                  <tr class="click-row" onclick="selectPrincipal('geo', this)">
+                    <td>
+                      Geothermal Viewer<span class="cell-note">16 members</span>
+                    </td>
+                    <td><span class="badge badge-primary">Group</span></td>
+                    <td>Geothermal · read</td>
+                    <td>06 Nov</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="grid-footer">
+                1–5 of 148 <span>‹</span><span>›</span>
+              </div>
+            </div>
             <aside class="card detail-card" id="principal-detail"></aside>
           </div>
         </section>
 
         <section class="tab-panel" id="panel-groups">
-          <div class="toolbar"><input class="toolbar-search" placeholder="Search groups…" /><span class="toolbar-spacer"></span><button class="btn btn-default btn-sm">+ Create group</button></div>
+          <div class="toolbar">
+            <input class="toolbar-search" placeholder="Search groups…" /><span
+              class="toolbar-spacer"
+            ></span
+            ><button class="btn btn-default btn-sm">+ Create group</button>
+          </div>
           <div class="split-view">
-            <div class="datagrid"><table><thead><tr><th>Principal group</th><th>Members</th><th>Grant coverage</th><th>Updated</th></tr></thead><tbody>
-              <tr class="click-row selected" onclick="selectGroup('amp', this)"><td>AMP Field Team<span class="cell-note">Aquifer Mapping Program field staff</span></td><td>9</td><td>AMP · 6 explicit grants</td><td>Today</td></tr>
-              <tr class="click-row" onclick="selectGroup('viewer', this)"><td>Viewer<span class="cell-note">General internal read access</span></td><td>83</td><td>Global · 3 explicit grants</td><td>28 Oct</td></tr>
-              <tr class="click-row" onclick="selectGroup('geo', this)"><td>Geothermal Viewer<span class="cell-note">Geothermal program collaborators</span></td><td>16</td><td>Geothermal · 3 explicit grants</td><td>06 Nov</td></tr>
-              <tr class="click-row" onclick="selectGroup('services', this)"><td>Data Services Operators<span class="cell-note">Central administrative operators</span></td><td>4</td><td>Global · administer</td><td>22 Oct</td></tr>
-            </tbody></table></div>
+            <div class="datagrid">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Principal group</th>
+                    <th>Members</th>
+                    <th>Grant coverage</th>
+                    <th>Updated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    class="click-row selected"
+                    onclick="selectGroup('amp', this)"
+                  >
+                    <td>
+                      AMP Field Team<span class="cell-note"
+                        >Aquifer Mapping Program field staff</span
+                      >
+                    </td>
+                    <td>9</td>
+                    <td>AMP · 6 explicit grants</td>
+                    <td>Today</td>
+                  </tr>
+                  <tr class="click-row" onclick="selectGroup('viewer', this)">
+                    <td>
+                      Viewer<span class="cell-note"
+                        >General internal read access</span
+                      >
+                    </td>
+                    <td>83</td>
+                    <td>Global · 3 explicit grants</td>
+                    <td>28 Oct</td>
+                  </tr>
+                  <tr class="click-row" onclick="selectGroup('geo', this)">
+                    <td>
+                      Geothermal Viewer<span class="cell-note"
+                        >Geothermal program collaborators</span
+                      >
+                    </td>
+                    <td>16</td>
+                    <td>Geothermal · 3 explicit grants</td>
+                    <td>06 Nov</td>
+                  </tr>
+                  <tr class="click-row" onclick="selectGroup('services', this)">
+                    <td>
+                      Data Services Operators<span class="cell-note"
+                        >Central administrative operators</span
+                      >
+                    </td>
+                    <td>4</td>
+                    <td>Global · administer</td>
+                    <td>22 Oct</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <aside class="card detail-card" id="group-detail"></aside>
           </div>
         </section>
 
         <section class="tab-panel" id="panel-keys">
-          <div class="alert alert-info"><span>ⓘ</span><div><strong>Database-backed keys only.</strong> Raw credentials are shown once at creation and are never recoverable here. Email expiry notifications are planned; console warnings are available now.</div></div>
-          <div class="toolbar"><input class="toolbar-search" placeholder="Search key or owner…" /><button class="toggle-chip on">Active</button><button class="toggle-chip">Revoked</button><span class="toolbar-spacer"></span><button class="btn btn-default btn-sm" onclick="openModal('Issue database-backed API key?', 'The secret would be shown once. It inherits authorization through the shared policy engine; issuing a key does not create broader access.')">+ Issue key</button></div>
-          <div class="datagrid"><table><thead><tr><th>Key / owner</th><th>Authorization scope</th><th>Created</th><th>Expires</th><th>Last used</th><th>Status</th><th></th></tr></thead><tbody>
-            <tr><td>NM Tech GIS lab<span class="cell-note mono">ocot_7m2f…p9xq · owner: GIS Lab</span></td><td>OGC.Internal · read</td><td>01 Dec 2025</td><td><span class="badge badge-warning">01 Dec · 19 days</span></td><td>Today, 08:14</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-outline btn-xs" onclick="openModal('Rotate “NM Tech GIS lab”?', 'A replacement credential would be revealed once. The existing key remains valid only until its scheduled 01 Dec 2026 expiration.')">Rotate</button></td></tr>
-            <tr><td>AMP field laptop<span class="cell-note mono">ocot_c8k1…r5mv · owner: AMP operations</span></td><td>OGC.Internal · read</td><td>10 Dec 2025</td><td><span class="badge badge-warning">10 Dec · 28 days</span></td><td>Yesterday</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-outline btn-xs" onclick="openModal('Rotate “AMP field laptop”?', 'A replacement credential would be revealed once. The existing key remains valid only until its scheduled expiration.')">Rotate</button></td></tr>
-            <tr><td>Geothermal QGIS export<span class="cell-note mono">ocot_a3d9…h2wk · owner: K. Sanchez</span></td><td>OGC.Internal · read</td><td>12 Aug 2026</td><td>12 Aug 2027</td><td>06 Nov</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-destructive btn-xs" onclick="openModal('Revoke “Geothermal QGIS export”?', 'Revocation takes effect on the next authorization check. This action is recorded in the append-only activity log.')">Revoke</button></td></tr>
-            <tr><td>Retired field tablet<span class="cell-note mono">ocot_v0s6…m8qa · owner: former contractor</span></td><td>OGC.Internal · read</td><td>03 Jan 2025</td><td>03 Jan 2026</td><td>12 Dec 2025</td><td><span class="badge badge-neutral">Revoked</span></td><td><button class="btn btn-outline btn-xs" disabled>Revoked</button></td></tr>
-          </tbody></table></div>
+          <div class="alert alert-info">
+            <span>ⓘ</span>
+            <div>
+              <strong>Database-backed keys only.</strong> Raw credentials are
+              shown once at creation and are never recoverable here. Email
+              expiry notifications are planned; console warnings are available
+              now.
+            </div>
+          </div>
+          <div class="toolbar">
+            <input
+              class="toolbar-search"
+              placeholder="Search key or owner…"
+            /><button class="toggle-chip on">Active</button
+            ><button class="toggle-chip">Revoked</button
+            ><span class="toolbar-spacer"></span
+            ><button
+              class="btn btn-default btn-sm"
+              onclick="openModal('Issue database-backed API key?', 'The secret would be shown once. It inherits authorization through the shared policy engine; issuing a key does not create broader access.')"
+            >
+              + Issue key
+            </button>
+          </div>
+          <div class="datagrid">
+            <table>
+              <thead>
+                <tr>
+                  <th>Key / owner</th>
+                  <th>Authorization scope</th>
+                  <th>Created</th>
+                  <th>Expires</th>
+                  <th>Last used</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    NM Tech GIS lab<span class="cell-note mono"
+                      >ocot_7m2f…p9xq · owner: GIS Lab</span
+                    >
+                  </td>
+                  <td>OGC.Internal · read</td>
+                  <td>01 Dec 2025</td>
+                  <td>
+                    <span class="badge badge-warning">01 Dec · 19 days</span>
+                  </td>
+                  <td>Today, 08:14</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button
+                      class="btn btn-outline btn-xs"
+                      onclick="openModal('Rotate “NM Tech GIS lab”?', 'A replacement credential would be revealed once. The existing key remains valid only until its scheduled 01 Dec 2026 expiration.')"
+                    >
+                      Rotate
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    AMP field laptop<span class="cell-note mono"
+                      >ocot_c8k1…r5mv · owner: AMP operations</span
+                    >
+                  </td>
+                  <td>OGC.Internal · read</td>
+                  <td>10 Dec 2025</td>
+                  <td>
+                    <span class="badge badge-warning">10 Dec · 28 days</span>
+                  </td>
+                  <td>Yesterday</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button
+                      class="btn btn-outline btn-xs"
+                      onclick="openModal('Rotate “AMP field laptop”?', 'A replacement credential would be revealed once. The existing key remains valid only until its scheduled expiration.')"
+                    >
+                      Rotate
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Geothermal QGIS export<span class="cell-note mono"
+                      >ocot_a3d9…h2wk · owner: K. Sanchez</span
+                    >
+                  </td>
+                  <td>OGC.Internal · read</td>
+                  <td>12 Aug 2026</td>
+                  <td>12 Aug 2027</td>
+                  <td>06 Nov</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button
+                      class="btn btn-destructive btn-xs"
+                      onclick="openModal('Revoke “Geothermal QGIS export”?', 'Revocation takes effect on the next authorization check. This action is recorded in the append-only activity log.')"
+                    >
+                      Revoke
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Retired field tablet<span class="cell-note mono"
+                      >ocot_v0s6…m8qa · owner: former contractor</span
+                    >
+                  </td>
+                  <td>OGC.Internal · read</td>
+                  <td>03 Jan 2025</td>
+                  <td>03 Jan 2026</td>
+                  <td>12 Dec 2025</td>
+                  <td><span class="badge badge-neutral">Revoked</span></td>
+                  <td>
+                    <button class="btn btn-outline btn-xs" disabled>
+                      Revoked
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <section class="tab-panel" id="panel-activity">
-          <div class="alert alert-success"><span>✓</span><div><strong>Chain verified.</strong> The current event hash matches the trusted checkpoint recorded at 09:00 MST. Activity records are append-only; verification does not make privileged database rewrites impossible without protected checkpoints.</div></div>
-          <div class="toolbar"><input class="toolbar-search" placeholder="Search actor, target, or event…" /><select class="toolbar-select"><option>All event types</option><option>Authorization changes</option><option>API-key lifecycle</option><option>Operational events</option></select><select class="toolbar-select"><option>All programs</option><option>AMP</option><option>Geothermal</option></select><span class="toolbar-spacer"></span><button class="btn btn-outline btn-sm">Verify chain</button></div>
-          <div class="datagrid"><table><thead><tr><th>Timestamp <span class="sort-caret">▾</span></th><th>Event</th><th>Actor</th><th>Affected object</th><th>Program / scope</th><th>Integrity</th></tr></thead><tbody>
-            <tr><td class="mono">2026-11-12 10:42</td><td>Group membership added</td><td>N. Patel</td><td>Marisol Vega → AMP Field Team</td><td>AMP</td><td><span class="badge badge-success">Chained</span></td></tr>
-            <tr><td class="mono">2026-11-11 15:07</td><td>API key rotated</td><td>T. Martinez</td><td>NM Tech GIS lab</td><td>OGC.Internal</td><td><span class="badge badge-success">Chained</span></td></tr>
-            <tr><td class="mono">2026-11-06 13:21</td><td>Grant created</td><td>K. Sanchez</td><td>Geothermal Viewer · groundwater level read</td><td>Geothermal</td><td><span class="badge badge-success">Chained</span></td></tr>
-            <tr><td class="mono">2026-11-04 09:18</td><td>Grant revoked</td><td>N. Patel</td><td>Evan Brooks · update</td><td>Jornada Basin monitoring</td><td><span class="badge badge-success">Chained</span></td></tr>
-            <tr><td class="mono">2026-11-01 16:42</td><td>API key revoked</td><td>T. Martinez</td><td>Retired field tablet</td><td>OGC.Internal</td><td><span class="badge badge-success">Chained</span></td></tr>
-          </tbody></table><div class="grid-footer">1–5 of 1,482 events <span>‹</span><span>›</span></div></div>
+          <div class="alert alert-success">
+            <span>✓</span>
+            <div>
+              <strong>Chain verified.</strong> The current event hash matches
+              the trusted checkpoint recorded at 09:00 MST. Activity records are
+              append-only; verification does not make privileged database
+              rewrites impossible without protected checkpoints.
+            </div>
+          </div>
+          <div class="toolbar">
+            <input
+              class="toolbar-search"
+              placeholder="Search actor, target, or event…"
+            /><select class="toolbar-select">
+              <option>All event types</option>
+              <option>Authorization changes</option>
+              <option>API-key lifecycle</option>
+              <option>Operational events</option></select
+            ><select class="toolbar-select">
+              <option>All programs</option>
+              <option>AMP</option>
+              <option>Geothermal</option></select
+            ><span class="toolbar-spacer"></span
+            ><button class="btn btn-outline btn-sm">Verify chain</button>
+          </div>
+          <div class="datagrid">
+            <table>
+              <thead>
+                <tr>
+                  <th>Timestamp <span class="sort-caret">▾</span></th>
+                  <th>Event</th>
+                  <th>Actor</th>
+                  <th>Affected object</th>
+                  <th>Program / scope</th>
+                  <th>Integrity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="mono">2026-11-12 10:42</td>
+                  <td>Group membership added</td>
+                  <td>N. Patel</td>
+                  <td>Marisol Vega → AMP Field Team</td>
+                  <td>AMP</td>
+                  <td><span class="badge badge-success">Chained</span></td>
+                </tr>
+                <tr>
+                  <td class="mono">2026-11-11 15:07</td>
+                  <td>API key rotated</td>
+                  <td>T. Martinez</td>
+                  <td>NM Tech GIS lab</td>
+                  <td>OGC.Internal</td>
+                  <td><span class="badge badge-success">Chained</span></td>
+                </tr>
+                <tr>
+                  <td class="mono">2026-11-06 13:21</td>
+                  <td>Grant created</td>
+                  <td>K. Sanchez</td>
+                  <td>Geothermal Viewer · groundwater level read</td>
+                  <td>Geothermal</td>
+                  <td><span class="badge badge-success">Chained</span></td>
+                </tr>
+                <tr>
+                  <td class="mono">2026-11-04 09:18</td>
+                  <td>Grant revoked</td>
+                  <td>N. Patel</td>
+                  <td>Evan Brooks · update</td>
+                  <td>Jornada Basin monitoring</td>
+                  <td><span class="badge badge-success">Chained</span></td>
+                </tr>
+                <tr>
+                  <td class="mono">2026-11-01 16:42</td>
+                  <td>API key revoked</td>
+                  <td>T. Martinez</td>
+                  <td>Retired field tablet</td>
+                  <td>OGC.Internal</td>
+                  <td><span class="badge badge-success">Chained</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="grid-footer">
+              1–5 of 1,482 events <span>‹</span><span>›</span>
+            </div>
+          </div>
         </section>
       </main>
     </div>
 
-    <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <div class="modal"><h2 id="modal-title"></h2><p id="modal-copy"></p><div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancel</button><button class="btn btn-default" onclick="closeModal()">Acknowledge mockup</button></div></div>
+    <div
+      class="modal-backdrop"
+      id="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div class="modal">
+        <h2 id="modal-title"></h2>
+        <p id="modal-copy"></p>
+        <div class="modal-actions">
+          <button class="btn btn-outline" onclick="closeModal()">Cancel</button
+          ><button class="btn btn-default" onclick="closeModal()">
+            Acknowledge mockup
+          </button>
+        </div>
+      </div>
     </div>
 
     <script>
       const principalDetails = {
-        marisol: { initials: 'MV', name: 'Marisol Vega', meta: 'marisol.vega@nmtech.edu · User', groups: ['AMP Field Team'], grants: [['read', 'program · AMP', 'well inventory · groundwater level · water chemistry'], ['create', 'program · AMP', 'groundwater level']], note: 'Effective access is inherited through group membership.' },
-        elena: { initials: 'EO', name: 'Elena Ortiz', meta: 'elena.ortiz@state.nm.us · User', groups: ['Viewer'], grants: [['read', 'global · *', 'well inventory · groundwater level · water chemistry'], ['update', 'thing · WL-1187', 'groundwater level · expires 30 Nov 2026']], note: 'Includes one time-bound direct grant in addition to group access.' },
-        amp: { initials: 'AT', name: 'AMP Field Team', meta: '9 members · Principal group', groups: [], grants: [['read', 'program · AMP', 'well inventory · groundwater level · water chemistry'], ['create', 'program · AMP', 'groundwater level']], note: 'Select Groups & Grants to inspect and modify the group definition.' },
-        key: { initials: 'AK', name: 'NM Tech GIS lab', meta: 'Database-backed API key · Active', groups: [], grants: [['read', 'OGC.Internal', 'effective through assigned key grants']], note: 'Credential validity never authorizes access beyond current grants.' },
-        geo: { initials: 'GV', name: 'Geothermal Viewer', meta: '16 members · Principal group', groups: [], grants: [['read', 'program · Geothermal', 'well inventory · groundwater level · water chemistry']], note: 'Effective access is inherited through this group.' }
+        marisol: {
+          initials: "MV",
+          name: "Marisol Vega",
+          meta: "marisol.vega@nmtech.edu · User",
+          groups: ["AMP Field Team"],
+          grants: [
+            [
+              "read",
+              "program · AMP",
+              "well inventory · groundwater level · water chemistry",
+            ],
+            ["create", "program · AMP", "groundwater level"],
+          ],
+          note: "Effective access is inherited through group membership.",
+        },
+        elena: {
+          initials: "EO",
+          name: "Elena Ortiz",
+          meta: "elena.ortiz@state.nm.us · User",
+          groups: ["Viewer"],
+          grants: [
+            [
+              "read",
+              "global · *",
+              "well inventory · groundwater level · water chemistry",
+            ],
+            [
+              "update",
+              "thing · WL-1187",
+              "groundwater level · expires 30 Nov 2026",
+            ],
+          ],
+          note: "Includes one time-bound direct grant in addition to group access.",
+        },
+        amp: {
+          initials: "AT",
+          name: "AMP Field Team",
+          meta: "9 members · Principal group",
+          groups: [],
+          grants: [
+            [
+              "read",
+              "program · AMP",
+              "well inventory · groundwater level · water chemistry",
+            ],
+            ["create", "program · AMP", "groundwater level"],
+          ],
+          note: "Select Groups & Grants to inspect and modify the group definition.",
+        },
+        key: {
+          initials: "AK",
+          name: "NM Tech GIS lab",
+          meta: "Database-backed API key · Active",
+          groups: [],
+          grants: [
+            ["read", "OGC.Internal", "effective through assigned key grants"],
+          ],
+          note: "Credential validity never authorizes access beyond current grants.",
+        },
+        geo: {
+          initials: "GV",
+          name: "Geothermal Viewer",
+          meta: "16 members · Principal group",
+          groups: [],
+          grants: [
+            [
+              "read",
+              "program · Geothermal",
+              "well inventory · groundwater level · water chemistry",
+            ],
+          ],
+          note: "Effective access is inherited through this group.",
+        },
       };
       const groupDetails = {
-        amp: { name: 'AMP Field Team', description: 'Reusable access for Aquifer Mapping Program field staff.', members: '9 members', grants: [['read', 'program · AMP', 'well inventory'], ['read', 'program · AMP', 'groundwater level'], ['read', 'program · AMP', 'water chemistry'], ['create', 'program · AMP', 'groundwater level'], ['create', 'program · AMP', 'water chemistry'], ['update', 'program · AMP', 'groundwater level']] },
-        viewer: { name: 'Viewer', description: 'General internal read access; each data type remains explicit.', members: '83 members', grants: [['read', 'global · *', 'well inventory'], ['read', 'global · *', 'groundwater level'], ['read', 'global · *', 'water chemistry']] },
-        geo: { name: 'Geothermal Viewer', description: 'Read access for Geothermal program collaborators.', members: '16 members', grants: [['read', 'program · Geothermal', 'well inventory'], ['read', 'program · Geothermal', 'groundwater level'], ['read', 'program · Geothermal', 'water chemistry']] },
-        services: { name: 'Data Services Operators', description: 'Central operators with global access-management authority.', members: '4 members', grants: [['administer', 'global · *', 'well inventory'], ['administer', 'global · *', 'groundwater level'], ['administer', 'global · *', 'water chemistry']] }
+        amp: {
+          name: "AMP Field Team",
+          description:
+            "Reusable access for Aquifer Mapping Program field staff.",
+          members: "9 members",
+          grants: [
+            ["read", "program · AMP", "well inventory"],
+            ["read", "program · AMP", "groundwater level"],
+            ["read", "program · AMP", "water chemistry"],
+            ["create", "program · AMP", "groundwater level"],
+            ["create", "program · AMP", "water chemistry"],
+            ["update", "program · AMP", "groundwater level"],
+          ],
+        },
+        viewer: {
+          name: "Viewer",
+          description:
+            "General internal read access; each data type remains explicit.",
+          members: "83 members",
+          grants: [
+            ["read", "global · *", "well inventory"],
+            ["read", "global · *", "groundwater level"],
+            ["read", "global · *", "water chemistry"],
+          ],
+        },
+        geo: {
+          name: "Geothermal Viewer",
+          description: "Read access for Geothermal program collaborators.",
+          members: "16 members",
+          grants: [
+            ["read", "program · Geothermal", "well inventory"],
+            ["read", "program · Geothermal", "groundwater level"],
+            ["read", "program · Geothermal", "water chemistry"],
+          ],
+        },
+        services: {
+          name: "Data Services Operators",
+          description:
+            "Central operators with global access-management authority.",
+          members: "4 members",
+          grants: [
+            ["administer", "global · *", "well inventory"],
+            ["administer", "global · *", "groundwater level"],
+            ["administer", "global · *", "water chemistry"],
+          ],
+        },
       };
-      function grantMarkup(grants) { return grants.map(([cap, scope, data]) => `<div class="grant-item"><div class="grant-main"><span class="badge badge-primary">${cap}</span><span>${scope}</span></div><div class="grant-sub">${data}</div></div>`).join(''); }
+      function grantMarkup(grants) {
+        return grants
+          .map(
+            ([cap, scope, data]) =>
+              `<div class="grant-item"><div class="grant-main"><span class="badge badge-primary">${cap}</span><span>${scope}</span></div><div class="grant-sub">${data}</div></div>`,
+          )
+          .join("");
+      }
       function selectPrincipal(key, row) {
         if (row) {
-          document.querySelectorAll('#panel-principals tbody tr').forEach(item => item.classList.remove('selected'));
-          row.classList.add('selected');
+          document
+            .querySelectorAll("#panel-principals tbody tr")
+            .forEach((item) => item.classList.remove("selected"));
+          row.classList.add("selected");
         }
         const p = principalDetails[key];
-        document.getElementById('principal-detail').innerHTML = `<div class="card-header"><div class="identity"><div class="identity-avatar">${p.initials}</div><div><div class="identity-name">${p.name}</div><div class="identity-meta">${p.meta}</div></div></div><button class="btn btn-ghost btn-xs">⋯</button></div><div class="card-content"><div class="overline" style="margin-bottom:6px">Effective permissions</div><div class="grant-list">${grantMarkup(p.grants)}</div>${p.groups.length ? `<div class="overline" style="margin:15px 0 6px">Group membership</div><div>${p.groups.map(g => `<span class="badge badge-outline">${g}</span>`).join(' ')}</div>` : ''}<div class="alert alert-info" style="margin:15px 0 0"><span>ⓘ</span><div>${p.note}</div></div></div><div class="card-footer"><button class="btn btn-outline btn-sm" onclick="openModal('Change access for ${p.name}?', 'The console must validate the acting operator’s authority server-side before any membership or grant change is recorded.')">Change access</button></div>`;
+        document.getElementById("principal-detail").innerHTML =
+          `<div class="card-header"><div class="identity"><div class="identity-avatar">${p.initials}</div><div><div class="identity-name">${p.name}</div><div class="identity-meta">${p.meta}</div></div></div><button class="btn btn-ghost btn-xs">⋯</button></div><div class="card-content"><div class="overline" style="margin-bottom:6px">Effective permissions</div><div class="grant-list">${grantMarkup(p.grants)}</div>${p.groups.length ? `<div class="overline" style="margin:15px 0 6px">Group membership</div><div>${p.groups.map((g) => `<span class="badge badge-outline">${g}</span>`).join(" ")}</div>` : ""}<div class="alert alert-info" style="margin:15px 0 0"><span>ⓘ</span><div>${p.note}</div></div></div><div class="card-footer"><button class="btn btn-outline btn-sm" onclick="openModal('Change access for ${p.name}?', 'The console must validate the acting operator’s authority server-side before any membership or grant change is recorded.')">Change access</button></div>`;
       }
       function selectGroup(key, row) {
         if (row) {
-          document.querySelectorAll('#panel-groups tbody tr').forEach(item => item.classList.remove('selected'));
-          row.classList.add('selected');
+          document
+            .querySelectorAll("#panel-groups tbody tr")
+            .forEach((item) => item.classList.remove("selected"));
+          row.classList.add("selected");
         }
         const g = groupDetails[key];
-        document.getElementById('group-detail').innerHTML = `<div class="card-header"><div><div class="card-title">${g.name}</div><div class="card-description">${g.description}</div></div><button class="btn btn-ghost btn-xs">⋯</button></div><div class="card-content"><div class="status-line"><span class="status-dot"></span><div><strong>${g.members}</strong><br><span class="identity-meta">Membership and grants take effect through the shared authorization engine.</span></div></div><div class="overline" style="margin:16px 0 6px">Explicit grants</div><div class="grant-list">${grantMarkup(g.grants)}</div></div><div class="card-footer"><button class="btn btn-outline btn-sm" onclick="openModal('Manage ${g.name}?', 'The actual console must prevent a delegated operator from assigning grants broader than their own administrative authority.')">Manage group</button></div>`;
+        document.getElementById("group-detail").innerHTML =
+          `<div class="card-header"><div><div class="card-title">${g.name}</div><div class="card-description">${g.description}</div></div><button class="btn btn-ghost btn-xs">⋯</button></div><div class="card-content"><div class="status-line"><span class="status-dot"></span><div><strong>${g.members}</strong><br><span class="identity-meta">Membership and grants take effect through the shared authorization engine.</span></div></div><div class="overline" style="margin:16px 0 6px">Explicit grants</div><div class="grant-list">${grantMarkup(g.grants)}</div></div><div class="card-footer"><button class="btn btn-outline btn-sm" onclick="openModal('Manage ${g.name}?', 'The actual console must prevent a delegated operator from assigning grants broader than their own administrative authority.')">Manage group</button></div>`;
       }
       function showPanel(name) {
-        document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.panel === name));
-        document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.toggle('active', panel.id === `panel-${name}`));
-        if (name === 'principals') selectPrincipal('marisol');
-        if (name === 'groups') selectGroup('amp');
+        document
+          .querySelectorAll(".tab")
+          .forEach((tab) =>
+            tab.classList.toggle("active", tab.dataset.panel === name),
+          );
+        document
+          .querySelectorAll(".tab-panel")
+          .forEach((panel) =>
+            panel.classList.toggle("active", panel.id === `panel-${name}`),
+          );
+        if (name === "principals") selectPrincipal("marisol");
+        if (name === "groups") selectGroup("amp");
       }
-      function openModal(title, copy) { document.getElementById('modal-title').textContent = title; document.getElementById('modal-copy').textContent = copy; document.getElementById('modal-backdrop').classList.add('show'); }
-      function closeModal() { document.getElementById('modal-backdrop').classList.remove('show'); }
-      document.getElementById('modal-backdrop').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-      selectPrincipal('marisol');
-      selectGroup('amp');
+      function openModal(title, copy) {
+        document.getElementById("modal-title").textContent = title;
+        document.getElementById("modal-copy").textContent = copy;
+        document.getElementById("modal-backdrop").classList.add("show");
+      }
+      function closeModal() {
+        document.getElementById("modal-backdrop").classList.remove("show");
+      }
+      document
+        .getElementById("modal-backdrop")
+        .addEventListener("click", (e) => {
+          if (e.target === e.currentTarget) closeModal();
+        });
+      selectPrincipal("marisol");
+      selectGroup("amp");
     </script>
   </body>
 </html>
