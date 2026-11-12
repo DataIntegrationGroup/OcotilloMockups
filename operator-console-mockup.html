@@ -2063,6 +2063,52 @@
       .mockup-note code {
         font-size: 11px;
       }
+      /* shadcn-style contained tabs: the selected view reads as a small surface
+         within a muted control rather than as a navigation underline. */
+      .tabs-bar {
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        min-height: 36px;
+        gap: 2px;
+        overflow-x: auto;
+        border: 0;
+        border-radius: var(--radius-lg);
+        background: var(--muted);
+        padding: 3px;
+        margin-bottom: 20px;
+      }
+      .tab {
+        display: inline-flex;
+        min-height: 30px;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: var(--radius);
+        margin: 0;
+        padding: 6px 12px;
+        background: transparent;
+        color: var(--muted-foreground);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: normal;
+        line-height: 1;
+        transition: background-color 150ms ease, color 150ms ease,
+          box-shadow 150ms ease;
+      }
+      .tab.active {
+        background: var(--background);
+        box-shadow: 0 1px 2px rgb(15 23 42 / 8%);
+        color: var(--foreground);
+      }
+      .tab:hover:not(.active) {
+        background: color-mix(in oklab, var(--foreground) 6%, transparent);
+        color: var(--foreground);
+      }
+      .tab:focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 2px;
+      }
       @media (max-width: 1040px) {
         .console-grid,
         .split-view {
@@ -2159,9 +2205,13 @@
           </div>
         </div>
 
-        <nav class="tabs-bar" aria-label="Operator Console sections">
+        <nav class="tabs-bar" role="tablist" aria-label="Operator Console sections">
           <button
             class="tab active"
+            id="tab-overview"
+            role="tab"
+            aria-controls="panel-overview"
+            aria-selected="true"
             data-panel="overview"
             onclick="showPanel('overview')"
           >
@@ -2169,19 +2219,43 @@
           </button>
           <button
             class="tab"
+            id="tab-principals"
+            role="tab"
+            aria-controls="panel-principals"
+            aria-selected="false"
             data-panel="principals"
             onclick="showPanel('principals')"
           >
             Principals
           </button>
-          <button class="tab" data-panel="groups" onclick="showPanel('groups')">
+          <button
+            class="tab"
+            id="tab-groups"
+            role="tab"
+            aria-controls="panel-groups"
+            aria-selected="false"
+            data-panel="groups"
+            onclick="showPanel('groups')"
+          >
             Groups &amp; Grants
           </button>
-          <button class="tab" data-panel="keys" onclick="showPanel('keys')">
+          <button
+            class="tab"
+            id="tab-keys"
+            role="tab"
+            aria-controls="panel-keys"
+            aria-selected="false"
+            data-panel="keys"
+            onclick="showPanel('keys')"
+          >
             API Keys
           </button>
           <button
             class="tab"
+            id="tab-activity"
+            role="tab"
+            aria-controls="panel-activity"
+            aria-selected="false"
             data-panel="activity"
             onclick="showPanel('activity')"
           >
@@ -2189,7 +2263,7 @@
           </button>
         </nav>
 
-        <section class="tab-panel active" id="panel-overview">
+        <section class="tab-panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
           <div class="stat-strip summary-strip">
             <div class="stat-cell">
               <div class="stat-label">Active principals</div>
@@ -2340,7 +2414,7 @@
           </div>
         </section>
 
-        <section class="tab-panel" id="panel-principals">
+        <section class="tab-panel" id="panel-principals" role="tabpanel" aria-labelledby="tab-principals">
           <div class="toolbar">
             <input
               class="toolbar-search"
@@ -2424,7 +2498,7 @@
           </div>
         </section>
 
-        <section class="tab-panel" id="panel-groups">
+        <section class="tab-panel" id="panel-groups" role="tabpanel" aria-labelledby="tab-groups">
           <div class="toolbar">
             <input class="toolbar-search" placeholder="Search groups…" /><span
               class="toolbar-spacer"
@@ -2493,7 +2567,7 @@
           </div>
         </section>
 
-        <section class="tab-panel" id="panel-keys">
+        <section class="tab-panel" id="panel-keys" role="tabpanel" aria-labelledby="tab-keys">
           <div class="alert alert-info">
             <span>ⓘ</span>
             <div>
@@ -2617,7 +2691,7 @@
           </div>
         </section>
 
-        <section class="tab-panel" id="panel-activity">
+        <section class="tab-panel" id="panel-activity" role="tabpanel" aria-labelledby="tab-activity">
           <div class="alert alert-success">
             <span>✓</span>
             <div>
@@ -2882,9 +2956,11 @@
       function showPanel(name) {
         document
           .querySelectorAll(".tab")
-          .forEach((tab) =>
-            tab.classList.toggle("active", tab.dataset.panel === name),
-          );
+          .forEach((tab) => {
+            const isActive = tab.dataset.panel === name;
+            tab.classList.toggle("active", isActive);
+            tab.setAttribute("aria-selected", isActive);
+          });
         document
           .querySelectorAll(".tab-panel")
           .forEach((panel) =>
