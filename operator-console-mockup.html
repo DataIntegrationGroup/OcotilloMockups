@@ -1866,16 +1866,34 @@
         font-size: 12px;
         color: var(--muted-foreground);
       }
-      .console-grid {
+      .overview-layout {
         display: grid;
         grid-template-columns: minmax(0, 1.65fr) minmax(290px, 0.85fr);
         gap: 16px;
+        align-items: start;
+      }
+      .overview-main {
+        min-width: 0;
       }
       .summary-strip {
         margin-bottom: 16px;
       }
       .notice-count {
         color: var(--warning-text);
+      }
+      .attention-title-row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .attention-badge svg {
+        width: 13px;
+        height: 13px;
+        stroke: currentColor;
+        stroke-width: 2;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
       .activity-list {
         display: grid;
@@ -2110,7 +2128,7 @@
         outline-offset: 2px;
       }
       @media (max-width: 1040px) {
-        .console-grid,
+        .overview-layout,
         .split-view {
           grid-template-columns: 1fr;
         }
@@ -2264,7 +2282,9 @@
         </nav>
 
         <section class="tab-panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
-          <div class="stat-strip summary-strip">
+          <div class="overview-layout">
+            <div class="overview-main">
+              <div class="stat-strip summary-strip">
             <div class="stat-cell">
               <div class="stat-label">Active principals</div>
               <div class="stat-value">148</div>
@@ -2275,13 +2295,7 @@
               <div class="stat-value">12</div>
               <div class="stat-note">Recorded in the last 7 days</div>
             </div>
-            <div class="stat-cell">
-              <div class="stat-label">Needs attention</div>
-              <div class="stat-value notice-count">4</div>
-              <div class="stat-note">3 expiring keys · 1 expiring grant</div>
-            </div>
-          </div>
-          <div class="console-grid">
+              </div>
             <div class="card">
               <div class="card-header">
                 <div>
@@ -2350,10 +2364,23 @@
                 </div>
               </div>
             </div>
+            </div>
             <div class="card">
               <div class="card-header">
                 <div>
-                  <div class="card-title">Needs attention</div>
+                  <div class="attention-title-row">
+                    <div class="card-title">Needs attention</div>
+                    <span
+                      class="badge badge-warning attention-badge"
+                      aria-label="4 items need attention"
+                      ><svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 8v4"></path>
+                        <path d="M12 16h.01"></path>
+                      </svg>
+                      4</span
+                    >
+                  </div>
                   <div class="card-description">
                     Upcoming expiry and review items.
                   </div>
