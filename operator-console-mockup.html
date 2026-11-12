@@ -2111,7 +2111,9 @@
         font-weight: 500;
         letter-spacing: normal;
         line-height: 1;
-        transition: background-color 150ms ease, color 150ms ease,
+        transition:
+          background-color 150ms ease,
+          color 150ms ease,
           box-shadow 150ms ease;
       }
       .tab.active {
@@ -2223,7 +2225,11 @@
           </div>
         </div>
 
-        <nav class="tabs-bar" role="tablist" aria-label="Operator Console sections">
+        <nav
+          class="tabs-bar"
+          role="tablist"
+          aria-label="Operator Console sections"
+        >
           <button
             class="tab active"
             id="tab-overview"
@@ -2281,89 +2287,97 @@
           </button>
         </nav>
 
-        <section class="tab-panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+        <section
+          class="tab-panel active"
+          id="panel-overview"
+          role="tabpanel"
+          aria-labelledby="tab-overview"
+        >
           <div class="overview-layout">
             <div class="overview-main">
               <div class="stat-strip summary-strip">
-            <div class="stat-cell">
-              <div class="stat-label">Active principals</div>
-              <div class="stat-value">148</div>
-              <div class="stat-note">126 users · 14 groups · 8 API keys</div>
-            </div>
-            <div class="stat-cell">
-              <div class="stat-label">Access changes</div>
-              <div class="stat-value">12</div>
-              <div class="stat-note">Recorded in the last 7 days</div>
-            </div>
-              </div>
-            <div class="card">
-              <div class="card-header">
-                <div>
-                  <div class="card-title">Recent access changes</div>
-                  <div class="card-description">
-                    Authorization changes recorded in the unified activity log.
+                <div class="stat-cell">
+                  <div class="stat-label">Active principals</div>
+                  <div class="stat-value">148</div>
+                  <div class="stat-note">
+                    126 users · 14 groups · 8 API keys
                   </div>
                 </div>
-                <button
-                  class="btn btn-link btn-sm"
-                  onclick="showPanel('activity')"
-                >
-                  View activity →
-                </button>
+                <div class="stat-cell">
+                  <div class="stat-label">Access changes</div>
+                  <div class="stat-value">4</div>
+                  <div class="stat-note">Recorded in the last 7 days</div>
+                </div>
               </div>
-              <div class="card-content">
-                <div class="activity-list">
-                  <div class="activity-row">
-                    <div class="activity-mark">+</div>
-                    <div>
-                      <div class="activity-title">
-                        Added Marisol Vega to AMP Field Team
-                      </div>
-                      <div class="activity-detail">
-                        N. Patel · group membership · AMP
-                      </div>
+              <div class="card">
+                <div class="card-header">
+                  <div>
+                    <div class="card-title">Recent access changes</div>
+                    <div class="card-description">
+                      Authorization changes recorded in the unified activity
+                      log.
                     </div>
-                    <div class="activity-time">Today, 10:42</div>
                   </div>
-                  <div class="activity-row">
-                    <div class="activity-mark">↻</div>
-                    <div>
-                      <div class="activity-title">
-                        Rotated API key “NM Tech GIS lab”
+                  <button
+                    class="btn btn-link btn-sm"
+                    onclick="showPanel('activity')"
+                  >
+                    View activity →
+                  </button>
+                </div>
+                <div class="card-content">
+                  <div class="activity-list">
+                    <div class="activity-row">
+                      <div class="activity-mark">+</div>
+                      <div>
+                        <div class="activity-title">
+                          Added Marisol Vega to AMP Field Team
+                        </div>
+                        <div class="activity-detail">
+                          N. Patel · group membership · AMP
+                        </div>
                       </div>
-                      <div class="activity-detail">
-                        T. Martinez · key remains valid until 12 Dec 2026
-                      </div>
+                      <div class="activity-time">Today, 10:42</div>
                     </div>
-                    <div class="activity-time">Yesterday</div>
-                  </div>
-                  <div class="activity-row">
-                    <div class="activity-mark">✓</div>
-                    <div>
-                      <div class="activity-title">
-                        Updated Geothermal Viewer grants
+                    <div class="activity-row">
+                      <div class="activity-mark">↻</div>
+                      <div>
+                        <div class="activity-title">
+                          Rotated API key “NM Tech GIS lab”
+                        </div>
+                        <div class="activity-detail">
+                          T. Martinez · key remains valid until 12 Dec 2026
+                        </div>
                       </div>
-                      <div class="activity-detail">
-                        K. Sanchez · added groundwater-level read scope
-                      </div>
+                      <div class="activity-time">Yesterday</div>
                     </div>
-                    <div class="activity-time">06 Nov</div>
-                  </div>
-                  <div class="activity-row">
-                    <div class="activity-mark">−</div>
-                    <div>
-                      <div class="activity-title">
-                        Revoked direct grant from Evan Brooks
+                    <div class="activity-row">
+                      <div class="activity-mark">✓</div>
+                      <div>
+                        <div class="activity-title">
+                          Updated Geothermal Viewer grants
+                        </div>
+                        <div class="activity-detail">
+                          K. Sanchez · added groundwater-level read scope
+                        </div>
                       </div>
-                      <div class="activity-detail">
-                        N. Patel · project: Jornada Basin monitoring
-                      </div>
+                      <div class="activity-time">06 Nov</div>
                     </div>
-                    <div class="activity-time">04 Nov</div>
+                    <div class="activity-row">
+                      <div class="activity-mark">−</div>
+                      <div>
+                        <div class="activity-title">
+                          Revoked direct grant from Evan Brooks
+                        </div>
+                        <div class="activity-detail">
+                          N. Patel · project: Jornada Basin monitoring
+                        </div>
+                      </div>
+                      <div class="activity-time">04 Nov</div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             </div>
             <div class="card">
               <div class="card-header">
@@ -2372,13 +2386,13 @@
                     <div class="card-title">Needs attention</div>
                     <span
                       class="badge badge-warning attention-badge"
-                      aria-label="4 items need attention"
+                      aria-label="3 items need attention"
                       ><svg viewBox="0 0 24 24" aria-hidden="true">
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="M12 8v4"></path>
                         <path d="M12 16h.01"></path>
                       </svg>
-                      4</span
+                      3</span
                     >
                   </div>
                   <div class="card-description">
@@ -2434,14 +2448,19 @@
           </div>
         </section>
 
-        <section class="tab-panel" id="panel-principals" role="tabpanel" aria-labelledby="tab-principals">
+        <section
+          class="tab-panel"
+          id="panel-principals"
+          role="tabpanel"
+          aria-labelledby="tab-principals"
+        >
           <div class="toolbar">
             <input
               class="toolbar-search"
               value=""
               placeholder="Search people, groups, keys…"
-            /><span class="toolbar-label">Showing 148 principals</span
-            ><span class="toolbar-spacer"></span
+            />
+            <span class="toolbar-spacer"></span
             ><button class="btn btn-outline btn-sm">Export list</button>
           </div>
           <div class="split-view">
@@ -2518,7 +2537,12 @@
           </div>
         </section>
 
-        <section class="tab-panel" id="panel-groups" role="tabpanel" aria-labelledby="tab-groups">
+        <section
+          class="tab-panel"
+          id="panel-groups"
+          role="tabpanel"
+          aria-labelledby="tab-groups"
+        >
           <div class="toolbar">
             <input class="toolbar-search" placeholder="Search groups…" /><span
               class="toolbar-spacer"
@@ -2587,16 +2611,12 @@
           </div>
         </section>
 
-        <section class="tab-panel" id="panel-keys" role="tabpanel" aria-labelledby="tab-keys">
-          <div class="alert alert-info">
-            <span>ⓘ</span>
-            <div>
-              <strong>Database-backed keys only.</strong> Raw credentials are
-              shown once at creation and are never recoverable here. Email
-              expiry notifications are planned; console warnings are available
-              now.
-            </div>
-          </div>
+        <section
+          class="tab-panel"
+          id="panel-keys"
+          role="tabpanel"
+          aria-labelledby="tab-keys"
+        >
           <div class="toolbar">
             <input
               class="toolbar-search"
@@ -2711,16 +2731,12 @@
           </div>
         </section>
 
-        <section class="tab-panel" id="panel-activity" role="tabpanel" aria-labelledby="tab-activity">
-          <div class="alert alert-success">
-            <span>✓</span>
-            <div>
-              <strong>Chain verified.</strong> The current event hash matches
-              the trusted checkpoint recorded at 09:00 MST. Activity records are
-              append-only; verification does not make privileged database
-              rewrites impossible without protected checkpoints.
-            </div>
-          </div>
+        <section
+          class="tab-panel"
+          id="panel-activity"
+          role="tabpanel"
+          aria-labelledby="tab-activity"
+        >
           <div class="toolbar">
             <input
               class="toolbar-search"
@@ -2974,13 +2990,11 @@
           `<div class="card-header"><div><div class="card-title">${g.name}</div><div class="card-description">${g.description}</div></div><button class="btn btn-ghost btn-xs">⋯</button></div><div class="card-content"><div class="status-line"><span class="status-dot"></span><div><strong>${g.members}</strong><br><span class="identity-meta">Membership and grants take effect through the shared authorization engine.</span></div></div><div class="overline" style="margin:16px 0 6px">Explicit grants</div><div class="grant-list">${grantMarkup(g.grants)}</div></div><div class="card-footer"><button class="btn btn-outline btn-sm" onclick="openModal('Manage ${g.name}?', 'The actual console must prevent a delegated operator from assigning grants broader than their own administrative authority.')">Manage group</button></div>`;
       }
       function showPanel(name) {
-        document
-          .querySelectorAll(".tab")
-          .forEach((tab) => {
-            const isActive = tab.dataset.panel === name;
-            tab.classList.toggle("active", isActive);
-            tab.setAttribute("aria-selected", isActive);
-          });
+        document.querySelectorAll(".tab").forEach((tab) => {
+          const isActive = tab.dataset.panel === name;
+          tab.classList.toggle("active", isActive);
+          tab.setAttribute("aria-selected", isActive);
+        });
         document
           .querySelectorAll(".tab-panel")
           .forEach((panel) =>
