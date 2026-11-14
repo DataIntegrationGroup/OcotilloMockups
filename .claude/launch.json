@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8931"],
       "port": 8931
+    },
+    {
+      "name": "nm-water-viz",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "tools/nm-water-viz", "run", "dev", "--", "--port", "5173", "--strictPort"],
+      "port": 5173
     }
   ]
 }
