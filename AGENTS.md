@@ -116,6 +116,36 @@ Mark the sample clearly as a sample, in a screen-only banner that does not
 print. The artifact should be unmistakable as an example when read on screen
 and clean when put on paper.
 
+## Working prototypes (`tools/`)
+
+`tools/` is the one place where the rules above do not apply. It holds
+prototypes that only make sense against live data, so they cannot be lo-fi.
+At the moment it holds one:
+
+- `tools/nm-water-viz/` is a map explorer for the Weaver and Ocotillo OGC
+  APIs, built with React, Vite, SQLRooms (DuckDB-WASM) and kepler.gl.
+
+What is allowed here and nowhere else:
+
+- An npm project with source, a `package.json` and a build step.
+- Live calls to the public Weaver and Ocotillo APIs.
+- Runtime downloads from the network: DuckDB-WASM loads from jsDelivr, and
+  the base map loads its tiles.
+
+What still holds:
+
+- The thing a reviewer opens is still **one file**. `npm run build:mockup`
+  inlines every JS and CSS chunk with `vite-plugin-singlefile` and writes it to
+  the repo root (`nm-water-data-explorer.html`). It opens from `file://`
+  without a server, but it needs a network connection.
+- Commit the source and the rebuilt HTML together, so the file at the root
+  always matches `tools/`.
+- The built file is not named `*-mockup.html`. It is not a mockup, and
+  `design-system/sync.py` must not inject the design-system block into it.
+
+Do not use `tools/` as a way around the mockup rules. A screen that can be
+argued about with fake data belongs in a mockup.
+
 ## Design rules
 
 `design-system/README.md` has the full set, including where each value comes
