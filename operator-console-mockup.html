@@ -1895,6 +1895,9 @@
         stroke-linecap: round;
         stroke-linejoin: round;
       }
+      .sidebar .attention-badge {
+        margin-left: auto;
+      }
       .activity-list {
         display: grid;
         gap: 0;
@@ -2016,6 +2019,30 @@
         margin-top: 3px;
         font-size: 11px;
         color: var(--muted-foreground);
+      }
+      .grant-validity {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+      }
+      .grant-validity-label {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .grant-validity-value {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          monospace;
+        font-size: 10.5px;
+        color: var(--foreground);
+        white-space: nowrap;
       }
       .section-action {
         display: flex;
@@ -2187,8 +2214,18 @@
         <hr class="nav-divider" />
         <div class="nav-item"><span class="nav-icon">↧</span> Exports</div>
         <hr class="nav-divider" />
-        <div class="nav-item active is-new">
-          <span class="nav-icon">🔒</span> Operator Console
+        <div class="nav-item active">
+          <span class="nav-icon">🔒</span><span>Operator Console</span
+          ><span
+            class="badge badge-warning attention-badge"
+            aria-label="3 items need attention"
+            ><svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 8v4"></path>
+              <path d="M12 16h.01"></path>
+            </svg>
+            3</span
+          >
         </div>
         <div class="sidebar-footer">
           <div class="sidebar-footer-link">About</div>
@@ -2219,9 +2256,7 @@
           <div class="header-actions">
             <button class="btn btn-outline" onclick="showPanel('activity')">
               ⌕ Search activity</button
-            ><button class="btn btn-default" onclick="showPanel('groups')">
-              + Create group
-            </button>
+            ><button class="btn btn-default">Take tour</button>
           </div>
         </div>
 
@@ -2847,8 +2882,16 @@
               "read",
               "program · AMP",
               "well inventory · groundwater level · water chemistry",
+              "2026-01-01 00:00 UTC",
+              "No end date",
             ],
-            ["create", "program · AMP", "groundwater level"],
+            [
+              "create",
+              "program · AMP",
+              "groundwater level",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
           ],
           note: "Effective access is inherited through group membership.",
         },
@@ -2862,11 +2905,15 @@
               "read",
               "global · *",
               "well inventory · groundwater level · water chemistry",
+              "2026-01-03 00:00 UTC",
+              "No end date",
             ],
             [
               "update",
               "thing · WL-1187",
-              "groundwater level · expires 30 Nov 2026",
+              "groundwater level",
+              "2026-11-01 08:00 UTC",
+              "2026-11-30 23:59 UTC",
             ],
           ],
           note: "Includes one time-bound direct grant in addition to group access.",
@@ -2881,8 +2928,16 @@
               "read",
               "program · AMP",
               "well inventory · groundwater level · water chemistry",
+              "2026-01-01 00:00 UTC",
+              "No end date",
             ],
-            ["create", "program · AMP", "groundwater level"],
+            [
+              "create",
+              "program · AMP",
+              "groundwater level",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
           ],
           note: "Select Groups & Grants to inspect and modify the group definition.",
         },
@@ -2892,7 +2947,13 @@
           meta: "Database-backed API key · Active",
           groups: [],
           grants: [
-            ["read", "OGC.Internal", "effective through assigned key grants"],
+            [
+              "read",
+              "OGC.Internal",
+              "effective through assigned key grants",
+              "2026-08-12 14:30 UTC",
+              "2026-12-12 23:59 UTC",
+            ],
           ],
           note: "Credential validity never authorizes access beyond current grants.",
         },
@@ -2906,6 +2967,8 @@
               "read",
               "program · Geothermal",
               "well inventory · groundwater level · water chemistry",
+              "2026-02-15 00:00 UTC",
+              "No end date",
             ],
           ],
           note: "Effective access is inherited through this group.",
@@ -2918,12 +2981,12 @@
             "Reusable access for Aquifer Mapping Program field staff.",
           members: "9 members",
           grants: [
-            ["read", "program · AMP", "well inventory"],
-            ["read", "program · AMP", "groundwater level"],
-            ["read", "program · AMP", "water chemistry"],
-            ["create", "program · AMP", "groundwater level"],
-            ["create", "program · AMP", "water chemistry"],
-            ["update", "program · AMP", "groundwater level"],
+            ["read", "program · AMP", "well inventory", "2026-01-01 00:00 UTC", "No end date"],
+            ["read", "program · AMP", "groundwater level", "2026-01-01 00:00 UTC", "No end date"],
+            ["read", "program · AMP", "water chemistry", "2026-01-01 00:00 UTC", "No end date"],
+            ["create", "program · AMP", "groundwater level", "2026-01-01 00:00 UTC", "No end date"],
+            ["create", "program · AMP", "water chemistry", "2026-01-01 00:00 UTC", "No end date"],
+            ["update", "program · AMP", "groundwater level", "2026-01-01 00:00 UTC", "No end date"],
           ],
         },
         viewer: {
@@ -2932,9 +2995,9 @@
             "General internal read access; each data type remains explicit.",
           members: "83 members",
           grants: [
-            ["read", "global · *", "well inventory"],
-            ["read", "global · *", "groundwater level"],
-            ["read", "global · *", "water chemistry"],
+            ["read", "global · *", "well inventory", "2026-01-03 00:00 UTC", "No end date"],
+            ["read", "global · *", "groundwater level", "2026-01-03 00:00 UTC", "No end date"],
+            ["read", "global · *", "water chemistry", "2026-01-03 00:00 UTC", "No end date"],
           ],
         },
         geo: {
@@ -2942,9 +3005,9 @@
           description: "Read access for Geothermal program collaborators.",
           members: "16 members",
           grants: [
-            ["read", "program · Geothermal", "well inventory"],
-            ["read", "program · Geothermal", "groundwater level"],
-            ["read", "program · Geothermal", "water chemistry"],
+            ["read", "program · Geothermal", "well inventory", "2026-02-15 00:00 UTC", "No end date"],
+            ["read", "program · Geothermal", "groundwater level", "2026-02-15 00:00 UTC", "No end date"],
+            ["read", "program · Geothermal", "water chemistry", "2026-02-15 00:00 UTC", "No end date"],
           ],
         },
         services: {
@@ -2953,17 +3016,17 @@
             "Central operators with global access-management authority.",
           members: "4 members",
           grants: [
-            ["administer", "global · *", "well inventory"],
-            ["administer", "global · *", "groundwater level"],
-            ["administer", "global · *", "water chemistry"],
+            ["administer", "global · *", "well inventory", "2026-01-01 00:00 UTC", "No end date"],
+            ["administer", "global · *", "groundwater level", "2026-01-01 00:00 UTC", "No end date"],
+            ["administer", "global · *", "water chemistry", "2026-01-01 00:00 UTC", "No end date"],
           ],
         },
       };
       function grantMarkup(grants) {
         return grants
           .map(
-            ([cap, scope, data]) =>
-              `<div class="grant-item"><div class="grant-main"><span class="badge badge-primary">${cap}</span><span>${scope}</span></div><div class="grant-sub">${data}</div></div>`,
+            ([cap, scope, data, start, end]) =>
+              `<div class="grant-item"><div class="grant-main"><span class="badge badge-primary">${cap}</span><span>${scope}</span></div><div class="grant-sub">${data}</div><div class="grant-validity"><div><span class="grant-validity-label">Start</span><span class="grant-validity-value">${start}</span></div><div><span class="grant-validity-label">End</span><span class="grant-validity-value">${end}</span></div></div></div>`,
           )
           .join("");
       }
