@@ -1875,8 +1875,21 @@
       .overview-main {
         min-width: 0;
       }
-      .summary-strip {
-        margin-bottom: 16px;
+      .principal-summary {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        column-gap: 9px;
+        row-gap: 2px;
+        padding: 9px var(--card-spacing);
+        min-width: 0;
+      }
+      .overview-section-divider {
+        width: auto;
+        height: 1px;
+        margin: -8px var(--card-spacing);
+        border: 0;
+        background: var(--border);
       }
       .notice-count {
         color: var(--warning-text);
@@ -2038,8 +2051,8 @@
         color: var(--muted-foreground);
       }
       .grant-validity-value {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-          monospace;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         font-size: 10.5px;
         color: var(--foreground);
         white-space: nowrap;
@@ -2330,27 +2343,21 @@
         >
           <div class="overview-layout">
             <div class="overview-main">
-              <div class="stat-strip summary-strip">
-                <div class="stat-cell">
-                  <div class="stat-label">Active principals</div>
-                  <div class="stat-value">148</div>
-                  <div class="stat-note">
-                    126 users · 14 groups · 8 API keys
-                  </div>
+              <div class="card overview-combined-card">
+                <!--
+                <div class="principal-summary">
+                  <span class="stat-label">Active principals</span>
+                  <span class="stat-value">148</span>
+                  <span class="stat-note"
+                    >( 126 users · 14 groups · 8 API keys )</span
+                  >
                 </div>
-                <div class="stat-cell">
-                  <div class="stat-label">Access changes</div>
-                  <div class="stat-value">4</div>
-                  <div class="stat-note">Recorded in the last 7 days</div>
-                </div>
-              </div>
-              <div class="card">
+                -->
                 <div class="card-header">
                   <div>
                     <div class="card-title">Recent access changes</div>
                     <div class="card-description">
-                      Authorization changes recorded in the unified activity
-                      log.
+                      4 recorded changes in the last 7 days
                     </div>
                   </div>
                   <button
@@ -2981,12 +2988,48 @@
             "Reusable access for Aquifer Mapping Program field staff.",
           members: "9 members",
           grants: [
-            ["read", "program · AMP", "well inventory", "2026-01-01 00:00 UTC", "No end date"],
-            ["read", "program · AMP", "groundwater level", "2026-01-01 00:00 UTC", "No end date"],
-            ["read", "program · AMP", "water chemistry", "2026-01-01 00:00 UTC", "No end date"],
-            ["create", "program · AMP", "groundwater level", "2026-01-01 00:00 UTC", "No end date"],
-            ["create", "program · AMP", "water chemistry", "2026-01-01 00:00 UTC", "No end date"],
-            ["update", "program · AMP", "groundwater level", "2026-01-01 00:00 UTC", "No end date"],
+            [
+              "read",
+              "program · AMP",
+              "well inventory",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "read",
+              "program · AMP",
+              "groundwater level",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "read",
+              "program · AMP",
+              "water chemistry",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "create",
+              "program · AMP",
+              "groundwater level",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "create",
+              "program · AMP",
+              "water chemistry",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "update",
+              "program · AMP",
+              "groundwater level",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
           ],
         },
         viewer: {
@@ -2995,9 +3038,27 @@
             "General internal read access; each data type remains explicit.",
           members: "83 members",
           grants: [
-            ["read", "global · *", "well inventory", "2026-01-03 00:00 UTC", "No end date"],
-            ["read", "global · *", "groundwater level", "2026-01-03 00:00 UTC", "No end date"],
-            ["read", "global · *", "water chemistry", "2026-01-03 00:00 UTC", "No end date"],
+            [
+              "read",
+              "global · *",
+              "well inventory",
+              "2026-01-03 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "read",
+              "global · *",
+              "groundwater level",
+              "2026-01-03 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "read",
+              "global · *",
+              "water chemistry",
+              "2026-01-03 00:00 UTC",
+              "No end date",
+            ],
           ],
         },
         geo: {
@@ -3005,9 +3066,27 @@
           description: "Read access for Geothermal program collaborators.",
           members: "16 members",
           grants: [
-            ["read", "program · Geothermal", "well inventory", "2026-02-15 00:00 UTC", "No end date"],
-            ["read", "program · Geothermal", "groundwater level", "2026-02-15 00:00 UTC", "No end date"],
-            ["read", "program · Geothermal", "water chemistry", "2026-02-15 00:00 UTC", "No end date"],
+            [
+              "read",
+              "program · Geothermal",
+              "well inventory",
+              "2026-02-15 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "read",
+              "program · Geothermal",
+              "groundwater level",
+              "2026-02-15 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "read",
+              "program · Geothermal",
+              "water chemistry",
+              "2026-02-15 00:00 UTC",
+              "No end date",
+            ],
           ],
         },
         services: {
@@ -3016,9 +3095,27 @@
             "Central operators with global access-management authority.",
           members: "4 members",
           grants: [
-            ["administer", "global · *", "well inventory", "2026-01-01 00:00 UTC", "No end date"],
-            ["administer", "global · *", "groundwater level", "2026-01-01 00:00 UTC", "No end date"],
-            ["administer", "global · *", "water chemistry", "2026-01-01 00:00 UTC", "No end date"],
+            [
+              "administer",
+              "global · *",
+              "well inventory",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "administer",
+              "global · *",
+              "groundwater level",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
+            [
+              "administer",
+              "global · *",
+              "water chemistry",
+              "2026-01-01 00:00 UTC",
+              "No end date",
+            ],
           ],
         },
       };
