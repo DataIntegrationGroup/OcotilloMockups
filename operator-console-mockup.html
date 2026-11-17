@@ -1875,21 +1875,23 @@
       .overview-main {
         min-width: 0;
       }
-      .principal-summary {
+      .entity-footer-summary {
         display: flex;
         align-items: baseline;
-        flex-wrap: wrap;
-        column-gap: 9px;
-        row-gap: 2px;
-        padding: 9px var(--card-spacing);
-        min-width: 0;
+        gap: 5px;
+        white-space: nowrap;
       }
-      .overview-section-divider {
-        width: auto;
-        height: 1px;
-        margin: -8px var(--card-spacing);
-        border: 0;
-        background: var(--border);
+      .entity-grid-footer {
+        justify-content: space-between;
+      }
+      .entity-footer-summary .stat-label {
+        font-size: 10px;
+      }
+      .entity-footer-summary .stat-value {
+        font-size: 14px;
+      }
+      .entity-footer-summary .stat-note {
+        font-size: 11px;
       }
       .notice-count {
         color: var(--warning-text);
@@ -2344,15 +2346,6 @@
           <div class="overview-layout">
             <div class="overview-main">
               <div class="card overview-combined-card">
-                <!--
-                <div class="principal-summary">
-                  <span class="stat-label">Active principals</span>
-                  <span class="stat-value">148</span>
-                  <span class="stat-note"
-                    >( 126 users · 14 groups · 8 API keys )</span
-                  >
-                </div>
-                -->
                 <div class="card-header">
                   <div>
                     <div class="card-title">Recent access changes</div>
@@ -2571,8 +2564,13 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="grid-footer">
-                1–5 of 148 <span>‹</span><span>›</span>
+              <div class="grid-footer entity-grid-footer">
+                <div class="entity-footer-summary">
+                  <span class="stat-label">Active principals</span>
+                  <span class="stat-value">148</span>
+                  <span class="stat-note">(126 users · 14 groups · 8 API keys)</span>
+                </div>
+                <div>1–5 of 148 <span>‹</span><span>›</span></div>
               </div>
             </div>
             <aside class="card detail-card" id="principal-detail"></aside>
@@ -2648,6 +2646,13 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="grid-footer entity-grid-footer">
+                <div class="entity-footer-summary">
+                  <span class="stat-label">Active groups</span>
+                  <span class="stat-value">14</span>
+                </div>
+                <div>1–4 of 14 <span>‹</span><span>›</span></div>
+              </div>
             </div>
             <aside class="card detail-card" id="group-detail"></aside>
           </div>
@@ -2770,6 +2775,13 @@
                 </tr>
               </tbody>
             </table>
+            <div class="grid-footer entity-grid-footer">
+              <div class="entity-footer-summary">
+                <span class="stat-label">Active API keys</span>
+                <span class="stat-value">8</span>
+              </div>
+              <div>1–4 of 8 <span>‹</span><span>›</span></div>
+            </div>
           </div>
         </section>
 
