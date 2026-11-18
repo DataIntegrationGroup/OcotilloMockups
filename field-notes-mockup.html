@@ -1866,6 +1866,9 @@
     <style>
 :root{
   --fn-ink: var(--foreground);
+  /* Text on a brand-900 surface: constant white. --paper flips to zinc-700 in
+     dark mode, which turned every band/th header into dark-on-dark. */
+  --fn-onband: #ffffff;
   --fn-band: var(--brand-900);
   --fn-head: var(--brand-900);
   --fn-headrule: var(--primary-dark);
@@ -1887,23 +1890,28 @@ font-size:8.5pt;line-height:1.25;padding:24pt;display:flex;flex-wrap:wrap;gap:24
 .p2{padding:28pt;gap:10pt}
 @page{size:letter;margin:0}
 @media print{body{background:none;padding:0;gap:0;display:block}
+ .mockup-note{display:none}
  .sheet{box-shadow:none;break-after:page;page-break-after:always}.sheet:last-child{break-after:auto;page-break-after:auto}}
 
 /* shared */
 .k{font-weight:700;margin-right:3pt}
 .kv{display:flex;align-items:baseline;min-height:11pt}
 .kv .v{flex:1}
-.band{background:var(--fn-band);color:var(--paper);font-size:8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:2.5pt 5pt}
+.band{background:var(--fn-band);color:var(--fn-onband);font-size:8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:2.5pt 5pt}
 .tbl{display:grid;border-left:.5pt solid var(--fn-rule);border-bottom:0}
+.tbl .td{min-width:0}
+.logo,.qr{display:inline-block}
 .tbl>div{font-size:7.5pt;line-height:1.2;padding:2.5pt 4pt;border-right:.5pt solid var(--fn-rule);border-bottom:.5pt solid var(--fn-rule);
  font-variant-numeric:tabular-nums;min-height:13pt}
-.tbl .th{background:var(--fn-head);color:var(--paper);font-size:7pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+.tbl .th{background:var(--fn-head);color:var(--fn-onband);font-size:7pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
  border-right-color:var(--fn-headrule);border-bottom-color:var(--fn-head);display:flex;align-items:flex-end}
 .tbl .th.end{border-right-color:var(--fn-rule)}
 .tbl .th.fn-num{font-variant-numeric:tabular-nums;justify-content:flex-end;text-align:right}
 .tbl .z{background:var(--fn-zebra)}
 .tbl .fn-num{font-variant-numeric:tabular-nums;text-align:right}
 .tbl .stat{background:var(--fn-amber)}
+/* cream 'water level not affected' cells: dark mode keeps the tint, darkens it */
+.dark .tbl .stat{background:color-mix(in srgb, var(--fn-amber) 22%, var(--paper))}
 .tbl .note{background:var(--fn-green)}
 .rule-area{background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 11.5pt,var(--fn-rule) 11.5pt,var(--fn-rule) 12pt);
  line-height:12pt;font-size:8.5pt}
@@ -1942,7 +1950,7 @@ font-size:8.5pt;line-height:1.25;padding:24pt;display:flex;flex-wrap:wrap;gap:24
 .wrow{display:grid;grid-template-columns:repeat(3,1fr);column-gap:8pt}
 .mgrid{flex:1;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:auto;grid-auto-rows:1fr;border-left:.5pt solid var(--fn-rule)}
 .mgrid>div{border-right:.5pt solid var(--fn-rule);border-bottom:.5pt solid var(--fn-rule);font-size:7.5pt;padding:2pt 4pt;display:flex;align-items:center}
-.mgrid .th{background:var(--fn-head);color:var(--paper);font-size:7pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;justify-content:center;border-right-color:var(--fn-headrule);border-bottom-color:var(--fn-head);min-height:13pt}
+.mgrid .th{background:var(--fn-head);color:var(--fn-onband);font-size:7pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;justify-content:center;border-right-color:var(--fn-headrule);border-bottom-color:var(--fn-head);min-height:13pt}
 .mgrid .th.end{border-right-color:var(--fn-rule)}
 .mgrid .rl{font-weight:700;background:var(--fn-zebra)}
 .mgrid .w{background:var(--fn-write)}
@@ -1955,6 +1963,10 @@ font-size:8.5pt;line-height:1.25;padding:24pt;display:flex;flex-wrap:wrap;gap:24
 .fn-info .row{display:flex;column-gap:10pt}
 .fn-info .row>.kv{flex:1 1 0}
 .fn-info .k{color:var(--fn-accent)}
+/* --brand-50 does not flip, so in dark mode the info band stayed light while its
+   values inherited the light ink. Re-tint the band and lift the accent labels. */
+.dark .fn-info{background:color-mix(in srgb, var(--fn-accent) 16%, var(--paper))}
+.dark .fn-info .k{color:color-mix(in srgb, var(--fn-accent) 40%, #fff)}
 .fn-info .v{font-size:10pt}
 .hydbox{border:.5pt solid var(--fn-rule);display:flex;flex-direction:column}
 .hydbox h2{font-family:var(--font-heading);font-size:9.5pt;font-weight:700;padding:5pt 8pt 2pt;color:var(--fn-ink)}
@@ -1981,6 +1993,26 @@ font-size:8.5pt;line-height:1.25;padding:24pt;display:flex;flex-wrap:wrap;gap:24
 
   <body>
     <!-- Sheet 1–2: blank printed field-notes form, no JS, no navigation. -->
+<div class="mockup-note" role="note">
+  <strong>Mockup — not a working page.</strong> Every value is hand-typed sample data for one well
+  (<em>Mesa Redonda Ranch Well 2, WL-0217</em>) shown in the final 8.5×11 sheet layout. No JavaScript,
+  no navigation, no live data.
+  <ul>
+    <li><strong>Not functional:</strong> photo frames are empty placeholders (no frame is drawn when a
+      well has no image); the QR is a drawn glyph standing in for the code the app already generates;
+      the hydrograph is a fixed illustration; “Printed 11/16/2026” is a literal string.</li>
+    <li><strong>Settled:</strong> (1) a well with no prior reading leaves the Previous-DTW line as
+      <em>blank space</em> — no dash, no “N/A”; (2) page 2 <em>is</em> the owner page, and it sits behind
+      the export toggle (BDMS-1508) — off by default, expected often on a single-well preview and
+      rarely on a batch; (3) the photo column shows at most <em>three</em> images, chosen in the app —
+      ordering which three is out of scope here; (4) the QR reuses codes the app already generates
+      rather than being encoded for this sheet.</li>
+    <li><strong>Still open:</strong> (1) in a batch with page 2 switched on, repeat the owner page
+      after every well or once per packet; (2) the BDMS-1584 elements carried from BDMS-1507 that are
+      not drawn here — the “About the Bureau” copy, the staff contact block, the blank “next water
+      level” line.</li>
+  </ul>
+</div>
 <section class="sheet p1" aria-label="Page 1 Field Compilation Notes">
 <header class="hdr1"><h1>Field Compilation Notes</h1><span class="date">Printed 11/16/2026</span></header>
 <div class="top"><div class="fn-main">
