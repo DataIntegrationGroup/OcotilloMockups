@@ -1990,8 +1990,9 @@
           </div>
           <div class="header-actions">
             <a
+              id="pv-open"
               class="btn btn-outline"
-              href="assets/lofi_mockup_field_notes.pdf"
+              href="assets/lofi_mockup_p1.pdf"
               target="_blank"
               rel="noopener"
               >Open in new tab</a
@@ -2004,26 +2005,27 @@
              force a decision about. -->
         <div class="mockup-note">
           <strong>Lo-fi mockup — not functional.</strong> Wells list → well → PDF
-          preview inside the app shell; the preview pane is the real field-notes PDF
-          from assets/lofi_mockup_field_notes.pdf, rendered by the browser's own PDF
-          viewer. It stands in for both pages at once — in the app, page 2 is
-          rendered only when the Owner Sheet toggle is on. “Open in new tab” opens the
-          PDF file itself, so the browser's PDF viewer brings its own toolbar; the
-          print and download icons there belong to Chrome, not to the app.
+          preview inside the app shell; the preview pane is a real lo-fi PDF from
+          assets/lofi_mockup_p1.pdf, rendered by the browser's own PDF viewer. The
+          Owner Sheet toggle swaps the pane to assets/lofi_mockup_p2.pdf, the way the
+          app adds page 2. “Open in new tab” opens whichever PDF is in the pane, so
+          the browser's PDF viewer brings its own toolbar; the print and download
+          icons there belong to Chrome, not to the app.
           Open questions flagged for review:
           <ul>
             <li>Own route with Wells / &lt;well&gt; / PDF Preview, or a tab on the well page?
               (The chemistry well-details mockup's “Field Sheet PDF” header button is the
               likely way in.)</li>
-            <li>Does the rail show per-well report options, or report type only?</li>
-            <li>Download in the header, “Email…” in the rail, “Open in new tab” a plain
-              link to the PDF file — one place each. Right split?</li>
-            <li>The export-options panel above the viewer (Optional Fields, Owner Sheet,
-              Reset) overlaps the rail. Keep it, or move those controls to the rail?</li>
             <li>Which actions do viewers need? The app has one header action today
               (WellPDFDownloadButton, editors only); “Email…” and “Open in new tab”
               are new.</li>
           </ul>
+          <p><strong>Settled in this drawing:</strong> the rail carries report settings only —
+          an Owner Sheet toggle, Report type, Format, and a single “Email…” action in its footer.
+          Download PDF
+          sits in the page header with “Open in new tab” beside it as a plain link to the PDF
+          file, so each action appears once. The export-options panel (Optional Fields, Owner
+          Sheet, Reset) is gone: the rail replaced it.</p>
         </div>
 
         <div class="pv-layout">
@@ -2041,13 +2043,14 @@
             <div class="card-body pv-bare">
               <div class="pdf-frame">
                 <iframe
-                  src="assets/lofi_mockup_field_notes.pdf"
+                  id="pv-frame"
+                  src="assets/lofi_mockup_p1.pdf"
                   title="Field compilation notes preview — WL-0217"
                 ></iframe>
               </div>
               <div class="pdf-fallback helper">
                 Preview blank? This browser is not showing PDFs inline —
-                <a href="assets/lofi_mockup_field_notes.pdf">Open the field notes PDF</a>.
+                <a id="pv-fallback" href="assets/lofi_mockup_p1.pdf">Open the field notes PDF</a>.
               </div>
             </div>
           </div>
@@ -2061,17 +2064,19 @@
             </div>
             <div class="card-body">
               <div class="field">
+                <div class="field-label">Owner Sheet</div>
+                <div>
+                  <button type="button" class="toggle-chip" aria-pressed="false" aria-label="Owner Sheet">Off</button>
+                </div>
+                <div class="helper">Adds page 2.</div>
+              </div>
+              <div class="field">
                 <div class="field-label">Report type</div>
                 <div class="field-value">Field compilation notes</div>
               </div>
               <div class="field">
                 <div class="field-label">Format</div>
                 <div class="field-value num">Letter</div>
-              </div>
-              <div class="field">
-                <div class="field-label">Pages</div>
-                <div class="field-value num">1–2</div>
-                <div class="helper">Page 2 only when Owner Sheet is on.</div>
               </div>
             </div>
             <div class="card-footer pv-rail-actions">
@@ -2081,5 +2086,30 @@
         </div>
       </div>
     </div>
+    <script>
+      // mockup only: the Owner Sheet chip flips colour and swaps the preview to
+      // page 2's PDF. Off = page 1 alone, on = the version that adds the owner sheet.
+      (function () {
+        var pages = {
+          off: "assets/lofi_mockup_p1.pdf",
+          on: "assets/lofi_mockup_p2.pdf",
+        };
+        var frame = document.getElementById("pv-frame");
+        var fallback = document.getElementById("pv-fallback");
+        var opener = document.getElementById("pv-open");
+
+        document.querySelectorAll(".toggle-chip").forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            var on = chip.classList.toggle("on");
+            chip.setAttribute("aria-pressed", on ? "true" : "false");
+            chip.textContent = on ? "On" : "Off";
+            var file = on ? pages.on : pages.off;
+            if (frame) frame.src = file;
+            if (fallback) fallback.href = file;
+            if (opener) opener.href = file;
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
