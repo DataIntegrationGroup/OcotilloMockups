@@ -479,6 +479,22 @@
         color: var(--muted-foreground);
         margin-top: 6px;
       }
+      /* Header chips — mirrors WellStatusChips.tsx: purpose, release status, project. */
+      .page-badges {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .page-badges .badge {
+        height: 22px;
+        padding: 0 10px;
+        font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
       .header-actions {
         display: flex;
         flex-wrap: wrap;
@@ -506,6 +522,7 @@
         font-size: 14px;
         font-weight: 500;
         white-space: nowrap;
+        text-decoration: none;
         cursor: pointer;
         transition: all 0.12s ease;
         background: transparent;
@@ -1964,11 +1981,21 @@
         <div class="page-header">
           <div>
             <div class="page-title">Mesa Redonda Ranch Well 2</div>
-            <div class="page-subtitle">WL-0217 · Field compilation notes · 2 pages</div>
+            <div class="page-subtitle">WL-0217</div>
+            <div class="page-badges">
+              <span class="badge badge-info" title="Well purpose">MONITORING</span>
+              <span class="badge badge-success" title="Visibility: public">PUBLIC</span>
+              <span class="badge badge-outline" title="View wells in this project">MESA REDONDA RANCH</span>
+            </div>
           </div>
           <div class="header-actions">
-            <button class="btn btn-outline">Open in new tab</button>
-            <button class="btn btn-outline">Print</button>
+            <a
+              class="btn btn-outline"
+              href="assets/lofi_mockup_field_notes.pdf"
+              target="_blank"
+              rel="noopener"
+              >Open in new tab</a
+            >
             <button class="btn btn-default">Download PDF</button>
           </div>
         </div>
@@ -1977,29 +2004,25 @@
              force a decision about. -->
         <div class="mockup-note">
           <strong>Lo-fi mockup — not functional.</strong> Wells list → well → PDF
-          preview inside the app shell; the preview pane is the real 2-page
-          field-notes PDF from assets/lofi_mockup_field_notes.pdf, rendered by the
-          browser's own PDF viewer.
+          preview inside the app shell; the preview pane is the real field-notes PDF
+          from assets/lofi_mockup_field_notes.pdf, rendered by the browser's own PDF
+          viewer. It stands in for both pages at once — in the app, page 2 is
+          rendered only when the Owner Sheet toggle is on. “Open in new tab” opens the
+          PDF file itself, so the browser's PDF viewer brings its own toolbar; the
+          print and download icons there belong to Chrome, not to the app.
           Open questions flagged for review:
           <ul>
             <li>Own route with Wells / &lt;well&gt; / PDF Preview, or a tab on the well page?
               (The chemistry well-details mockup's “Field Sheet PDF” header button is the
               likely way in.)</li>
             <li>Does the rail show per-well report options, or report type only?</li>
-            <li>Download / email entry points — header only, or rail too?</li>
-            <li>The app labels this record by its name, WL-0217: the breadcrumb
-              (AppShell.tsx, recordName) and the title (WellShowTitle, well.name)
-              both print the Point ID. The chemistry well-details mockup titles a well
-              “WL-0433 — Santa Ana Seep Spring”. Show the site name here, the Point ID, or both?</li>
-            <li>Today's preview page opens a “PDF Export Options” panel above the viewer
-              (Density, Optional Fields, Single Page Mode, Reset). The field-notes report
-              is implemented at a single density — there is no density choice to make, and
-              the Density control is being removed as an option. That leaves Optional
-              Fields, the owner-page toggle (BDMS-1508) and Reset. Keep the panel, move it
-              to the rail, or drop it for the field-notes report?</li>
-            <li>The app's header has a single Download action (WellPDFDownloadButton,
-              editors only). “Open in new tab”, “Print” and “Email…” do not exist yet —
-              wanted, and for which roles?</li>
+            <li>Download in the header, “Email…” in the rail, “Open in new tab” a plain
+              link to the PDF file — one place each. Right split?</li>
+            <li>The export-options panel above the viewer (Optional Fields, Owner Sheet,
+              Reset) overlaps the rail. Keep it, or move those controls to the rail?</li>
+            <li>Which actions do viewers need? The app has one header action today
+              (WellPDFDownloadButton, editors only); “Email…” and “Open in new tab”
+              are new.</li>
           </ul>
         </div>
 
@@ -2043,17 +2066,16 @@
               </div>
               <div class="field">
                 <div class="field-label">Format</div>
-                <div class="field-value num">Letter · 2 pages</div>
+                <div class="field-value num">Letter</div>
               </div>
               <div class="field">
                 <div class="field-label">Pages</div>
                 <div class="field-value num">1–2</div>
+                <div class="helper">Page 2 only when Owner Sheet is on.</div>
               </div>
             </div>
             <div class="card-footer pv-rail-actions">
-              <button class="btn btn-default">Download PDF</button>
               <button class="btn btn-ghost btn-sm">Email…</button>
-              <span class="badge badge-outline">placeholder</span>
             </div>
           </div>
         </div>
