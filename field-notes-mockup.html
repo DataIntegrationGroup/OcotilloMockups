@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lo-fi Mockup — Field Notes · Well Record · Ocotillo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- design-system:start — generated from design-system/ocotillo.css
+             by design-system/sync.py. Do not edit this block by hand. -->
+    <style>
+      /* ============================================================================
+       * Ocotillo Mockup Design System
+       * ----------------------------------------------------------------------------
+       * Derived from the real application. Source of truth, in priority order:
+       *
+       *   OcotilloUI/src/index.css   → design tokens (shadcn/Tailwind layer)
+       *   OcotilloUI/src/theme.ts    → design tokens (MUI layer) + brand ramp
+       *   OcotilloUI/src/components/ui/*.tsx → component specs (button, badge,
+       *                                        card, table, input, checkbox)
+       *
+       * When the app changes, change this file. Do not fork values into a mockup.
+       * See README.md for the conventions and the app→mockup mapping table.
+       * ========================================================================== */
+
+      /* ── Reset ───────────────────────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ── Tokens ──────────────────────────────────────────────────────────────────
+       * Mirrors src/index.css :root. Written as hex rather than oklch so mockup
+       * authors can read them; the values are the same colors.
+       * ------------------------------------------------------------------------- */
+      :root {
+        /* Ocotillo brand blue — the one ramp that is NOT from Tailwind.
+           Sampled from the pixel water-splash mark and the desert sky in the
+           masthead photo. Hue ~235–245: water/desert-sky blue, no violet cast. */
+        --brand-50: #eff8fd;
+        --brand-100: #dceffb;
+        --brand-200: #b8dff6;
+        --brand-300: #83c6ee;
+        --brand-400: #47a6dd;
+        --brand-500: #1e88c4;
+        --brand-600: #0e6da8;
+        --brand-700: #0f5786;
+        --brand-800: #12496e;
+        --brand-900: #143d5b;
+        --brand-950: #0d273c;
+
+        /* Surfaces */
+        --background: #fafafa; /* zinc-50  — page */
+        --paper: #ffffff; /* white    — cards, popovers, grids */
+        --card: #ffffff;
+        --wrapper: #fafafa; /* zinc-50  — inset wells, placeholders */
+        --popover: #ffffff;
+
+        /* Text */
+        --foreground: #0f172a; /* slate-900 */
+        --muted-foreground: #64748b; /* slate-500 */
+        --muted: #f5f5f5; /* neutral-100 — hover/selected fills */
+        --accent: #f0f0f0; /* neutral-150 — hover/active */
+
+        /* Lines.
+           Two different line colors exist in the app and both are correct:
+             --border  neutral-200, the shadcn/Tailwind border token (tables, inputs)
+             --divider stone-300,   MUI's palette.divider (DataGrid, MUI rules)
+           --ring-card is `ring-1 ring-foreground/10`, how shadcn Cards are outlined. */
+        --border: #e5e5e5;
+        --divider: #d6d3d1;
+        --input-border: #e5e5e5;
+        --ring: #0e6da8;
+        --ring-card: rgba(15, 23, 42, 0.1);
+
+        /* Primary — brand-600 on light surfaces. `--primary-dark` is the
+           hover/emphasis slot, not "a darker primary". */
+        --primary: var(--brand-600);
+        --primary-dark: var(--brand-700);
+        --primary-light: var(--brand-300);
+        --primary-foreground: #ffffff;
+        --primary-bg: var(--brand-50);
+
+        /* Secondary — amber. Deliberately NOT the ocotillo bloom: the bloom sits
+           11.6 degrees of hue from `warning` and reads as an alarm in UI chrome. */
+        --secondary: #d97706; /* amber-600 */
+        --secondary-light: #fcd34d; /* amber-300 */
+        --secondary-dark: #92400e; /* amber-800 */
+        --secondary-foreground: #ffffff;
+
+        /* Semantic status */
+        --destructive: #dc2626; /* red-600     */
+        --success: #047857; /* emerald-700 */
+        --warning: #f97316; /* orange-500  */
+        --info: #0f766e; /* teal-700 — teal, not cyan: cyan reads as the brand
+                                      blue when an info alert sits by a primary button */
+        /* orange-500 fails AA as text on white, so warning LABELS use orange-700.
+           Dark mode flips this: the surface is dark, so the text steps lighter. */
+        --warning-text: #c2410c; /* orange-700 */
+        --destructive-foreground: #ffffff;
+        --success-foreground: #ffffff;
+        --warning-foreground: #ffffff;
+        --info-foreground: #ffffff;
+
+        /* Brand identity — NEVER wire these to a semantic slot. Brand surfaces
+           only: favicon, artwork, splash. Mode-independent by design. */
+        --bloom: #e2552e;
+        --sand: #f2e9d2;
+
+        /* Radius — --radius is the shadcn scale root (0.375rem). */
+        --radius: 6px;
+        --radius-sm: 2px;
+        --radius-md: 4px;
+        --radius-lg: 6px; /* buttons, inputs  (rounded-lg)  */
+        --radius-xl: 10px; /* cards            (rounded-xl)  */
+        --radius-4xl: 22px; /* badges           (rounded-4xl) */
+
+        /* Type */
+        --font-sans: "Public Sans Variable", "Public Sans", system-ui, sans-serif;
+        --font-heading: "Outfit Variable", "Outfit", system-ui, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+        /* Chrome dimensions — mockup-only, no app equivalent to sync against. */
+        --appbar-h: 52px;
+        --sidebar-w: 260px;
+
+        /* Elevation. The app is a flat, ring-outlined UI: cards carry a ring, not
+           a shadow. Shadows are reserved for things that genuinely float. */
+        --shadow-popover: 0 18px 44px rgba(15, 23, 42, 0.14);
+        --shadow-paper: 0 10px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.07);
+      }
+
+      /* Dark mode — add class="dark" to <html>, same switch the app uses. */
+      .dark {
+        --background: #18181b; /* zinc-900 */
+        --paper: #3f3f46; /* zinc-700 */
+        --card: #3f3f46;
+        --wrapper: #27272a; /* zinc-800 */
+        --popover: #3f3f46;
+
+        --foreground: #f1f5f9; /* slate-100 */
+        --muted-foreground: #94a3b8; /* slate-400 */
+        --muted: #27272a;
+        --accent: #27272a;
+
+        --border: #3f3f46;
+        --divider: #3f3f46;
+        --input-border: #27272a;
+        --ring: var(--brand-300);
+        --ring-card: rgba(255, 255, 255, 0.12);
+
+        /* Primary steps UP the ramp in dark mode, and --primary-dark (the
+           hover/emphasis slot) has to resolve LIGHTER than --primary. */
+        --primary: var(--brand-300);
+        --primary-dark: var(--brand-200);
+        --primary-light: var(--brand-400);
+        --primary-foreground: #18181b;
+        --primary-bg: var(--brand-900);
+
+        --secondary: #fcd34d;
+        --secondary-foreground: #18181b;
+
+        --destructive: #f87171; /* red-400     */
+        --success: #6ee7b7; /* emerald-300 */
+        --warning: #fdba74; /* orange-300  */
+        --warning-text: #fdba74; /* orange-300 — light text on a dark surface */
+        --info: #5eead4; /* teal-300    */
+        --destructive-foreground: #18181b;
+        --success-foreground: #18181b;
+        --warning-foreground: #18181b;
+        --info-foreground: #18181b;
+      }
+
+      /* ── Base ────────────────────────────────────────────────────────────────── */
+      body {
+        font-family: var(--font-sans);
+        background: var(--background);
+        color: var(--foreground);
+        font-size: 14px; /* MUI body2 — the app's working text size */
+        line-height: 1.6;
+      }
+
+      /* ── Typography ──────────────────────────────────────────────────────────────
+       * Matches theme.ts `typography`. Headings are Outfit; everything else is
+       * Public Sans. Only the variants mockups actually use are defined here.
+       * ------------------------------------------------------------------------- */
+      .h1,
+      .h2,
+      .h3,
+      .h4,
+      .h5,
+      .h6 {
+        font-family: var(--font-heading);
+      }
+      .h1 {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .h2 {
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.5;
+      }
+      .h3 {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1.5;
+      }
+      .h4 {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .h5 {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .h6 {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+      .deck {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      .body1 {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .body2 {
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .caption {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .overline {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        letter-spacing: 0.03em;
+        font-variant-numeric: tabular-nums;
+      }
+      .muted {
+        color: var(--muted-foreground);
+      }
+      .num {
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── App bar ─────────────────────────────────────────────────────────────────
+       * AppBar is transparent/elevation 0 over background.default in the app.
+       * ------------------------------------------------------------------------- */
+      .appbar {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: var(--background);
+        border-bottom: 1px solid var(--border);
+        height: var(--appbar-h);
+        display: flex;
+        align-items: center;
+        padding: 0 16px 0 0;
+        gap: 12px;
+      }
+      .appbar-hamburger {
+        width: var(--appbar-h);
+        height: var(--appbar-h);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .appbar-title {
+        font-family: var(--font-heading);
+        font-weight: 800;
+        font-size: 1.05rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--foreground);
+      }
+      .appbar-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .appbar-search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-lg);
+        padding: 5px 12px;
+        font-size: 13px;
+        color: var(--muted-foreground);
+        background: var(--paper);
+        width: 220px;
+        cursor: text;
+      }
+      .appbar-search-kbd {
+        margin-left: auto;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 1px 5px;
+        font-size: 10px;
+        color: var(--muted-foreground);
+        background: var(--wrapper);
+      }
+      .appbar-icon-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+      }
+      .appbar-icon-btn:hover {
+        background: var(--muted);
+      }
+      .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      /* ── Layout & sidebar ────────────────────────────────────────────────────── */
+      .layout {
+        display: flex;
+        min-height: calc(100vh - var(--appbar-h));
+      }
+      .sidebar {
+        width: var(--sidebar-w);
+        flex-shrink: 0;
+        background: var(--background);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding-top: 8px;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 16px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .nav-item:hover {
+        background: var(--accent);
+        color: var(--foreground);
+      }
+      .nav-item.active {
+        color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+        font-weight: 600;
+      }
+      .nav-item.is-new::after {
+        content: "NEW";
+        margin-left: auto;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--primary);
+        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        border-radius: var(--radius-sm);
+        padding: 0 4px;
+      }
+      .nav-icon {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+      }
+      .nav-divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 6px 0;
+      }
+      .sidebar-footer {
+        margin-top: auto;
+        padding: 12px 0 8px;
+        border-top: 1px solid var(--border);
+      }
+      .sidebar-footer-link {
+        display: block;
+        padding: 6px 16px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        cursor: pointer;
+      }
+      .sidebar-footer-link:hover {
+        color: var(--foreground);
+      }
+      .main {
+        flex: 1;
+        padding: 20px 24px;
+        overflow: auto;
+        min-width: 0;
+      }
+
+      /* ── Breadcrumb ──────────────────────────────────────────────────────────── */
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        color: var(--muted-foreground);
+        margin-bottom: 10px;
+      }
+      .breadcrumb a {
+        color: var(--muted-foreground);
+        text-decoration: none;
+      }
+      .breadcrumb a:hover {
+        text-decoration: underline;
+        color: var(--foreground);
+      }
+      .breadcrumb-sep {
+        color: var(--border);
+      }
+
+      /* ── Page header ─────────────────────────────────────────────────────────────
+       * OcotilloPageTitle renders Typography h3 with fontWeight 700, lineHeight 1.1.
+       * ------------------------------------------------------------------------- */
+      .page-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .page-title {
+        font-family: var(--font-heading);
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--foreground);
+      }
+      .page-subtitle {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        margin-top: 6px;
+      }
+      .header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      /* ── Buttons ─────────────────────────────────────────────────────────────────
+       * ui/button.tsx: rounded-lg, text-sm, font-medium, h-8 default.
+       * Variants map 1:1 to the app's cva variants.
+       * ------------------------------------------------------------------------- */
+      .btn {
+        font-family: var(--font-sans);
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        height: 32px;
+        padding: 0 10px;
+        border-radius: var(--radius-lg);
+        border: 1px solid transparent;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.12s ease;
+        background: transparent;
+        color: var(--foreground);
+      }
+      .btn:focus-visible {
+        outline: none;
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .btn-default {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .btn-default:hover {
+        background: color-mix(in oklab, var(--primary) 80%, transparent);
+      }
+      .btn-outline {
+        border-color: var(--border);
+        background: var(--background);
+      }
+      .btn-outline:hover {
+        background: var(--muted);
+      }
+      .btn-ghost {
+        background: transparent;
+      }
+      .btn-ghost:hover {
+        background: var(--muted);
+      }
+      .btn-secondary {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+      }
+      .btn-destructive {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+      }
+      .btn-destructive:hover {
+        background: color-mix(in oklab, var(--destructive) 20%, transparent);
+      }
+      .btn-link {
+        background: transparent;
+        color: var(--primary);
+        text-underline-offset: 4px;
+      }
+      .btn-link:hover {
+        text-decoration: underline;
+      }
+      /* Primary-outlined. MUI's `contained secondary` — an outlined button in all
+         but name — which the app still uses for secondary page actions. */
+      .btn-primary-outline {
+        background: var(--paper);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      .btn-primary-outline:hover {
+        background: var(--brand-50);
+        color: var(--primary-dark);
+        border-color: var(--primary-dark);
+      }
+
+      .btn-xs {
+        height: 24px;
+        padding: 0 8px;
+        font-size: 12px;
+        border-radius: var(--radius-md);
+      }
+      .btn-sm {
+        height: 28px;
+        padding: 0 10px;
+        font-size: 12.8px;
+      }
+      .btn-lg {
+        height: 36px;
+        padding: 0 10px;
+      }
+      .btn-icon {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+      }
+
+      /* ── Cards ───────────────────────────────────────────────────────────────────
+       * ui/card.tsx: rounded-xl, bg-card, ring-1 ring-foreground/10, NO shadow,
+       * --card-spacing 16px (12px at size=sm).
+       * ------------------------------------------------------------------------- */
+      .card {
+        --card-spacing: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: var(--card-spacing);
+        padding: var(--card-spacing) 0;
+        overflow: hidden;
+        border-radius: var(--radius-xl);
+        background: var(--card);
+        box-shadow: 0 0 0 1px var(--ring-card);
+        font-size: 14px;
+      }
+      .card.card-sm {
+        --card-spacing: 12px;
+      }
+      .card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 var(--card-spacing);
+      }
+      .card-header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+      }
+      .card-header-icon {
+        font-size: 16px;
+        color: var(--primary);
+      }
+      .card-title {
+        font-family: var(--font-heading);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.375;
+        color: var(--foreground);
+      }
+      .card-description,
+      .card-subtitle {
+        font-size: 13px;
+        color: var(--muted-foreground);
+      }
+      .card-content,
+      .card-body {
+        padding: 0 var(--card-spacing);
+        min-width: 0;
+      }
+      .card-footer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: var(--card-spacing);
+        margin-bottom: calc(-1 * var(--card-spacing));
+        border-top: 1px solid var(--border);
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .card-placeholder {
+        padding: 16px;
+        min-height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        font-style: italic;
+        background: var(--wrapper);
+        margin: 0 var(--card-spacing);
+        border-radius: var(--radius-md);
+        border: 1px dashed var(--border);
+      }
+
+      /* ── Grid helpers ────────────────────────────────────────────────────────── */
+      .grid {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .g2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .g3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .g4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .g-main-aside {
+        grid-template-columns: 2fr minmax(0, 1fr);
+      }
+      .span2 {
+        grid-column: span 2;
+      }
+      .span3 {
+        grid-column: span 3;
+      }
+
+      /* ── Badges / chips ──────────────────────────────────────────────────────────
+       * ui/badge.tsx: h-5, rounded-4xl, px-2, text-xs, font-medium.
+       * The app's tint formula is `bg-<color>/10` with a `/30` border — do not
+       * hand-pick 50/200 hex pairs, they drift from the token the moment it moves.
+       * ------------------------------------------------------------------------- */
+      .badge,
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 20px;
+        width: fit-content;
+        flex-shrink: 0;
+        padding: 2px 8px;
+        border-radius: var(--radius-4xl);
+        border: 1px solid transparent;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .badge-default {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .badge-secondary {
+        background: var(--secondary);
+        color: var(--secondary-foreground);
+      }
+      .badge-outline {
+        border-color: var(--border);
+        color: var(--foreground);
+      }
+      .badge-ghost {
+        color: var(--muted-foreground);
+      }
+
+      /* Semantic tints — one formula, applied per token. */
+      .badge-destructive,
+      .badge-error {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+      }
+      .badge-warning {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        color: var(--warning-text);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+      }
+      .badge-success,
+      .badge-filter-emerald {
+        background: color-mix(in oklab, var(--success) 10%, transparent);
+        color: var(--success);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+      }
+      .badge-info {
+        background: color-mix(in oklab, var(--info) 10%, transparent);
+        color: var(--info);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+      }
+      .badge-filter,
+      .badge-primary {
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+      }
+      .badge-neutral,
+      .badge-muted {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        border-color: var(--border);
+      }
+
+      /* ── Domain badges ───────────────────────────────────────────────────────────
+       * Water-chemistry result flags. These are Ocotillo-specific meanings mapped
+       * onto the semantic tints above — never onto new one-off colors.
+       *   MCL   exceeds a health-based limit          → destructive
+       *   SMCL  exceeds a taste/odor/staining limit   → warning
+       *   ND    not detected, value is the det. limit → neutral
+       *   Calc. calculated, not directly measured     → neutral
+       * ------------------------------------------------------------------------- */
+      .chip-mcl {
+        background: color-mix(in oklab, var(--destructive) 10%, transparent);
+        color: var(--destructive);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+      }
+      .chip-smcl,
+      .chip-nd,
+      .chip-warn {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        color: var(--warning-text);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+      }
+      .chip-ok {
+        background: color-mix(in oklab, var(--success) 10%, transparent);
+        color: var(--success);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+      }
+      .chip-calc,
+      .chip-neutral {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        border-color: var(--border);
+      }
+      .chip-info {
+        background: color-mix(in oklab, var(--info) 10%, transparent);
+        color: var(--info);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+      }
+      .chip-primary {
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+      }
+
+      /* ── Tables ──────────────────────────────────────────────────────────────────
+       * Two table idioms exist in the app, and they look different on purpose:
+       *
+       *   .datagrid — MUI X DataGrid (theme.ts MuiDataGrid). Bordered container,
+       *               5px radius, 13px, tabular-nums. Use for record lists.
+       *   .table    — ui/table.tsx shadcn table. No outer border, 14px, row
+       *               border-b only. Use for tables inside a card.
+       * ------------------------------------------------------------------------- */
+      .datagrid {
+        border: 1px solid var(--divider);
+        border-radius: 5px;
+        overflow: hidden;
+        background: var(--paper);
+        font-size: 13px;
+        width: 100%;
+      }
+      .datagrid table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .datagrid thead th {
+        background: var(--paper);
+        border-bottom: 1px solid var(--divider);
+        padding: 0 12px;
+        height: 40px;
+        text-align: left;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--foreground);
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .datagrid tbody td {
+        padding: 0 12px;
+        height: 44px;
+        border-bottom: 1px solid var(--divider);
+        vertical-align: middle;
+        color: var(--foreground);
+        font-size: 13px;
+        font-variant-numeric: tabular-nums;
+      }
+      .datagrid tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .datagrid tbody tr:hover td {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .datagrid tbody tr.selected td {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .datagrid.dense tbody td {
+        height: 34px;
+      }
+      .datagrid.scroll-x {
+        overflow-x: auto;
+      }
+      /* Crosstab: first column pinned, parameters run across. */
+      .datagrid.crosstab {
+        overflow-x: auto;
+      }
+      .datagrid.crosstab th:first-child,
+      .datagrid.crosstab td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--paper);
+        z-index: 1;
+        box-shadow: 1px 0 0 var(--divider);
+      }
+      .datagrid.crosstab tbody tr:hover td:first-child {
+        background: var(--muted);
+      }
+      .grid-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 16px;
+        padding: 8px 12px;
+        border-top: 1px solid var(--divider);
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .sort-caret {
+        color: var(--muted-foreground);
+        font-size: 10px;
+        margin-left: 3px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        caption-side: bottom;
+      }
+      .table thead tr {
+        border-bottom: 1px solid var(--border);
+      }
+      .table th {
+        height: 40px;
+        padding: 0 8px;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: 500;
+        white-space: nowrap;
+        color: var(--foreground);
+      }
+      .table td {
+        padding: 8px;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--border);
+      }
+      .table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .table tbody tr:hover {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+
+      /* Cell furniture shared by both idioms. */
+      .cell-note {
+        display: block;
+        margin-top: 3px;
+        font-size: 10px;
+        color: var(--muted-foreground);
+      }
+      .unit-label {
+        display: block;
+        margin-top: 2px;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Forms ───────────────────────────────────────────────────────────────── */
+      .form-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+      }
+      .label,
+      .field-label-sm {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .input,
+      .select,
+      textarea.input {
+        font-family: var(--font-sans);
+        font-size: 13px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-lg);
+        padding: 0 10px;
+        height: 32px;
+        background: var(--paper);
+        color: var(--foreground);
+        min-width: 140px;
+      }
+      textarea.input {
+        height: auto;
+        padding: 8px 10px;
+        width: 100%;
+        resize: vertical;
+        line-height: 1.5;
+      }
+      .input:focus,
+      .select:focus,
+      textarea.input:focus {
+        outline: none;
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+      }
+      .input:disabled,
+      .select:disabled {
+        background: var(--muted);
+        color: var(--muted-foreground);
+        cursor: not-allowed;
+      }
+      .input-mono {
+        font-family: var(--font-mono);
+        letter-spacing: 0.03em;
+      }
+      .helper {
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .error-text {
+        font-size: 11px;
+        color: var(--destructive);
+      }
+
+      /* Checkbox — ui/checkbox.tsx: size-4, rounded-sm, primary when checked. */
+      .box,
+      .row-check {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--input-border);
+        background: var(--paper);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        line-height: 1;
+        color: transparent;
+        cursor: pointer;
+      }
+      .box.on,
+      .row-check.on,
+      .check-item.on .box {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .check-list {
+        display: grid;
+        gap: 2px;
+      }
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        padding: 6px 8px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+      }
+      .check-item:hover {
+        background: var(--muted);
+      }
+      .check-item .box {
+        margin-top: 3px;
+      }
+      .check-text {
+        font-size: 13px;
+        color: var(--foreground);
+      }
+      .check-sub {
+        display: block;
+        font-size: 11px;
+        color: var(--muted-foreground);
+        line-height: 1.4;
+      }
+
+      /* Radio option cards. */
+      .opt-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .opt-card {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 11px 13px;
+        background: var(--paper);
+        cursor: pointer;
+      }
+      .opt-card:hover {
+        background: var(--muted);
+      }
+      .opt-card.on {
+        border-color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .opt-radio {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1.5px solid var(--muted-foreground);
+        flex-shrink: 0;
+        margin-top: 3px;
+        position: relative;
+      }
+      .opt-card.on .opt-radio {
+        border-color: var(--primary);
+      }
+      .opt-card.on .opt-radio::after {
+        content: "";
+        position: absolute;
+        inset: 3px;
+        border-radius: 50%;
+        background: var(--primary);
+      }
+      .opt-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--foreground);
+      }
+      .opt-desc {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+        line-height: 1.45;
+      }
+
+      /* Dropzone. */
+      .dropzone {
+        border: 1.5px dashed color-mix(in oklab, var(--primary) 40%, transparent);
+        border-radius: var(--radius-lg);
+        background: color-mix(in oklab, var(--primary) 6%, transparent);
+        padding: 22px 16px;
+        text-align: center;
+        cursor: pointer;
+      }
+      .dropzone:hover {
+        background: color-mix(in oklab, var(--primary) 12%, transparent);
+      }
+      .dropzone-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--primary-dark);
+      }
+      .dropzone-sub {
+        font-size: 11.5px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Alerts ──────────────────────────────────────────────────────────────── */
+      .alert {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        border-radius: var(--radius-lg);
+        border: 1px solid;
+        padding: 9px 12px;
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+      .alert-info {
+        background: color-mix(in oklab, var(--info) 8%, transparent);
+        border-color: color-mix(in oklab, var(--info) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-primary {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-ok,
+      .alert-success {
+        background: color-mix(in oklab, var(--success) 8%, transparent);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-warn {
+        background: color-mix(in oklab, var(--warning) 10%, transparent);
+        border-color: color-mix(in oklab, var(--warning) 30%, transparent);
+        color: var(--foreground);
+      }
+      .alert-error {
+        background: color-mix(in oklab, var(--destructive) 8%, transparent);
+        border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+        color: var(--foreground);
+      }
+
+      /* ── Tabs ────────────────────────────────────────────────────────────────── */
+      .tabs-bar {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 16px;
+      }
+      .tab {
+        padding: 10px 16px;
+        font-size: 13.5px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        white-space: nowrap;
+      }
+      .tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+      .tab:hover:not(.active) {
+        color: var(--foreground);
+        background: var(--muted);
+      }
+      .tab-panel {
+        display: none;
+      }
+      .tab-panel.active {
+        display: block;
+      }
+
+      /* ── Toolbar ─────────────────────────────────────────────────────────────── */
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .toolbar-label {
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .toolbar-select,
+      .toolbar-search {
+        font-family: var(--font-sans);
+        font-size: 12px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius-md);
+        padding: 4px 8px;
+        background: var(--paper);
+        color: var(--foreground);
+      }
+      .toolbar-search {
+        width: 200px;
+      }
+      .toolbar-spacer {
+        margin-left: auto;
+      }
+      .toggle-chip {
+        font-size: 12px;
+        border: 1px solid var(--border);
+        background: var(--paper);
+        color: var(--muted-foreground);
+        border-radius: var(--radius-4xl);
+        padding: 3px 11px;
+        cursor: pointer;
+      }
+      .toggle-chip.on {
+        border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+      }
+
+      /* ── Stat strip ──────────────────────────────────────────────────────────── */
+      .stat-strip {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--paper);
+      }
+      .stat-cell {
+        flex: 1;
+        padding: 9px 13px;
+        border-left: 1px solid var(--border);
+        min-width: 0;
+      }
+      .stat-cell:first-child {
+        border-left: none;
+      }
+      .stat-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .stat-value {
+        font-family: var(--font-heading);
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: var(--foreground);
+        font-variant-numeric: tabular-nums;
+      }
+      .stat-note {
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Key/value field grid ────────────────────────────────────────────────── */
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .field-cell {
+        padding: 10px 16px;
+        border-left: 1px solid var(--border);
+        min-width: 0;
+      }
+      .field-cell:first-child {
+        border-left: none;
+      }
+      .field-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        margin-bottom: 2px;
+      }
+      .field-value {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--foreground);
+      }
+
+      /* ── Step rail (wizard) ──────────────────────────────────────────────────── */
+      .steps {
+        display: flex;
+        align-items: stretch;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .step {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 16px;
+        border-left: 1px solid var(--border);
+        cursor: pointer;
+        min-width: 0;
+      }
+      .step:first-child {
+        border-left: none;
+      }
+      .step:hover {
+        background: var(--muted);
+      }
+      .step-num {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--muted);
+        color: var(--muted-foreground);
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .step-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted-foreground);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .step-sub {
+        font-size: 11px;
+        font-weight: 400;
+        color: var(--muted-foreground);
+      }
+      .step.active {
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .step.active .step-num {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .step.active .step-label {
+        color: var(--primary);
+      }
+      .step.done .step-num {
+        background: color-mix(in oklab, var(--success) 12%, transparent);
+        border-color: color-mix(in oklab, var(--success) 30%, transparent);
+        color: var(--success);
+      }
+      .step-panel {
+        display: none;
+      }
+      .step-panel.active {
+        display: block;
+      }
+
+      /* ── Distribution meter ──────────────────────────────────────────────────────
+       * Where one value sits inside a reference distribution. Used for
+       * "this well vs. nearby wells" comparisons.
+       * ------------------------------------------------------------------------- */
+      .meter {
+        min-width: 150px;
+        padding: 4px 0;
+      }
+      .meter-track {
+        position: relative;
+        height: 8px;
+        border-radius: 4px;
+        background: var(--muted);
+        border: 1px solid var(--border);
+      }
+      .meter-band {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        border-radius: 4px;
+        background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+      }
+      .meter-median {
+        position: absolute;
+        top: -3px;
+        bottom: -3px;
+        width: 2px;
+        background: var(--muted-foreground);
+      }
+      .meter-mark {
+        position: absolute;
+        top: -5px;
+        width: 3px;
+        height: 16px;
+        border-radius: 2px;
+        background: var(--primary);
+      }
+      .meter-mark.over {
+        background: var(--destructive);
+      }
+      .meter-limit {
+        position: absolute;
+        top: -4px;
+        bottom: -4px;
+        width: 0;
+        border-left: 2px dashed var(--destructive);
+      }
+      .meter-scale {
+        display: flex;
+        justify-content: space-between;
+        font-size: 9.5px;
+        color: var(--muted-foreground);
+        margin-top: 3px;
+      }
+
+      /* ── Section rule ────────────────────────────────────────────────────────── */
+      .section-rule {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 26px 0 14px;
+      }
+      .section-rule::after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid var(--border);
+      }
+      .section-rule-title {
+        font-family: var(--font-heading);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Legend ──────────────────────────────────────────────────────────────── */
+      .legend {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding-top: 12px;
+        margin-top: 10px;
+        border-top: 1px solid var(--border);
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      /* ── Empty / state box ───────────────────────────────────────────────────── */
+      .state-box {
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--wrapper);
+        padding: 26px 16px;
+        text-align: center;
+        font-size: 12.5px;
+        color: var(--muted-foreground);
+      }
+
+      /* ── Popover / autocomplete ──────────────────────────────────────────────── */
+      .combo-wrap {
+        position: relative;
+      }
+      .popper {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        right: 0;
+        min-width: 240px;
+        max-height: 230px;
+        overflow: auto;
+        z-index: 50;
+        padding: 4px 0;
+        background: var(--popover);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-popover);
+      }
+      .popper-group {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        padding: 6px 12px 3px;
+      }
+      .popper-opt {
+        padding: 5px 12px;
+        cursor: pointer;
+      }
+      .popper-opt:hover,
+      .popper-opt.highlighted {
+        background: var(--muted);
+      }
+
+      /* ── Sticky selection tray ───────────────────────────────────────────────── */
+      .tray {
+        position: sticky;
+        bottom: 0;
+        z-index: 150;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 11px 24px;
+        background: var(--paper);
+        border-top: 1px solid var(--border);
+        box-shadow: 0 -3px 10px rgba(15, 23, 42, 0.06);
+      }
+      .tray-count {
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      .tray-chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+      .tray-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        background: color-mix(in oklab, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border-radius: var(--radius-4xl);
+        padding: 1px 4px 1px 9px;
+      }
+      .tray-chip-x {
+        cursor: pointer;
+        color: var(--muted-foreground);
+        font-size: 12px;
+        padding: 0 3px;
+      }
+      .tray-chip-x:hover {
+        color: var(--destructive);
+      }
+
+      /* ── Printed report ("paper") ────────────────────────────────────────────────
+       * For mockups of PDF deliverables. The app renders these for real with
+       * @react-pdf/renderer (OcotilloUI/src/components/pdf). This is the on-screen
+       * approximation: a letter-width sheet floating on the wrapper surface.
+       * ------------------------------------------------------------------------- */
+      .paper-wrap {
+        background: var(--wrapper);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        padding: 22px;
+        display: flex;
+        justify-content: center;
+      }
+      .report-page {
+        width: 850px;
+        max-width: 100%;
+        background: var(--paper);
+        box-shadow: var(--shadow-paper);
+        padding: 34px 40px 26px;
+        font-size: 12.5px;
+        line-height: 1.55;
+      }
+      .rp-head {
+        display: flex;
+        gap: 22px;
+        align-items: flex-start;
+        border-bottom: 2px solid var(--foreground);
+        padding-bottom: 14px;
+        margin-bottom: 16px;
+      }
+      .rp-org {
+        font-family: var(--font-heading);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-title {
+        font-family: var(--font-heading);
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-top: 2px;
+      }
+      .rp-sub {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        margin-top: 3px;
+      }
+      .rp-section {
+        margin-top: 20px;
+      }
+      .rp-h {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-family: var(--font-heading);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--primary);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 4px;
+        margin-bottom: 10px;
+      }
+      .rp-h-note {
+        margin-left: auto;
+        font-family: var(--font-sans);
+        font-size: 10.5px;
+        font-weight: 400;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--muted-foreground);
+      }
+      .rp-p {
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      .rp-cols2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .rp-kv {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+      }
+      .rp-kv-cell {
+        padding: 7px 11px;
+        border-left: 1px solid var(--border);
+        border-top: 1px solid var(--border);
+        min-width: 0;
+      }
+      .rp-kv-cell:nth-child(4n + 1) {
+        border-left: none;
+      }
+      .rp-kv-cell:nth-child(-n + 4) {
+        border-top: none;
+      }
+      .rp-kv-label {
+        font-size: 9.5px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-kv-value {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .rp-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11.5px;
+      }
+      .rp-table th {
+        text-align: left;
+        vertical-align: bottom;
+        border-bottom: 1.5px solid var(--foreground);
+        padding: 5px 8px;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .rp-table td {
+        padding: 6px 8px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+      .rp-table tbody tr:nth-child(even) td {
+        background: color-mix(in oklab, var(--muted) 50%, transparent);
+      }
+      .rp-table tr.row-exceed td {
+        background: color-mix(in oklab, var(--destructive) 7%, transparent);
+      }
+      .rp-table tr.row-smcl td {
+        background: color-mix(in oklab, var(--warning) 7%, transparent);
+      }
+      .rp-num {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+      }
+      .rp-callout {
+        border-left: 4px solid var(--destructive);
+        background: color-mix(in oklab, var(--destructive) 7%, transparent);
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        padding: 11px 14px;
+        font-size: 12px;
+      }
+      .rp-callout.ok {
+        border-left-color: var(--success);
+        background: color-mix(in oklab, var(--success) 8%, transparent);
+      }
+      .rp-callout.info {
+        border-left-color: var(--primary);
+        background: color-mix(in oklab, var(--primary) 8%, transparent);
+      }
+      .rp-callout-title {
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
+      .rp-callout ul {
+        margin: 6px 0 0 17px;
+      }
+      .rp-chart {
+        height: 118px;
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-md);
+        background: var(--wrapper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-style: italic;
+        color: var(--muted-foreground);
+      }
+      .rp-qr {
+        margin-left: auto;
+        flex-shrink: 0;
+        width: 118px;
+        text-align: center;
+      }
+      .rp-qr svg {
+        display: block;
+        width: 106px;
+        height: 106px;
+        margin: 0 auto;
+        padding: 4px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+      }
+      .rp-qr-cap {
+        font-size: 9.5px;
+        color: var(--muted-foreground);
+        line-height: 1.35;
+        margin-top: 4px;
+      }
+      .rp-priv {
+        font-size: 10.5px;
+        font-style: italic;
+        color: var(--muted-foreground);
+        margin-top: 7px;
+      }
+      .rp-glossary {
+        columns: 2;
+        column-gap: 22px;
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+      .rp-glossary p {
+        break-inside: avoid;
+        margin-bottom: 5px;
+      }
+      .rp-glossary strong {
+        color: var(--foreground);
+      }
+      .rp-foot {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-top: 24px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        font-size: 10.5px;
+        color: var(--muted-foreground);
+      }
+      .rp-foot svg {
+        width: 54px;
+        height: 54px;
+        flex-shrink: 0;
+      }
+      .rp-page-num {
+        margin-left: auto;
+        white-space: nowrap;
+      }
+
+      /* ── Mockup annotation ───────────────────────────────────────────────────────
+       * Mockup-only. Deliberately outside the token system so it never reads as
+       * product UI — a reviewer must be able to tell commentary from the design.
+       * Every mockup carries one, stating what is not real and what is unresolved.
+       * ------------------------------------------------------------------------- */
+      .mockup-note {
+        background: #fefce8;
+        border: 1px solid #fde047;
+        border-radius: var(--radius-lg);
+        padding: 10px 14px;
+        font-size: 12px;
+        color: #713f12;
+        margin-bottom: 16px;
+      }
+      .mockup-note strong {
+        font-weight: 600;
+      }
+      .mockup-note ul {
+        margin: 6px 0 0 18px;
+      }
+      .mockup-note li {
+        margin-bottom: 2px;
+      }
+      .dark .mockup-note {
+        background: #422006;
+        border-color: #854d0e;
+        color: #fef08a;
+      }
+    </style>
+    <!-- design-system:end -->
+
+    <style>
+:root{
+  --fn-ink: var(--foreground);
+  /* Text on a brand-900 surface: constant white. --paper flips to zinc-700 in
+     dark mode, which turned every band/th header into dark-on-dark. */
+  --fn-onband: #ffffff;
+  --fn-band: var(--brand-900);
+  --fn-head: var(--brand-900);
+  --fn-headrule: var(--primary-dark);
+  --fn-rule: var(--divider);
+  --fn-zebra: var(--muted);
+  --fn-amber: var(--sand);
+  --fn-green: color-mix(in srgb, var(--success) 14%, var(--paper));
+  --fn-write: color-mix(in srgb, var(--foreground) 7%, var(--paper));
+  --fn-muted: var(--muted-foreground);
+  --fn-accent: var(--primary-dark);
+  --fn-frame: color-mix(in srgb, var(--foreground) 16%, var(--paper));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{background:var(--wrapper);font-family:var(--font-sans);color:var(--fn-ink);
+font-size:8.5pt;line-height:1.25;padding:24pt;display:flex;flex-wrap:wrap;gap:24pt;justify-content:center;align-items:flex-start}
+.sheet{width:612pt;height:792pt;background:var(--paper);box-shadow:0 2pt 10pt rgba(0,0,0,.2);overflow:hidden;display:flex;flex-direction:column}
+.p1{padding:28pt;gap:4pt}
+.p2{padding:28pt;gap:8pt}
+@page{size:letter;margin:0}
+@media print{body{background:none;padding:0;gap:0;display:block}
+ .mockup-note{display:none}
+ .sheet{box-shadow:none;break-after:page;page-break-after:always}.sheet:last-child{break-after:auto;page-break-after:auto}}
+
+/* shared */
+.k{font-weight:700;margin-right:3pt}
+.kv{display:flex;align-items:baseline;min-height:11pt}
+.kv .v{flex:1}
+.band{background:var(--fn-band);color:var(--fn-onband);font-size:8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:2pt 5pt}
+.tbl{display:grid;border-left:.5pt solid var(--fn-rule);border-bottom:0}
+.tbl .td{min-width:0}
+.logo,.qr{display:inline-block}
+.tbl>div{font-size:7.5pt;line-height:1.2;padding:2.5pt 4pt;border-right:.5pt solid var(--fn-rule);border-bottom:.5pt solid var(--fn-rule);
+ font-variant-numeric:tabular-nums;min-height:13pt}
+.tbl .th{background:var(--fn-head);color:var(--fn-onband);font-size:7pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+ border-right-color:var(--fn-headrule);border-bottom-color:var(--fn-head);display:flex;align-items:flex-end}
+.tbl .th.end{border-right-color:var(--fn-rule)}
+.tbl .th.fn-num{font-variant-numeric:tabular-nums;justify-content:center;text-align:center}
+.tbl .z{background:var(--fn-zebra)}
+.tbl .fn-num{font-variant-numeric:tabular-nums;text-align:center}
+.tbl .stat{background:var(--fn-amber)}
+/* cream 'water level not affected' cells: dark mode keeps the tint, darkens it */
+.dark .tbl .stat{background:color-mix(in srgb, var(--fn-amber) 22%, var(--paper))}
+.tbl .note{background:var(--fn-green)}
+.rule-area{background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 11.5pt,var(--fn-rule) 11.5pt,var(--fn-rule) 12pt);
+ line-height:12pt;font-size:8.5pt}
+.ruled-field{display:grid;grid-template-columns:74pt 1fr;align-items:start}
+.ruled-field>.k{line-height:12pt}
+.rf-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8pt;align-items:start}
+
+/* page 1 */
+.hdr1{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2pt solid var(--fn-ink);padding-bottom:2pt}
+.hdr1 h1{font-family:var(--font-heading);font-size:15pt;font-weight:800;letter-spacing:-.01em}
+.hdr1 .date{font-size:8.5pt;color:var(--fn-muted);font-variant-numeric:tabular-nums}
+.top{display:grid;grid-template-columns:minmax(0,1fr) 104pt;column-gap:10pt}
+.top .fn-main{grid-column:1;display:flex;flex-direction:column;gap:4pt}
+.ident{display:grid;grid-template-columns:1fr 52pt;column-gap:8pt;align-items:start;padding-bottom:3pt;border-bottom:.5pt solid var(--fn-rule)}
+.ident-grid{display:grid;grid-template-columns:repeat(3,1fr);column-gap:8pt;row-gap:2pt}
+.ident .span3{grid-column:1 / -1}
+.ident .span2{grid-column:span 2}
+.idqr{width:52pt;height:52pt;justify-self:end;shape-rendering:crispEdges}
+.contacts{display:grid;grid-template-columns:repeat(2,1fr);column-gap:8pt;padding-bottom:3pt;border-bottom:.5pt solid var(--fn-rule)}
+.contacts .ct{display:flex;flex-direction:column;gap:1pt}
+.contacts .kv .v{overflow-wrap:normal;word-break:normal;hyphens:manual}
+.contacts .ch{font-size:7pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fn-muted);margin-bottom:1pt}
+.photos{display:flex;flex-direction:column;gap:4pt;align-items:flex-end}
+.photo{display:flex;flex-direction:column;gap:2pt;align-items:flex-start}
+.frame{width:104pt;height:78pt;border:.5pt solid var(--fn-frame);background:var(--fn-frame);display:flex;align-items:center;justify-content:center;color:var(--fn-muted);font-size:7pt}
+.frame.empty{background:var(--paper);border:.75pt dashed var(--fn-frame)}
+.cap{font-size:7pt;color:var(--fn-muted);line-height:1.3;overflow-wrap:anywhere;text-align:left;width:104pt}
+.cap b{display:block;color:var(--fn-ink);font-weight:700}
+.stackcap{font-size:7pt;color:var(--fn-muted);text-align:left;margin-top:1pt}
+.sect{display:flex;flex-direction:column}
+.tbl.lm .td{padding-top:3pt;padding-bottom:3pt}
+.tbl.lm .td.note{font-size:8pt;text-align:left}
+.nm{flex:1;display:flex;flex-direction:column}
+.nmbox{flex:1;display:flex;flex-direction:column;gap:4pt;border:1pt solid var(--fn-band);border-top:0;padding:4pt 6pt 16pt}
+.nm>.band{display:flex;justify-content:space-between;align-items:baseline;gap:8pt}
+.nm .band-prev{color:var(--fn-onband);font-size:8pt;font-weight:600;letter-spacing:0;text-transform:none;text-align:right;font-variant-numeric:tabular-nums}
+.wf{display:flex;flex-direction:column;gap:1.5pt}
+.wf.inl{flex-direction:row;align-items:flex-end;gap:4pt}
+.wf.inl .wbox{flex:1}
+.wf .k{font-size:7.5pt}
+.wbox{background:none;border:0;border-bottom:.5pt solid var(--fn-rule);height:17pt}
+.wbox.tall{height:38pt;background:none;border:0;border-bottom:.5pt solid var(--fn-rule)}
+.wbox.notes{height:72pt}
+.wbox.line{height:12pt;background:none;border:0;border-bottom:.5pt solid var(--fn-rule)}
+.wrow{display:grid;grid-template-columns:repeat(3,1fr);column-gap:8pt}
+.mgrid{flex:1;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:auto;grid-auto-rows:1fr;border-left:.5pt solid #d6d6d6}
+.mgrid>div{border-right:.5pt solid #d6d6d6;border-bottom:.5pt solid var(--fn-rule);font-size:7.5pt;padding:2pt 4pt;display:flex;align-items:center}
+.mgrid .th{background:var(--fn-head);color:var(--fn-onband);font-size:7pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;justify-content:center;border-right-color:var(--fn-headrule);border-bottom-color:var(--fn-rule);min-height:13pt}
+.mgrid .th.end{border-right-color:var(--fn-rule)}
+.mgrid .rl{font-weight:700;background:var(--fn-zebra)}
+.mgrid .w{background:none}
+
+/* page 2 */
+.hdr2{display:flex;align-items:center;gap:12pt;padding-bottom:9pt;border-bottom:3pt solid var(--fn-accent)}
+.hdr2 h1{font-family:var(--font-heading);font-size:17pt;font-weight:800;color:var(--fn-accent);line-height:1.1}
+.hdr2 .sub{font-size:8.5pt;color:var(--fn-muted);margin-top:2pt}
+.fn-info{display:flex;flex-direction:column;gap:3pt;background:var(--brand-50);border-left:3pt solid var(--fn-accent);padding:7pt 10pt}
+.fn-info .row{display:grid;grid-template-columns:1.05fr 0.975fr 0.975fr;column-gap:10pt}
+.fn-info .row>.kv{min-width:0}
+.fn-info .k{color:var(--fn-accent)}
+/* --brand-50 does not flip, so in dark mode the info band stayed light while its
+   values inherited the light ink. Re-tint the band and lift the accent labels. */
+.dark .fn-info{background:color-mix(in srgb, var(--fn-accent) 16%, var(--paper))}
+.dark .fn-info .k{color:color-mix(in srgb, var(--fn-accent) 40%, #fff)}
+.fn-info .v{font-size:10pt}
+.hydbox{border:.5pt solid var(--fn-rule);display:flex;flex-direction:column}
+.hydbox h2{font-family:var(--font-heading);font-size:9.5pt;font-weight:700;padding:5pt 8pt 2pt;color:var(--fn-ink)}
+.hyd{display:block;margin:0 auto}
+.hyd .g{stroke:var(--divider);stroke-width:.5}
+.hyd .ax{stroke:var(--fn-muted);stroke-width:.75}
+.hyd .tk{font-size:7px;fill:var(--fn-muted);font-family:inherit;font-variant-numeric:tabular-nums}
+.hyd .al{font-size:7.5px;fill:var(--fn-ink);font-weight:700;font-family:inherit}
+.hyd .ln{fill:none;stroke:var(--fn-accent);stroke-width:1.25;stroke-linejoin:round}
+.hyd .pt{fill:var(--paper);stroke:var(--fn-accent);stroke-width:1}
+.hyd .cur{fill:var(--destructive);stroke:var(--paper);stroke-width:1.2}
+.hyd .cl{font-size:7.5px;fill:var(--destructive);font-weight:700;font-family:inherit}
+.foot{margin-top:auto;border-top:.5pt solid var(--fn-rule);padding-top:8pt;display:flex;flex-direction:column;gap:6pt}
+.foot .r1{display:flex;justify-content:space-between;align-items:flex-start}
+.qrblk{display:flex;flex-direction:column;gap:3pt}
+.qrblk .url{font-size:7.5pt;color:var(--fn-accent)}
+.qrblk .lead{font-size:7.5pt;font-weight:700}
+.ask{text-align:right;display:flex;flex-direction:column;gap:1.5pt}
+.ask .q{font-size:10pt;font-weight:700;margin-bottom:2pt}
+.emails{display:flex;justify-content:space-between;font-size:8.5pt;font-weight:700;color:var(--fn-accent);
+ border-top:.5pt solid var(--divider);padding-top:5pt}
+    </style>
+  </head>
+
+  <body>
+    <!-- Sheet 1–2: blank printed field-notes form, no JS, no navigation. -->
+<div class="mockup-note" role="note">
+  <strong>Mockup — not a working page.</strong> Every value is hand-typed sample data for one well
+  (<em>Mesa Redonda Ranch Well 2, WL-0217</em>) shown in the final 8.5×11 sheet layout. No JavaScript,
+  no navigation, no live data.
+  <ul>
+    <li><strong>Not functional:</strong> photo frames are empty placeholders (no frame is drawn when a
+      well has no image); both QR codes are drawn placeholders and neither one scans — the identity QR stands
+      in for a Google Maps link to 34.30155, -102.59333 and the footer QR for the WL-0217 record, both built by
+      the app at export;
+      the hydrograph is a fixed illustration; “Printed 11/16/2026” is a literal string.</li>
+    <li><strong>Settled:</strong> (1) a well with no prior reading leaves the Previous-DTW line as
+      <em>blank space</em> — no dash, no “N/A”; (2) page 2 <em>is</em> the owner page, and it sits behind
+      the export toggle (BDMS-1508) — off by default, expected on a single-well preview and off for a
+      batch, with the intent that it can be switched on for a batch export; (3) the photo column shows at most <em>three</em> images, chosen in the app —
+      ordering which three is out of scope here; (4) the identity QR, a fixed square inside its cell in the right-hand column of the identity
+      block, is a mockup placeholder standing in for the code the app generates at export — not a generated code, and not required to scan; (5) the report renders at the implementation's single
+      density — the Density control in today's preview is being removed as an option, not re-mapped
+      to a different value; (6) the BDMS-1584 elements carried from BDMS-1507 — the “About the
+      Bureau” copy, the staff contact block, the blank “next water level” line — are not drawn, by
+      decision.</li>
+    <li><strong>Still open:</strong> in a batch with page 2 switched on, repeat the owner page
+      after every well or once per packet.</li>
+  </ul>
+</div>
+<section class="sheet p1" aria-label="Page 1 Field Compilation Notes">
+<header class="hdr1"><h1>Field Compilation Notes</h1><span class="date">Printed 11/16/2026</span></header>
+<div class="top"><div class="fn-main">
+<div class="ident"><div class="ident-grid"><div class="kv"><span class="k">Point ID</span><span class="v">WL-0217</span></div><div class="kv span2"><span class="k">Site Name</span><span class="v">Mesa Redonda Ranch Well 2</span></div>
+<div class="kv"><span class="k">Easting</span><span class="v">721486</span></div><div class="kv"><span class="k">Northing</span><span class="v">3798214</span></div><div class="kv"><span class="k">Elevation (ft)</span><span class="v">6,948</span></div>
+<div class="kv"><span class="k">Latitude</span><span class="v">34.30155</span></div><div class="kv"><span class="k">Longitude</span><span class="v">-102.59333</span></div></div><svg class="idqr" viewBox="0 0 39 39" width="37mm" height="37mm" role="img" aria-label="QR code linking to Google Maps at 34.30155, -102.59333" shape-rendering="crispEdges"><rect width="39" height="39" fill="#fff"/><path fill="#111" d="M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM7 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM13 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM22 1h1v1h-1zM25 1h1v1h-1zM27 1h1v1h-1zM31 1h1v1h-1zM32 1h1v1h-1zM33 1h1v1h-1zM34 1h1v1h-1zM35 1h1v1h-1zM36 1h1v1h-1zM37 1h1v1h-1zM1 2h1v1h-1zM7 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM15 2h1v1h-1zM19 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM26 2h1v1h-1zM27 2h1v1h-1zM28 2h1v1h-1zM29 2h1v1h-1zM31 2h1v1h-1zM37 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM9 3h1v1h-1zM11 3h1v1h-1zM14 3h1v1h-1zM15 3h1v1h-1zM17 3h1v1h-1zM19 3h1v1h-1zM22 3h1v1h-1zM23 3h1v1h-1zM24 3h1v1h-1zM25 3h1v1h-1zM27 3h1v1h-1zM28 3h1v1h-1zM29 3h1v1h-1zM31 3h1v1h-1zM33 3h1v1h-1zM34 3h1v1h-1zM35 3h1v1h-1zM37 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM7 4h1v1h-1zM9 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM19 4h1v1h-1zM23 4h1v1h-1zM25 4h1v1h-1zM26 4h1v1h-1zM27 4h1v1h-1zM31 4h1v1h-1zM33 4h1v1h-1zM34 4h1v1h-1zM35 4h1v1h-1zM37 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM7 5h1v1h-1zM9 5h1v1h-1zM10 5h1v1h-1zM11 5h1v1h-1zM13 5h1v1h-1zM15 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM19 5h1v1h-1zM20 5h1v1h-1zM21 5h1v1h-1zM22 5h1v1h-1zM23 5h1v1h-1zM24 5h1v1h-1zM29 5h1v1h-1zM31 5h1v1h-1zM33 5h1v1h-1zM34 5h1v1h-1zM35 5h1v1h-1zM37 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM9 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM16 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM28 6h1v1h-1zM29 6h1v1h-1zM31 6h1v1h-1zM37 6h1v1h-1zM1 7h1v1h-1zM2 7h1v1h-1zM3 7h1v1h-1zM4 7h1v1h-1zM5 7h1v1h-1zM6 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h1v1h-1zM21 7h1v1h-1zM23 7h1v1h-1zM25 7h1v1h-1zM27 7h1v1h-1zM29 7h1v1h-1zM31 7h1v1h-1zM32 7h1v1h-1zM33 7h1v1h-1zM34 7h1v1h-1zM35 7h1v1h-1zM36 7h1v1h-1zM37 7h1v1h-1zM9 8h1v1h-1zM11 8h1v1h-1zM17 8h1v1h-1zM18 8h1v1h-1zM19 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM27 8h1v1h-1zM29 8h1v1h-1zM1 9h1v1h-1zM3 9h1v1h-1zM4 9h1v1h-1zM5 9h1v1h-1zM6 9h1v1h-1zM7 9h1v1h-1zM13 9h1v1h-1zM17 9h1v1h-1zM22 9h1v1h-1zM24 9h1v1h-1zM26 9h1v1h-1zM31 9h1v1h-1zM32 9h1v1h-1zM33 9h1v1h-1zM34 9h1v1h-1zM35 9h1v1h-1zM1 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM11 10h1v1h-1zM12 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM21 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM25 10h1v1h-1zM26 10h1v1h-1zM27 10h1v1h-1zM30 10h1v1h-1zM36 10h1v1h-1zM1 11h1v1h-1zM2 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM5 11h1v1h-1zM6 11h1v1h-1zM7 11h1v1h-1zM10 11h1v1h-1zM12 11h1v1h-1zM13 11h1v1h-1zM14 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM20 11h1v1h-1zM22 11h1v1h-1zM27 11h1v1h-1zM28 11h1v1h-1zM30 11h1v1h-1zM31 11h1v1h-1zM33 11h1v1h-1zM36 11h1v1h-1zM37 11h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM16 12h1v1h-1zM20 12h1v1h-1zM21 12h1v1h-1zM22 12h1v1h-1zM24 12h1v1h-1zM25 12h1v1h-1zM28 12h1v1h-1zM29 12h1v1h-1zM30 12h1v1h-1zM32 12h1v1h-1zM33 12h1v1h-1zM37 12h1v1h-1zM2 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM18 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM23 13h1v1h-1zM25 13h1v1h-1zM26 13h1v1h-1zM27 13h1v1h-1zM30 13h1v1h-1zM31 13h1v1h-1zM32 13h1v1h-1zM33 13h1v1h-1zM35 13h1v1h-1zM36 13h1v1h-1zM37 13h1v1h-1zM3 14h1v1h-1zM8 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM12 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM29 14h1v1h-1zM30 14h1v1h-1zM32 14h1v1h-1zM2 15h1v1h-1zM5 15h1v1h-1zM7 15h1v1h-1zM10 15h1v1h-1zM11 15h1v1h-1zM12 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM19 15h1v1h-1zM23 15h1v1h-1zM28 15h1v1h-1zM29 15h1v1h-1zM31 15h1v1h-1zM32 15h1v1h-1zM33 15h1v1h-1zM34 15h1v1h-1zM36 15h1v1h-1zM37 15h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM16 16h1v1h-1zM20 16h1v1h-1zM24 16h1v1h-1zM29 16h1v1h-1zM30 16h1v1h-1zM32 16h1v1h-1zM33 16h1v1h-1zM36 16h1v1h-1zM37 16h1v1h-1zM1 17h1v1h-1zM2 17h1v1h-1zM4 17h1v1h-1zM6 17h1v1h-1zM7 17h1v1h-1zM8 17h1v1h-1zM10 17h1v1h-1zM11 17h1v1h-1zM13 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM19 17h1v1h-1zM21 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM26 17h1v1h-1zM31 17h1v1h-1zM33 17h1v1h-1zM35 17h1v1h-1zM36 17h1v1h-1zM37 17h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM22 18h1v1h-1zM24 18h1v1h-1zM25 18h1v1h-1zM27 18h1v1h-1zM30 18h1v1h-1zM34 18h1v1h-1zM36 18h1v1h-1zM1 19h1v1h-1zM5 19h1v1h-1zM6 19h1v1h-1zM7 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM15 19h1v1h-1zM18 19h1v1h-1zM21 19h1v1h-1zM27 19h1v1h-1zM28 19h1v1h-1zM29 19h1v1h-1zM30 19h1v1h-1zM31 19h1v1h-1zM34 19h1v1h-1zM35 19h1v1h-1zM36 19h1v1h-1zM37 19h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM10 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM17 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM25 20h1v1h-1zM27 20h1v1h-1zM28 20h1v1h-1zM29 20h1v1h-1zM30 20h1v1h-1zM32 20h1v1h-1zM37 20h1v1h-1zM1 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM5 21h1v1h-1zM7 21h1v1h-1zM9 21h1v1h-1zM12 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM21 21h1v1h-1zM25 21h1v1h-1zM26 21h1v1h-1zM28 21h1v1h-1zM30 21h1v1h-1zM31 21h1v1h-1zM33 21h1v1h-1zM35 21h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM13 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM29 22h1v1h-1zM30 22h1v1h-1zM34 22h1v1h-1zM36 22h1v1h-1zM1 23h1v1h-1zM2 23h1v1h-1zM4 23h1v1h-1zM5 23h1v1h-1zM7 23h1v1h-1zM8 23h1v1h-1zM9 23h1v1h-1zM10 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM18 23h1v1h-1zM21 23h1v1h-1zM22 23h1v1h-1zM26 23h1v1h-1zM28 23h1v1h-1zM29 23h1v1h-1zM31 23h1v1h-1zM32 23h1v1h-1zM33 23h1v1h-1zM34 23h1v1h-1zM36 23h1v1h-1zM37 23h1v1h-1zM3 24h1v1h-1zM5 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM15 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM18 24h1v1h-1zM19 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM29 24h1v1h-1zM31 24h1v1h-1zM32 24h1v1h-1zM33 24h1v1h-1zM36 24h1v1h-1zM37 24h1v1h-1zM1 25h1v1h-1zM3 25h1v1h-1zM4 25h1v1h-1zM5 25h1v1h-1zM6 25h1v1h-1zM7 25h1v1h-1zM10 25h1v1h-1zM13 25h1v1h-1zM14 25h1v1h-1zM17 25h1v1h-1zM22 25h1v1h-1zM24 25h1v1h-1zM26 25h1v1h-1zM28 25h1v1h-1zM29 25h1v1h-1zM31 25h1v1h-1zM32 25h1v1h-1zM33 25h1v1h-1zM35 25h1v1h-1zM37 25h1v1h-1zM1 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM6 26h1v1h-1zM10 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM13 26h1v1h-1zM15 26h1v1h-1zM16 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM25 26h1v1h-1zM26 26h1v1h-1zM30 26h1v1h-1zM34 26h1v1h-1zM35 26h1v1h-1zM1 27h1v1h-1zM3 27h1v1h-1zM5 27h1v1h-1zM7 27h1v1h-1zM8 27h1v1h-1zM9 27h1v1h-1zM11 27h1v1h-1zM12 27h1v1h-1zM16 27h1v1h-1zM17 27h1v1h-1zM19 27h1v1h-1zM20 27h1v1h-1zM23 27h1v1h-1zM26 27h1v1h-1zM27 27h1v1h-1zM28 27h1v1h-1zM29 27h1v1h-1zM30 27h1v1h-1zM31 27h1v1h-1zM32 27h1v1h-1zM33 27h1v1h-1zM36 27h1v1h-1zM37 27h1v1h-1zM1 28h1v1h-1zM3 28h1v1h-1zM5 28h1v1h-1zM8 28h1v1h-1zM11 28h1v1h-1zM13 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM20 28h1v1h-1zM21 28h1v1h-1zM22 28h1v1h-1zM23 28h1v1h-1zM25 28h1v1h-1zM28 28h1v1h-1zM29 28h1v1h-1zM30 28h1v1h-1zM34 28h1v1h-1zM36 28h1v1h-1zM1 29h1v1h-1zM4 29h1v1h-1zM5 29h1v1h-1zM6 29h1v1h-1zM7 29h1v1h-1zM11 29h1v1h-1zM13 29h1v1h-1zM14 29h1v1h-1zM15 29h1v1h-1zM16 29h1v1h-1zM17 29h1v1h-1zM18 29h1v1h-1zM20 29h1v1h-1zM23 29h1v1h-1zM24 29h1v1h-1zM25 29h1v1h-1zM26 29h1v1h-1zM27 29h1v1h-1zM28 29h1v1h-1zM29 29h1v1h-1zM30 29h1v1h-1zM31 29h1v1h-1zM32 29h1v1h-1zM33 29h1v1h-1zM35 29h1v1h-1zM37 29h1v1h-1zM9 30h1v1h-1zM10 30h1v1h-1zM12 30h1v1h-1zM13 30h1v1h-1zM15 30h1v1h-1zM20 30h1v1h-1zM21 30h1v1h-1zM23 30h1v1h-1zM24 30h1v1h-1zM26 30h1v1h-1zM28 30h1v1h-1zM29 30h1v1h-1zM33 30h1v1h-1zM34 30h1v1h-1zM36 30h1v1h-1zM1 31h1v1h-1zM2 31h1v1h-1zM3 31h1v1h-1zM4 31h1v1h-1zM5 31h1v1h-1zM6 31h1v1h-1zM7 31h1v1h-1zM11 31h1v1h-1zM12 31h1v1h-1zM14 31h1v1h-1zM16 31h1v1h-1zM17 31h1v1h-1zM19 31h1v1h-1zM21 31h1v1h-1zM23 31h1v1h-1zM26 31h1v1h-1zM27 31h1v1h-1zM29 31h1v1h-1zM31 31h1v1h-1zM33 31h1v1h-1zM35 31h1v1h-1zM36 31h1v1h-1zM37 31h1v1h-1zM1 32h1v1h-1zM7 32h1v1h-1zM9 32h1v1h-1zM10 32h1v1h-1zM11 32h1v1h-1zM12 32h1v1h-1zM13 32h1v1h-1zM16 32h1v1h-1zM21 32h1v1h-1zM24 32h1v1h-1zM29 32h1v1h-1zM33 32h1v1h-1zM34 32h1v1h-1zM1 33h1v1h-1zM3 33h1v1h-1zM4 33h1v1h-1zM5 33h1v1h-1zM7 33h1v1h-1zM9 33h1v1h-1zM11 33h1v1h-1zM12 33h1v1h-1zM15 33h1v1h-1zM19 33h1v1h-1zM21 33h1v1h-1zM22 33h1v1h-1zM23 33h1v1h-1zM24 33h1v1h-1zM26 33h1v1h-1zM28 33h1v1h-1zM29 33h1v1h-1zM30 33h1v1h-1zM31 33h1v1h-1zM32 33h1v1h-1zM33 33h1v1h-1zM35 33h1v1h-1zM36 33h1v1h-1zM37 33h1v1h-1zM1 34h1v1h-1zM3 34h1v1h-1zM4 34h1v1h-1zM5 34h1v1h-1zM7 34h1v1h-1zM9 34h1v1h-1zM10 34h1v1h-1zM12 34h1v1h-1zM14 34h1v1h-1zM16 34h1v1h-1zM17 34h1v1h-1zM22 34h1v1h-1zM24 34h1v1h-1zM25 34h1v1h-1zM27 34h1v1h-1zM28 34h1v1h-1zM29 34h1v1h-1zM31 34h1v1h-1zM33 34h1v1h-1zM35 34h1v1h-1zM37 34h1v1h-1zM1 35h1v1h-1zM3 35h1v1h-1zM4 35h1v1h-1zM5 35h1v1h-1zM7 35h1v1h-1zM9 35h1v1h-1zM10 35h1v1h-1zM11 35h1v1h-1zM13 35h1v1h-1zM15 35h1v1h-1zM19 35h1v1h-1zM21 35h1v1h-1zM26 35h1v1h-1zM29 35h1v1h-1zM36 35h1v1h-1zM37 35h1v1h-1zM1 36h1v1h-1zM7 36h1v1h-1zM10 36h1v1h-1zM12 36h1v1h-1zM13 36h1v1h-1zM14 36h1v1h-1zM15 36h1v1h-1zM17 36h1v1h-1zM19 36h1v1h-1zM22 36h1v1h-1zM23 36h1v1h-1zM27 36h1v1h-1zM29 36h1v1h-1zM31 36h1v1h-1zM33 36h1v1h-1zM34 36h1v1h-1zM37 36h1v1h-1zM1 37h1v1h-1zM2 37h1v1h-1zM3 37h1v1h-1zM4 37h1v1h-1zM5 37h1v1h-1zM6 37h1v1h-1zM7 37h1v1h-1zM9 37h1v1h-1zM11 37h1v1h-1zM12 37h1v1h-1zM13 37h1v1h-1zM18 37h1v1h-1zM23 37h1v1h-1zM25 37h1v1h-1zM26 37h1v1h-1zM27 37h1v1h-1zM28 37h1v1h-1zM30 37h1v1h-1zM31 37h1v1h-1zM33 37h1v1h-1zM35 37h1v1h-1zM36 37h1v1h-1zM37 37h1v1h-1z"/></svg></div>
+<div class="contacts"><div class="ct"><div class="ch">Primary Contact</div><div class="kv"><span class="k">Name</span><span class="v">Dolores Baca</span></div><div class="kv"><span class="k">Role / Relationship</span><span class="v">Owner</span></div><div class="kv"><span class="k">Phone</span><span class="v">(575) 555-0123</span></div><div class="kv"><span class="k">Mobile</span><span class="v">(575) 555-0187</span></div><div class="kv"><span class="k">Email</span><span class="v">dolores.baca.mesa.redonda@<wbr>example.com</span></div></div><div class="ct"><div class="ch">Secondary Contact</div><div class="kv"><span class="k">Name</span><span class="v"></span></div><div class="kv"><span class="k">Role / Relationship</span><span class="v"></span></div><div class="kv"><span class="k">Phone</span><span class="v"></span></div></div></div>
+<div class="ruled-field"><span class="k">Pre-Visit Notes</span><div class="rule-area" style="min-height:36pt"></div></div>
+<div class="ruled-field"><span class="k">Location Notes</span><div class="rule-area" style="min-height:36pt">Well is inside a fenced enclosure 40 ft west of the stock tank: 6-in steel casing with locking cap, solar panel on the north side. Ranch dogs loose near the house; stay in the truck until someone comes out.</div></div>
+<div class="ruled-field"><span class="k">Directions</span><div class="rule-area" style="min-height:36pt">From Quemado, west on US-60 for 6.2 mi, left (south) on CR B-021. Continue 3.8 mi on graded dirt to the cattle guard, then right at the green ranch gate (chained, not locked). Two-track 0.6 mi to the windmill; high clearance after rain.</div></div>
+<div class="ruled-field"><span class="k">MP Description</span><div class="rule-area" style="min-height:18pt">Top of PVC sounding tube, north side of 6-in steel casing, notched. Previous MP was top of casing (2.45 ft) before the tube was installed 06/09/2022.</div></div>
+<div class="rf-pair"><div class="ruled-field"><span class="k">Well Depth (ft)</span><div class="rule-area" style="min-height:12pt">312.00</div></div><div class="ruled-field"><span class="k">MP Height (ft)</span><div class="rule-area" style="min-height:12pt">2.10</div></div></div>
+</div><div class="photos">
+<div class="photo"><div class="frame"></div><div class="cap" title="WL0217_1.jpg">well casing, MP notch</div></div>
+<div class="photo"><div class="frame"></div><div class="cap" title="WL0217_2.jpg">enclosure from gate</div></div>
+<div class="photo"><div class="frame"></div><div class="cap" title="WL0217_3.jpg">ranch gate on CR B-021</div></div>
+<div class="stackcap">Top 3 photos shown</div></div></div>
+<div class="sect"><div class="band">Last Measurements</div>
+<div class="tbl lm" style="grid-template-columns:0.9fr 1.1fr 0.8fr 0.9fr 0.7fr 2.4fr">
+<div class="th">Date</div>
+<div class="th fn-num">DTW Below MP (ft)</div>
+<div class="th">Method</div>
+<div class="th">Level Status</div>
+<div class="th">Staff</div>
+<div class="th end">Site Notes</div>
+<div class="td">10/21/2026</div>
+<div class="td fn-num">41.62</div>
+<div class="td">Electric tape</div>
+<div class="td stat">Water level not affected</div>
+<div class="td">Ethan Mamer</div>
+<div class="td note end">Casing cap replaced 10/21; gate chain repaired.</div>
+<div class="td z">04/14/2026</div>
+<div class="td z fn-num">41.28</div>
+<div class="td z">Steel tape</div>
+<div class="td z stat">Water level not affected</div>
+<div class="td z">JT</div>
+<div class="td z note end"></div>
+</div>
+</div>
+<div class="sect"><div class="band">Installed Equipment</div>
+<div class="tbl" style="grid-template-columns:repeat(7,1fr)">
+<div class="th">Equipment Type</div>
+<div class="th">Model</div>
+<div class="th">Serial No</div>
+<div class="th fn-num">Cable Length (ft)</div>
+<div class="th fn-num">Rec Interval (hr)</div>
+<div class="th">Installed</div>
+<div class="th end">Notes</div>
+<div class="td">Pressure Transducer</div>
+<div class="td">Level TROLL 400</div>
+<div class="td">812447</div>
+<div class="td fn-num">60</div>
+<div class="td fn-num">12</div>
+<div class="td">06/09/2022</div>
+<div class="td note end">Downloaded 10/21/2026; battery 88%</div>
+<div class="td z">Barometric Logger</div>
+<div class="td z">Barologger 5</div>
+<div class="td z">2094117</div>
+<div class="td z fn-num">3</div>
+<div class="td z fn-num">12</div>
+<div class="td z">06/09/2022</div>
+<div class="td z note end"></div>
+</div>
+</div>
+<div class="nm"><div class="band"><span>New Measurement</span><span class="band-prev">Previous DTW Below MP: 41.62 ft (10/21/2026)</span></div><div class="nmbox">
+<div class="wrow" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)"><div class="wf"><span class="k">Date (MM/DD/YYYY)</span><div class="wbox line"></div></div><div class="wf"><span class="k">Staff</span><div class="wbox line"></div></div></div>
+<div class="mgrid"><div class="th"></div><div class="th">M1</div><div class="th">M2</div><div class="th">M3</div><div class="th">M4</div><div class="th end">M5</div><div class="rl">Hold (ft)</div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="rl">Cut (ft)</div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="rl">Tape Correction (ft)</div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="rl">WL Below MP (ft)</div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="rl">MP Correction (ft)</div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="rl">DTW Below MP (ft)</div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="rl">DTW BGS (ft)</div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="rl">Time (24 h)</div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div></div>
+<div class="wrow" style="grid-template-columns:1fr 1fr"><div class="wf inl"><span class="k">Method</span><div class="wbox line"></div></div><div class="wf inl"><span class="k">Level Status</span><div class="wbox line"></div></div></div>
+<div class="ruled-field"><span class="k">General Notes</span><div class="rule-area" style="min-height:24pt"></div></div>
+</div></div></section>
+<section class="sheet p2" aria-label="Page 2 Owner Leave-Behind">
+<header class="hdr2"><svg class="logo" viewBox="0 0 80 50" width="80pt" height="50pt" aria-label="Logo">
+<rect width="80" height="50" rx="3" fill="#1b4f72"/>
+<path d="M8 32 L19 15 L25 24 L31 17 L42 32 Z" fill="#8fb8d4"/>
+<path d="M8 36 q4.5 -3 9 0 t9 0 t9 0 t9 0" fill="none" stroke="#fff" stroke-width="1.6"/>
+<text x="47" y="22" fill="#fff" font-size="7.5" font-weight="700" font-family="Public Sans, Outfit, sans-serif">NMBG</text>
+<text x="47" y="31" fill="#cfe0ec" font-size="5.2" font-family="Public Sans, Outfit, sans-serif">Geology &amp;</text>
+<text x="47" y="38" fill="#cfe0ec" font-size="5.2" font-family="Public Sans, Outfit, sans-serif">Mineral Res.</text>
+</svg><div><h1>Your Well: Mesa Redonda Ranch Well 2</h1><div class="sub">Healy Collaborative Groundwater Monitoring Network</div></div></header>
+<div class="fn-info"><div class="row"><div class="kv"><span class="k">Site Name</span><span class="v">Mesa Redonda Ranch Well 2</span></div><div class="kv"><span class="k">Well Depth</span><span class="v">312.00 ft</span></div><div class="kv"><span class="k">MP Height</span><span class="v">2.10 ft</span></div></div><div class="row row2"><div class="kv"><span class="k">Point ID</span><span class="v">WL-0217</span></div><div class="kv"><span class="k">OSE #</span><span class="v">G-04218-POD1</span></div></div></div>
+<div class="hydbox"><h2>Depth to Water · 2018–2026</h2><svg class="hyd" viewBox="0 0 555 274" width="555pt" height="274pt" role="img" aria-label="Depth to water hydrograph">
+<rect x="46" y="14" width="493" height="226" fill="#fbfcfd" stroke="none"/>
+<line x1="46" y1="14.0" x2="539" y2="14.0" class="g"/>
+<text x="41" y="16.5" class="tk" text-anchor="end">37.0</text>
+<line x1="46" y1="46.3" x2="539" y2="46.3" class="g"/>
+<text x="41" y="48.8" class="tk" text-anchor="end">37.5</text>
+<line x1="46" y1="78.6" x2="539" y2="78.6" class="g"/>
+<text x="41" y="81.1" class="tk" text-anchor="end">38.0</text>
+<line x1="46" y1="110.9" x2="539" y2="110.9" class="g"/>
+<text x="41" y="113.4" class="tk" text-anchor="end">38.5</text>
+<line x1="46" y1="143.1" x2="539" y2="143.1" class="g"/>
+<text x="41" y="145.6" class="tk" text-anchor="end">39.0</text>
+<line x1="46" y1="175.4" x2="539" y2="175.4" class="g"/>
+<text x="41" y="177.9" class="tk" text-anchor="end">39.5</text>
+<line x1="46" y1="207.7" x2="539" y2="207.7" class="g"/>
+<text x="41" y="210.2" class="tk" text-anchor="end">40.0</text>
+<line x1="46" y1="240.0" x2="539" y2="240.0" class="g"/>
+<text x="41" y="242.5" class="tk" text-anchor="end">40.5</text>
+<line x1="46.0" y1="14" x2="46.0" y2="240" class="g"/>
+<text x="73.1" y="251" class="tk" text-anchor="middle">2018</text>
+<line x1="100.7" y1="14" x2="100.7" y2="240" class="g"/>
+<text x="127.9" y="251" class="tk" text-anchor="middle">2019</text>
+<line x1="155.5" y1="14" x2="155.5" y2="240" class="g"/>
+<text x="182.8" y="251" class="tk" text-anchor="middle">2020</text>
+<line x1="210.4" y1="14" x2="210.4" y2="240" class="g"/>
+<text x="237.5" y="251" class="tk" text-anchor="middle">2021</text>
+<line x1="265.1" y1="14" x2="265.1" y2="240" class="g"/>
+<text x="292.3" y="251" class="tk" text-anchor="middle">2022</text>
+<line x1="319.9" y1="14" x2="319.9" y2="240" class="g"/>
+<text x="347.0" y="251" class="tk" text-anchor="middle">2023</text>
+<line x1="374.6" y1="14" x2="374.6" y2="240" class="g"/>
+<text x="401.9" y="251" class="tk" text-anchor="middle">2024</text>
+<line x1="429.5" y1="14" x2="429.5" y2="240" class="g"/>
+<text x="456.7" y="251" class="tk" text-anchor="middle">2025</text>
+<line x1="484.3" y1="14" x2="484.3" y2="240" class="g"/>
+<text x="511.4" y="251" class="tk" text-anchor="middle">2026</text>
+<line x1="539.0" y1="14" x2="539.0" y2="240" class="g"/>
+<rect x="46" y="14" width="493" height="226" fill="none" class="ax"/>
+<text x="292.5" y="268" class="al" text-anchor="middle">Year</text>
+<text transform="translate(12 127.0) rotate(-90)" class="al" text-anchor="middle">Depth to water below ground surface (ft) · shallower at top</text>
+<polyline class="ln" points="61.9,72.1 90.2,97.9 116.5,52.7 144.8,104.4 172.1,85.0 199.4,136.7 226.7,110.9 254.0,143.1 281.5,117.3 308.8,169.0 335.9,130.2 364.3,162.5 390.5,136.7 417.8,181.9 446.2,139.3 474.5,189.0 499.7,154.8 528.2,176.7"/>
+<circle cx="61.9" cy="72.1" r="1.9" class="pt"/>
+<circle cx="90.2" cy="97.9" r="1.9" class="pt"/>
+<circle cx="116.5" cy="52.7" r="1.9" class="pt"/>
+<circle cx="144.8" cy="104.4" r="1.9" class="pt"/>
+<circle cx="172.1" cy="85.0" r="1.9" class="pt"/>
+<circle cx="199.4" cy="136.7" r="1.9" class="pt"/>
+<circle cx="226.7" cy="110.9" r="1.9" class="pt"/>
+<circle cx="254.0" cy="143.1" r="1.9" class="pt"/>
+<circle cx="281.5" cy="117.3" r="1.9" class="pt"/>
+<circle cx="308.8" cy="169.0" r="1.9" class="pt"/>
+<circle cx="335.9" cy="130.2" r="1.9" class="pt"/>
+<circle cx="364.3" cy="162.5" r="1.9" class="pt"/>
+<circle cx="390.5" cy="136.7" r="1.9" class="pt"/>
+<circle cx="417.8" cy="181.9" r="1.9" class="pt"/>
+<circle cx="446.2" cy="139.3" r="1.9" class="pt"/>
+<circle cx="474.5" cy="189.0" r="1.9" class="pt"/>
+<circle cx="499.7" cy="154.8" r="1.9" class="pt"/>
+<circle cx="528.2" cy="176.7" r="4.2" class="cur"/>
+<text x="531.2" y="206.7" class="cl" text-anchor="end">Most recent: ________ ft on ___/___/______</text>
+</svg></div>
+<div class="tbl" style="grid-template-columns:1.1fr 1.4fr 1fr">
+<div class="th">Date</div>
+<div class="th fn-num">Depth to water below ground surface (ft)</div>
+<div class="th end">Level Status</div>
+<div class="td">10/21/2026</div>
+<div class="td fn-num">39.52</div>
+<div class="td stat end">Water level not affected</div>
+<div class="td z">04/14/2026</div>
+<div class="td z fn-num">39.18</div>
+<div class="td z stat end">Water level not affected</div>
+<div class="td">10/28/2025</div>
+<div class="td fn-num">39.71</div>
+<div class="td stat end">Site was pumped recently</div>
+<div class="td z">04/22/2025</div>
+<div class="td z fn-num">38.94</div>
+<div class="td z stat end">Water level not affected</div>
+<div class="td">10/15/2024</div>
+<div class="td fn-num">39.60</div>
+<div class="td stat end">Water level not affected</div>
+<div class="td z">04/16/2024</div>
+<div class="td z fn-num">38.90</div>
+<div class="td z stat end">Water level not affected</div>
+<div class="td">10/24/2023</div>
+<div class="td fn-num">39.30</div>
+<div class="td stat end">Water level not affected</div>
+<div class="td z">04/18/2023</div>
+<div class="td z fn-num">38.80</div>
+<div class="td z stat end">Water level not affected</div>
+<div class="td">10/19/2022</div>
+<div class="td fn-num">39.40</div>
+<div class="td stat end">Site was pumped recently</div>
+<div class="td z">04/20/2022</div>
+<div class="td z fn-num">38.60</div>
+<div class="td z stat end">Water level not affected</div>
+</div>
+<footer class="foot"><div class="r1"><div class="qrblk"><span class="lead">See your well data online</span><svg class="qr" viewBox="0 0 35 35" width="70pt" height="70pt" role="img" aria-label="QR code linking to the WL-0217 well record" shape-rendering="crispEdges"><rect width="35" height="35" fill="#fff"/><path fill="#111" d="M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM7 1h1v1h-1zM11 1h1v1h-1zM15 1h1v1h-1zM16 1h1v1h-1zM19 1h1v1h-1zM20 1h1v1h-1zM22 1h1v1h-1zM24 1h1v1h-1zM27 1h1v1h-1zM28 1h1v1h-1zM29 1h1v1h-1zM30 1h1v1h-1zM31 1h1v1h-1zM32 1h1v1h-1zM33 1h1v1h-1zM1 2h1v1h-1zM7 2h1v1h-1zM12 2h1v1h-1zM16 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM27 2h1v1h-1zM33 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM11 3h1v1h-1zM13 3h1v1h-1zM15 3h1v1h-1zM16 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM24 3h1v1h-1zM27 3h1v1h-1zM29 3h1v1h-1zM30 3h1v1h-1zM31 3h1v1h-1zM33 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM7 4h1v1h-1zM10 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM21 4h1v1h-1zM23 4h1v1h-1zM24 4h1v1h-1zM27 4h1v1h-1zM29 4h1v1h-1zM30 4h1v1h-1zM31 4h1v1h-1zM33 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM7 5h1v1h-1zM12 5h1v1h-1zM14 5h1v1h-1zM17 5h1v1h-1zM18 5h1v1h-1zM21 5h1v1h-1zM24 5h1v1h-1zM27 5h1v1h-1zM29 5h1v1h-1zM30 5h1v1h-1zM31 5h1v1h-1zM33 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM9 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM25 6h1v1h-1zM27 6h1v1h-1zM33 6h1v1h-1zM1 7h1v1h-1zM2 7h1v1h-1zM3 7h1v1h-1zM4 7h1v1h-1zM5 7h1v1h-1zM6 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h1v1h-1zM21 7h1v1h-1zM23 7h1v1h-1zM25 7h1v1h-1zM27 7h1v1h-1zM28 7h1v1h-1zM29 7h1v1h-1zM30 7h1v1h-1zM31 7h1v1h-1zM32 7h1v1h-1zM33 7h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM18 8h1v1h-1zM19 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM1 9h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM7 9h1v1h-1zM9 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM23 9h1v1h-1zM25 9h1v1h-1zM26 9h1v1h-1zM28 9h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM9 10h1v1h-1zM11 10h1v1h-1zM12 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM21 10h1v1h-1zM25 10h1v1h-1zM26 10h1v1h-1zM27 10h1v1h-1zM28 10h1v1h-1zM32 10h1v1h-1zM33 10h1v1h-1zM3 11h1v1h-1zM6 11h1v1h-1zM7 11h1v1h-1zM10 11h1v1h-1zM13 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM20 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM25 11h1v1h-1zM28 11h1v1h-1zM29 11h1v1h-1zM31 11h1v1h-1zM32 11h1v1h-1zM33 11h1v1h-1zM4 12h1v1h-1zM10 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM19 12h1v1h-1zM20 12h1v1h-1zM22 12h1v1h-1zM24 12h1v1h-1zM25 12h1v1h-1zM26 12h1v1h-1zM27 12h1v1h-1zM29 12h1v1h-1zM30 12h1v1h-1zM33 12h1v1h-1zM1 13h1v1h-1zM3 13h1v1h-1zM4 13h1v1h-1zM6 13h1v1h-1zM7 13h1v1h-1zM19 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM25 13h1v1h-1zM26 13h1v1h-1zM27 13h1v1h-1zM30 13h1v1h-1zM33 13h1v1h-1zM2 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM12 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM23 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM29 14h1v1h-1zM31 14h1v1h-1zM32 14h1v1h-1zM33 14h1v1h-1zM5 15h1v1h-1zM7 15h1v1h-1zM9 15h1v1h-1zM12 15h1v1h-1zM14 15h1v1h-1zM15 15h1v1h-1zM19 15h1v1h-1zM22 15h1v1h-1zM24 15h1v1h-1zM25 15h1v1h-1zM26 15h1v1h-1zM27 15h1v1h-1zM28 15h1v1h-1zM30 15h1v1h-1zM32 15h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM5 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM14 16h1v1h-1zM16 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM22 16h1v1h-1zM24 16h1v1h-1zM25 16h1v1h-1zM27 16h1v1h-1zM29 16h1v1h-1zM32 16h1v1h-1zM1 17h1v1h-1zM3 17h1v1h-1zM4 17h1v1h-1zM7 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM13 17h1v1h-1zM14 17h1v1h-1zM15 17h1v1h-1zM18 17h1v1h-1zM20 17h1v1h-1zM21 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM27 17h1v1h-1zM29 17h1v1h-1zM32 17h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM14 18h1v1h-1zM17 18h1v1h-1zM24 18h1v1h-1zM25 18h1v1h-1zM28 18h1v1h-1zM30 18h1v1h-1zM32 18h1v1h-1zM2 19h1v1h-1zM4 19h1v1h-1zM5 19h1v1h-1zM7 19h1v1h-1zM10 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM22 19h1v1h-1zM26 19h1v1h-1zM31 19h1v1h-1zM32 19h1v1h-1zM33 19h1v1h-1zM3 20h1v1h-1zM8 20h1v1h-1zM9 20h1v1h-1zM13 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM18 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM27 20h1v1h-1zM28 20h1v1h-1zM1 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM7 21h1v1h-1zM11 21h1v1h-1zM12 21h1v1h-1zM13 21h1v1h-1zM14 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM24 21h1v1h-1zM26 21h1v1h-1zM32 21h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM8 22h1v1h-1zM9 22h1v1h-1zM10 22h1v1h-1zM13 22h1v1h-1zM16 22h1v1h-1zM17 22h1v1h-1zM23 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM27 22h1v1h-1zM28 22h1v1h-1zM31 22h1v1h-1zM32 22h1v1h-1zM33 22h1v1h-1zM1 23h1v1h-1zM2 23h1v1h-1zM3 23h1v1h-1zM7 23h1v1h-1zM8 23h1v1h-1zM9 23h1v1h-1zM10 23h1v1h-1zM11 23h1v1h-1zM13 23h1v1h-1zM14 23h1v1h-1zM16 23h1v1h-1zM18 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM27 23h1v1h-1zM28 23h1v1h-1zM29 23h1v1h-1zM30 23h1v1h-1zM33 23h1v1h-1zM2 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM15 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM22 24h1v1h-1zM30 24h1v1h-1zM32 24h1v1h-1zM1 25h1v1h-1zM4 25h1v1h-1zM7 25h1v1h-1zM10 25h1v1h-1zM11 25h1v1h-1zM12 25h1v1h-1zM14 25h1v1h-1zM15 25h1v1h-1zM16 25h1v1h-1zM18 25h1v1h-1zM20 25h1v1h-1zM21 25h1v1h-1zM22 25h1v1h-1zM25 25h1v1h-1zM26 25h1v1h-1zM27 25h1v1h-1zM28 25h1v1h-1zM29 25h1v1h-1zM30 25h1v1h-1zM32 25h1v1h-1zM33 25h1v1h-1zM9 26h1v1h-1zM10 26h1v1h-1zM14 26h1v1h-1zM15 26h1v1h-1zM19 26h1v1h-1zM20 26h1v1h-1zM21 26h1v1h-1zM22 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM25 26h1v1h-1zM29 26h1v1h-1zM30 26h1v1h-1zM32 26h1v1h-1zM33 26h1v1h-1zM1 27h1v1h-1zM2 27h1v1h-1zM3 27h1v1h-1zM4 27h1v1h-1zM5 27h1v1h-1zM6 27h1v1h-1zM7 27h1v1h-1zM10 27h1v1h-1zM11 27h1v1h-1zM12 27h1v1h-1zM13 27h1v1h-1zM14 27h1v1h-1zM21 27h1v1h-1zM22 27h1v1h-1zM25 27h1v1h-1zM27 27h1v1h-1zM29 27h1v1h-1zM30 27h1v1h-1zM31 27h1v1h-1zM32 27h1v1h-1zM1 28h1v1h-1zM7 28h1v1h-1zM9 28h1v1h-1zM10 28h1v1h-1zM14 28h1v1h-1zM15 28h1v1h-1zM16 28h1v1h-1zM21 28h1v1h-1zM22 28h1v1h-1zM23 28h1v1h-1zM25 28h1v1h-1zM29 28h1v1h-1zM1 29h1v1h-1zM3 29h1v1h-1zM4 29h1v1h-1zM5 29h1v1h-1zM7 29h1v1h-1zM11 29h1v1h-1zM13 29h1v1h-1zM14 29h1v1h-1zM17 29h1v1h-1zM20 29h1v1h-1zM21 29h1v1h-1zM23 29h1v1h-1zM25 29h1v1h-1zM26 29h1v1h-1zM27 29h1v1h-1zM28 29h1v1h-1zM29 29h1v1h-1zM30 29h1v1h-1zM32 29h1v1h-1zM33 29h1v1h-1zM1 30h1v1h-1zM3 30h1v1h-1zM4 30h1v1h-1zM5 30h1v1h-1zM7 30h1v1h-1zM9 30h1v1h-1zM10 30h1v1h-1zM11 30h1v1h-1zM15 30h1v1h-1zM16 30h1v1h-1zM21 30h1v1h-1zM22 30h1v1h-1zM24 30h1v1h-1zM27 30h1v1h-1zM29 30h1v1h-1zM1 31h1v1h-1zM3 31h1v1h-1zM4 31h1v1h-1zM5 31h1v1h-1zM7 31h1v1h-1zM10 31h1v1h-1zM13 31h1v1h-1zM18 31h1v1h-1zM21 31h1v1h-1zM24 31h1v1h-1zM25 31h1v1h-1zM29 31h1v1h-1zM33 31h1v1h-1zM1 32h1v1h-1zM7 32h1v1h-1zM10 32h1v1h-1zM11 32h1v1h-1zM12 32h1v1h-1zM14 32h1v1h-1zM15 32h1v1h-1zM16 32h1v1h-1zM17 32h1v1h-1zM18 32h1v1h-1zM19 32h1v1h-1zM21 32h1v1h-1zM22 32h1v1h-1zM24 32h1v1h-1zM25 32h1v1h-1zM1 33h1v1h-1zM2 33h1v1h-1zM3 33h1v1h-1zM4 33h1v1h-1zM5 33h1v1h-1zM6 33h1v1h-1zM7 33h1v1h-1zM9 33h1v1h-1zM10 33h1v1h-1zM13 33h1v1h-1zM14 33h1v1h-1zM15 33h1v1h-1zM17 33h1v1h-1zM20 33h1v1h-1zM21 33h1v1h-1zM22 33h1v1h-1zM25 33h1v1h-1zM26 33h1v1h-1zM27 33h1v1h-1zM29 33h1v1h-1zM30 33h1v1h-1zM32 33h1v1h-1z"/></svg><span class="url">weaver.newmexicowaterdata.org/location/WL-0217</span></div><div class="ask"><span class="q">For questions?</span><span>New Mexico Bureau of Geology &amp; Mineral Resources</span><span><span class="k">Field staff</span>Ethan Mamer&nbsp;·&nbsp;(575) 555-0148</span></div></div><div class="emails"><span>nmbg-waterlevels@nmt.edu</span><span>ethan.mamer@nmt.edu</span></div></footer>
+</section>
+</body></html>
